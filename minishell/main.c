@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 16:45:50 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/10/23 14:04:11 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/10/23 15:14:03 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,3 +60,6 @@ void handle_siginit(int sig)
 //lexer
 //parser
 //execute
+
+
+//pipe -> redirection
