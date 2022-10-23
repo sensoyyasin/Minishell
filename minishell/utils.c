@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 16:45:42 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/10/21 19:43:02 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/10/23 14:22:30 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,20 @@ int ft_strlen(const char *str)
     while (str[i])
         i++;
     return(i);
+}
+
+char	*to_lower(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] >= 'A' && str[i] <= 'Z')
+			str[i] += 32;
+			i++;
+	}
+	return(str);
 }
 
 int ft_strncmp(char *str1, char *str2, size_t n)
@@ -53,36 +67,33 @@ char	*ft_strdup(const char *s1)
 }
 
 
-int other_cmnds(char *arg)
+int other_cmnds(char **arg)
 {
-    extern char **environ;
-    int pid;
-    int i2 = 0;
-    char **str;
-    char *s;
+	int pid;
+	int i = 0;
+	char **str;
+	extern char **environ;
 
-    str = ft_split(ft_strdup(getenv("PATH")),':');
-    while (str[i2])
-    {
-        s = ft_strjoin(str[i2],"/");
-        s = ft_strjoin(s,arg);
-        if(access(s, F_OK) == 0)
-            break;
-        i2++;
-    }
-    pid = fork();
-    if (pid == 0)
-    {
-        //child process -> 0
-        char *argVec[] = {arg, NULL};
-        if(execve(s, argVec, environ)==-1)
+	str = ft_split(ft_strdup(getenv("PATH")),':');
+	while (str[i])
+	{
+		str[i] = ft_strjoin(str[i], "/");
+		str[i] = ft_strjoin(str[i], arg[0]);
+		if (access(str[i], F_OK) == 0)
+			break;
+		i++;
+	}
+	pid = fork();
+	if (pid == 0)
+	{
+		if(execve(str[i], arg, environ)==-1)
 		{
 			printf("zsh: command not found\n");
-            exit(0);
+			exit(0);
 		}
-    }
-    wait(NULL);
-    return (1);
+	}
+	wait(NULL);
+	return (1);
 }
 
 int ft_strcmp(char *str1, char *str2)

@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 16:45:50 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/10/21 19:44:33 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/10/23 14:04:11 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ int main(int argc, char **argv, char **env)
 {
 	(void)argc;
 	(void)*argv;
+	(void)*env;
 	t_list *shell;
 	char *ptr = NULL;
 
 	shell = malloc(sizeof(t_list*));
-	printf("%s\n",env[2]);
 	printf("------MINIHELL------\n");
 	while (1)
 	{

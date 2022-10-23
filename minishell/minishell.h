@@ -28,7 +28,7 @@ typedef struct s_list
 char	prompt(char *str);
 int		ft_echo(t_list *shell, int i);
 char	*path_finder();
-int		ft_pwd(char *str);
+int		ft_pwd(void);
 char	**ft_split(char *ptr, char c);
 int		ft_exit(int i);
 int		ft_strlen(const char *str);
@@ -36,8 +36,9 @@ int		ft_strcmp(char *str1,char *str2);
 char	*ft_strjoin(char const *s1, char const *s2);
 int		check(t_list *shell);
 int		ft_strncmp(char *str1, char *str2, size_t n);
-int		ft_cd(t_list *shell, int i);
+int		ft_cd(t_list *shell);
 void	handle_siginit(int sig);
-int		other_cmnds(char *arg);
+int		other_cmnds(char **arg);
+char	*to_lower(char *str);
 
 #endif

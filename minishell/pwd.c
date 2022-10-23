@@ -6,19 +6,22 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 17:14:43 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/10/15 17:14:44 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/10/23 14:40:21 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int ft_pwd(char *str)
+int ft_pwd(void)
 {
-	str = getenv("PWD");
-	if (str)
+	char str[256];
+
+	if (getcwd(str, sizeof(str)) != NULL)
 	{
 		printf("%s\n",str);
 		return (1);
 	}
+	else
+		perror("");
 	return(0);
 }
