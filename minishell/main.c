@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 16:45:50 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/10/23 15:14:03 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/10/27 17:16:38 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int main(int argc, char **argv, char **env)
 	{
 		signal(SIGINT, handle_siginit);
 		signal(SIGQUIT, SIG_IGN);
-		ptr =  readline(ft_strjoin(getenv("USER"),"\033[0;92m@yasinshell >\033[0m"));
+		ptr =  readline(ft_strjoin(getenv("USER"),"\033[0;92m@yasinshell> \033[0m"));
 		add_history(ptr);
 		if (!ptr)
 		{
@@ -36,10 +36,13 @@ int main(int argc, char **argv, char **env)
 		if (ptr[0] == 0)
 			continue;
 		shell->str = ft_split(ptr, ' ');
-		if (check(shell))
-			continue;
-		else
-			printf("zsh: command not found\n");
+		shell->str_pipe = ft_split(ptr, '|');
+		pipe_sayici(shell);
+		if (shell->pipe > 0)
+			shell_pipe_dup2(shell);
+		else if (check(shell))
+				continue;
+		free(ptr);
 	}
 	return(0);
 }

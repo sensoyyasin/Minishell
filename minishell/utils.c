@@ -6,11 +6,31 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 16:45:42 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/10/23 14:22:30 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/10/27 17:29:45 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	pipe_sayici(t_list *shell)
+{
+	int i;
+	int j;
+
+	i = 0;
+	shell->pipe = 0;
+	while (shell->str[i])
+	{
+		j = 0;
+		while (shell->str[i][j])
+		{
+			if (shell->str[i][j] == '|')
+				shell->pipe++;
+			j++;
+		}
+		i++;
+	}
+}
 
 int ft_strlen(const char *str)
 {
@@ -86,7 +106,7 @@ int other_cmnds(char **arg)
 	pid = fork();
 	if (pid == 0)
 	{
-		if(execve(str[i], arg, environ)==-1)
+		if(execve(str[i], arg, environ) == -1)
 		{
 			printf("zsh: command not found\n");
 			exit(0);

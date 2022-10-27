@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 16:45:44 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/10/23 14:33:13 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/10/27 17:34:58 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,13 @@ int check(t_list *shell)
 	else if (other_cmnds(shell->str))
 		return(1);
 	return(0);
+}
+
+int check2(t_list *shell, int i)
+{
+	char **temp;
+
+	temp = ft_split(shell->str_pipe[i], ' ');
+	other_cmnds(temp);
+	return(1);
 }

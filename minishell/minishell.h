@@ -23,7 +23,11 @@
 typedef struct s_list
 {
 	char 		**str;
-}	t_list;
+	char		**str_pipe;
+
+	int			pipe;
+	int 		pid;
+}		t_list;
 
 char	prompt(char *str);
 int		ft_echo(t_list *shell, int i);
@@ -40,5 +44,9 @@ int		ft_cd(t_list *shell);
 void	handle_siginit(int sig);
 int		other_cmnds(char **arg);
 char	*to_lower(char *str);
+void	shell_pipe_dup2(t_list *shell);
+void	pipe_sayici(t_list *shell);
+void	multi_close(int **fd);
+int check2(t_list *shell, int i);
 
 #endif
