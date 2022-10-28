@@ -6,13 +6,13 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 16:45:44 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/10/27 17:34:58 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/10/28 17:58:48 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int check(t_list *shell)
+int check(t_shell *shell)
 {
 	int i;
 
@@ -24,6 +24,8 @@ int check(t_list *shell)
 		ft_echo(shell, i);
 		return(1);
 	}
+	// else if (ft_strcmp(shell->str[i], "export"))
+	// 	ft_export(shell);
 	else if (ft_strcmp(shell->str[i], "exit"))
 		ft_exit(1);
 	else if ((ft_strcmp(shell->str[i], "pwd") && !shell->str[i + 1]) || ft_strcmp(shell->str[i], "PWD"))
@@ -41,7 +43,7 @@ int check(t_list *shell)
 	return(0);
 }
 
-int check2(t_list *shell, int i)
+int check2(t_shell *shell, int i)
 {
 	char **temp;
 

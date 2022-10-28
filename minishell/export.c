@@ -1,42 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/13 16:45:54 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/10/28 17:55:44 by ysensoy          ###   ########.fr       */
+/*   Created: 2022/10/28 14:57:48 by ysensoy           #+#    #+#             */
+/*   Updated: 2022/10/28 17:58:03 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_echo(t_shell *shell, int i)
-{
-	if (ft_strcmp(shell->str[i], "-n") == 1)
-	{
-		i++;
-		while (shell->str[i])
-		{
-			printf("%s",shell->str[i]);
-			if (shell->str[i + 1])
-				printf(" ");
-			i++;
-		}
-	}
-	else if (shell->str[i])
-	{
-		while (shell->str[i])
-		{
-			printf("%s",shell->str[i]);
-			if (shell->str[i + 1])
-				printf(" ");
-			i++;
-		}
-		printf("\n");
-	}
-	else
-		printf("\n");
-	return(1);
-}
+// void	ft_export(t_list *shell)
+// {
+// 	int i;
+
+// 	i = 0;
+// 	shell = (t_shell*)malloc(sizeof(t_shell));
+// 	if (!shell)
+// 		return ;
+// 	while (shell->temp_env[i])
+// 		i++;
+// 	//ft_lstaddback(&shell->temp_env);
+// }

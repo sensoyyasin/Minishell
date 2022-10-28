@@ -1,42 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/13 16:45:54 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/10/28 17:55:44 by ysensoy          ###   ########.fr       */
+/*   Created: 2022/02/09 10:16:01 by ysensoy           #+#    #+#             */
+/*   Updated: 2022/02/09 10:18:29 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	ft_echo(t_shell *shell, int i)
+void	*ft_memset(void *b, int c, size_t len)
 {
-	if (ft_strcmp(shell->str[i], "-n") == 1)
+	size_t	i;
+	char	*str;
+
+	i = 0;
+	str = (char *)b;
+	while (i < len)
 	{
+		str[i] = c;
 		i++;
-		while (shell->str[i])
-		{
-			printf("%s",shell->str[i]);
-			if (shell->str[i + 1])
-				printf(" ");
-			i++;
-		}
 	}
-	else if (shell->str[i])
-	{
-		while (shell->str[i])
-		{
-			printf("%s",shell->str[i]);
-			if (shell->str[i + 1])
-				printf(" ");
-			i++;
-		}
-		printf("\n");
-	}
-	else
-		printf("\n");
-	return(1);
+	return (b);
 }
+
+/*int	main()
+{
+	char dizi[30] = "yasintemp";
+	ft_putstr(ft_memset(dizi,'x',4));
+}*/

@@ -1,42 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/13 16:45:54 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/10/28 17:55:44 by ysensoy          ###   ########.fr       */
+/*   Created: 2022/02/09 10:14:57 by ysensoy           #+#    #+#             */
+/*   Updated: 2022/02/09 10:18:38 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	ft_echo(t_shell *shell, int i)
+int	ft_isalnum(int c)
 {
-	if (ft_strcmp(shell->str[i], "-n") == 1)
-	{
-		i++;
-		while (shell->str[i])
-		{
-			printf("%s",shell->str[i]);
-			if (shell->str[i + 1])
-				printf(" ");
-			i++;
-		}
-	}
-	else if (shell->str[i])
-	{
-		while (shell->str[i])
-		{
-			printf("%s",shell->str[i]);
-			if (shell->str[i + 1])
-				printf(" ");
-			i++;
-		}
-		printf("\n");
-	}
+	if ((c >= 'a' && c <= 'z')
+		|| (c >= 'A' && c <= 'Z'))
+		return (1);
+	else if (c >= '0' && c <= '9')
+		return (1);
 	else
-		printf("\n");
-	return(1);
+		return (0);
 }
+
+/*#include <stdio.h>
+
+int	main()
+{
+	printf("%d",ft_isalnum('a'));
+}*/

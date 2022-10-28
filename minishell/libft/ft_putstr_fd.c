@@ -1,42 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/13 16:45:54 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/10/28 17:55:44 by ysensoy          ###   ########.fr       */
+/*   Created: 2022/02/09 10:16:32 by ysensoy           #+#    #+#             */
+/*   Updated: 2022/02/14 11:44:59 by ysensoy          ###   ########.tr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	ft_echo(t_shell *shell, int i)
+void	ft_putstr_fd(char *s, int fd)
 {
-	if (ft_strcmp(shell->str[i], "-n") == 1)
+	int		i;
+
+	i = 0;
+	if (s)
 	{
-		i++;
-		while (shell->str[i])
+		while (s[i] != '\0')
 		{
-			printf("%s",shell->str[i]);
-			if (shell->str[i + 1])
-				printf(" ");
+			write(fd, &s[i], 1);
 			i++;
 		}
 	}
-	else if (shell->str[i])
-	{
-		while (shell->str[i])
-		{
-			printf("%s",shell->str[i]);
-			if (shell->str[i + 1])
-				printf(" ");
-			i++;
-		}
-		printf("\n");
-	}
-	else
-		printf("\n");
-	return(1);
 }
+/*
+int	main()
+{
+int	i = open("my.txt",O_WRONLY);
+int	c = open("taha.txt",O_WRONLY);
+printf("%d\n",i);
+printf("%d\n",c);
+ft_putstr_fd("yasin",i);
+ft_putstr_fd("taha",c);
+}*/

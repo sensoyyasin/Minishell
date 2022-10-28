@@ -1,38 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/15 13:50:02 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/10/28 17:56:21 by ysensoy          ###   ########.fr       */
+/*   Created: 2022/02/09 10:15:11 by ysensoy           #+#    #+#             */
+/*   Updated: 2022/02/09 10:18:37 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int ft_cd(t_shell *shell)
+int	ft_isascii(int c)
 {
-	char *str = NULL;
-	int i;
-
-	i = 0;
-	if (shell->str[i + 1] != NULL)
-	{
-		str = ft_strjoin(getcwd(str, sizeof(str)),"/");
-		i++;
-		if (!shell->str[i])
-			return(0);
-		str = ft_strjoin(str, shell->str[i]);
-		chdir(str);
-		return(1);
-	}
-	else
-	{
-		str = getenv("HOME");
-		chdir(str);
-		return(1);
-	}
-	return(0);
+	if (c >= 0 && c <= 127)
+		return (1);
+	return (0);
 }
+
+/*#include <stdio.h>
+int	main()
+{
+	printf("%d",ft_isascii('b'));
+}*/

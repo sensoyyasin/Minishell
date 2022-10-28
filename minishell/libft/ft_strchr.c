@@ -1,42 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/13 16:45:54 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/10/28 17:55:44 by ysensoy          ###   ########.fr       */
+/*   Created: 2022/02/09 10:16:37 by ysensoy           #+#    #+#             */
+/*   Updated: 2022/02/15 10:32:23 by ysensoy          ###   ########.tr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	ft_echo(t_shell *shell, int i)
+char	*ft_strchr(const char *s, int c)
 {
-	if (ft_strcmp(shell->str[i], "-n") == 1)
+	size_t	i;
+	size_t	a;
+
+	a = ft_strlen(s);
+	i = 0;
+	while (i <= a)
 	{
+		if (s[i] == (char)c)
+			return ((char *)s + i);
 		i++;
-		while (shell->str[i])
-		{
-			printf("%s",shell->str[i]);
-			if (shell->str[i + 1])
-				printf(" ");
-			i++;
-		}
 	}
-	else if (shell->str[i])
-	{
-		while (shell->str[i])
-		{
-			printf("%s",shell->str[i]);
-			if (shell->str[i + 1])
-				printf(" ");
-			i++;
-		}
-		printf("\n");
-	}
-	else
-		printf("\n");
-	return(1);
+	return (NULL);
 }
+/*
+int	main()
+{
+	char dizi[] = "bonjour";
+	printf("%s",ft_strchr(dizi,'o'));
+}*/

@@ -1,38 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/15 13:50:02 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/10/28 17:56:21 by ysensoy          ###   ########.fr       */
+/*   Created: 2022/02/09 10:14:31 by ysensoy           #+#    #+#             */
+/*   Updated: 2022/02/09 10:18:28 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
+//#include <fcntl.h>
 
-int ft_cd(t_shell *shell)
+void	ft_putchar_fd(char c, int fd)
 {
-	char *str = NULL;
-	int i;
-
-	i = 0;
-	if (shell->str[i + 1] != NULL)
-	{
-		str = ft_strjoin(getcwd(str, sizeof(str)),"/");
-		i++;
-		if (!shell->str[i])
-			return(0);
-		str = ft_strjoin(str, shell->str[i]);
-		chdir(str);
-		return(1);
-	}
-	else
-	{
-		str = getenv("HOME");
-		chdir(str);
-		return(1);
-	}
-	return(0);
+	write(fd, &c, 1);
 }
+/*
+int	main(void)
+{
+	int	i = open("my.txt",O_WRONLY);
+	int	c = open("taha.txt",O_WRONLY);
+	printf("%d",i);
+	printf("\n%d",c);
+	ft_putchar_fd('a',i);
+	ft_putchar_fd('y',c);
+}*/

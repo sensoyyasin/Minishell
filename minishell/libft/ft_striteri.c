@@ -1,42 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/13 16:45:54 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/10/28 17:55:44 by ysensoy          ###   ########.fr       */
+/*   Created: 2022/02/09 10:16:52 by ysensoy           #+#    #+#             */
+/*   Updated: 2022/02/14 16:09:17 by ysensoy          ###   ########.tr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	ft_echo(t_shell *shell, int i)
+void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 {
-	if (ft_strcmp(shell->str[i], "-n") == 1)
+	int		i;
+
+	i = 0;
+	if (!s)
+		return ;
+	while (s[i] != '\0')
 	{
+		(*f)(i, &s[i]);
 		i++;
-		while (shell->str[i])
-		{
-			printf("%s",shell->str[i]);
-			if (shell->str[i + 1])
-				printf(" ");
-			i++;
-		}
 	}
-	else if (shell->str[i])
-	{
-		while (shell->str[i])
-		{
-			printf("%s",shell->str[i]);
-			if (shell->str[i + 1])
-				printf(" ");
-			i++;
-		}
-		printf("\n");
-	}
-	else
-		printf("\n");
-	return(1);
 }
+/*
+void	ft_upper(unsigned int i, char *s)
+{
+	int	c;
+
+	c = 0;
+	i = 0;
+	if (*s)
+	{
+		s[c] = s[c] - 32;
+	}
+}
+
+int	main ()
+{
+	char yasintemp[] = "yasintemp";
+	ft_striteri(yasintemp,ft_upper);
+	printf("%s",yasintemp);
+}*/

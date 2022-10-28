@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 16:45:50 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/10/27 17:16:38 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/10/28 17:53:01 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ int main(int argc, char **argv, char **env)
 {
 	(void)argc;
 	(void)*argv;
-	(void)*env;
-	t_list *shell;
+	t_shell *shell;
 	char *ptr = NULL;
 
 	shell = malloc(sizeof(t_list*));
+	shell->temp_env = env;
 	printf("------MINIHELL------\n");
 	while (1)
 	{
@@ -39,30 +39,13 @@ int main(int argc, char **argv, char **env)
 		shell->str_pipe = ft_split(ptr, '|');
 		pipe_sayici(shell);
 		if (shell->pipe > 0)
+		{
 			shell_pipe_dup2(shell);
+			continue;
+		}
 		else if (check(shell))
 				continue;
 		free(ptr);
 	}
 	return(0);
 }
-
-void handle_siginit(int sig)
-{
-	if (sig == SIGINT)
-	{
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
-	//// when user presses ctrl-c
-}
-
-//ft_readline
-//lexer
-//parser
-//execute
-
-
-//pipe -> redirection

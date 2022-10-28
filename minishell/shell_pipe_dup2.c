@@ -1,23 +1,34 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   shell_pipe_dup2.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/28 14:57:44 by ysensoy           #+#    #+#             */
+/*   Updated: 2022/10/28 17:53:58 by ysensoy          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-// void	multi_close(int **fd)
-// {
-// 	int i;
+void	multi_close(int **fd)
+{
+	int i;
 
-// 	i = 0;
-// 	while (fd[i])
-// 	{
-// 		close(fd[i][0]);
-// 		close(fd[i][1]);
-// 		i++;
-// 	}
-// }
+	i = 0;
+	while (fd[i])
+	{
+		close(fd[i][0]);
+		close(fd[i][1]);
+		i++;
+	}
+}
 
-void	shell_pipe_dup2(t_list *shell)
+void	shell_pipe_dup2(t_shell *shell)
 {
 	int i = 0;
 	int **fd;
-	int pid;
 
 	fd = malloc(sizeof(int *) * shell->pipe	+ 1);
 	while (i < shell->pipe)
@@ -36,33 +47,28 @@ void	shell_pipe_dup2(t_list *shell)
 		i++;
 	}
 	i = 0;
+	//Child process has been created
+	if (fork() == 0)
+	{
+		dup2(fd[0][1], STDOUT_FILENO);
+		multi_close(fd);
+		check2(shell, i);
+		exit(EXIT_SUCCESS);
+	}
+	i++;
 	while (i < shell->pipe + 1)
 	{
-		pid = fork(); //Child process oluştu
-		if (pid == 0)
+		if (fork() == 0)
 		{
-			if (i == 0)
-			{
-				dup2(fd[0][1], STDOUT_FILENO);
-				close(fd[0][0]);
-				close(fd[0][1]);
-				check2(shell, i);
-				exit(1);
-			}
-			else
-			{
-				dup2(fd[0][0],STDIN_FILENO);
-				close(fd[0][0]);
-				close(fd[0][1]);
-				check2(shell, i);
-				exit(1);
-			}
-			i++;
+			dup2(fd[i - 1][0], STDIN_FILENO);
+			if (i != shell->pipe)
+				dup2(fd[i][1], STDOUT_FILENO);
+			multi_close(fd);
+			check2(shell,i);
+			exit(EXIT_SUCCESS);
 		}
-		close(fd[0][0]);
-		close(fd[0][1]);
-		wait(NULL);
 		i++;
 	}
+	multi_close(fd);
+	wait(NULL);
 }
-

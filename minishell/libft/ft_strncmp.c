@@ -1,38 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/15 13:50:02 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/10/28 17:56:21 by ysensoy          ###   ########.fr       */
+/*   Created: 2022/02/09 10:17:35 by ysensoy           #+#    #+#             */
+/*   Updated: 2022/02/17 10:27:40 by ysensoy          ###   ########.tr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int ft_cd(t_shell *shell)
+int	ft_strncmp(const char	*s1, const char	*s2, size_t n)
 {
-	char *str = NULL;
-	int i;
+	unsigned char	*k1;
+	unsigned char	*k2;
+	size_t			i;
 
 	i = 0;
-	if (shell->str[i + 1] != NULL)
-	{
-		str = ft_strjoin(getcwd(str, sizeof(str)),"/");
+	k1 = (unsigned char *)s1;
+	k2 = (unsigned char *)s2;
+	while (k1[i] == k2[i] && (k1[i] != '\0' || k2[i] != '\0'))
 		i++;
-		if (!shell->str[i])
-			return(0);
-		str = ft_strjoin(str, shell->str[i]);
-		chdir(str);
-		return(1);
-	}
+	if (n <= i)
+		return (0);
 	else
-	{
-		str = getenv("HOME");
-		chdir(str);
-		return(1);
-	}
-	return(0);
+		return (k1[i] - k2[i]);
 }
+/*
+#include <string.h>
+int	main()
+{
+	printf("%d\n",ft_strncmp("yasin","yasir",5));
+	//printf("%d",strncmp("test\200", "test\0", 6));
+}*/

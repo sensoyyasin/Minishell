@@ -6,13 +6,13 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 16:45:42 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/10/27 17:29:45 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/10/28 17:53:39 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	pipe_sayici(t_list *shell)
+void	pipe_sayici(t_shell *shell)
 {
 	int i;
 	int j;
@@ -31,6 +31,29 @@ void	pipe_sayici(t_list *shell)
 		i++;
 	}
 }
+
+// void	quote_sayici(t_shell *shell)
+// {
+// 	int i;
+// 	int j;
+
+// 	i = 0;
+// 	shell->pipe = 0;
+// 	while (shell->str[i])
+// 	{
+// 		j = 0;
+// 		while (shell->str[i][j])
+// 		{
+// 			if (((shell->str[i][j] == '<') || (shell->str[i][j] == '>')) &&
+// 				((shell->str[i][j + 1] == '<') || (shell->str[i][j] == '>')))
+// 				shell->quote++;
+// 			if ((shell->str[i][j] == '<') || (shell->str[i][j] == '>'))
+// 				shell->quote++;
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// }
 
 int ft_strlen(const char *str)
 {
@@ -159,3 +182,4 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	dizi[i] = '\0';
 	return (dizi);
 }
+

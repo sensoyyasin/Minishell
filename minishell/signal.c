@@ -1,42 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/13 16:45:54 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/10/28 17:55:44 by ysensoy          ###   ########.fr       */
+/*   Created: 2022/10/28 14:58:52 by ysensoy           #+#    #+#             */
+/*   Updated: 2022/10/28 14:58:56 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_echo(t_shell *shell, int i)
+void handle_siginit(int sig)
 {
-	if (ft_strcmp(shell->str[i], "-n") == 1)
+	//when user presses ctrl-c
+	if (sig == SIGINT)
 	{
-		i++;
-		while (shell->str[i])
-		{
-			printf("%s",shell->str[i]);
-			if (shell->str[i + 1])
-				printf(" ");
-			i++;
-		}
-	}
-	else if (shell->str[i])
-	{
-		while (shell->str[i])
-		{
-			printf("%s",shell->str[i]);
-			if (shell->str[i + 1])
-				printf(" ");
-			i++;
-		}
 		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
 	}
-	else
-		printf("\n");
-	return(1);
 }
