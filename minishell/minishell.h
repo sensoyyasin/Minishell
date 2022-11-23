@@ -67,9 +67,7 @@ char	*to_lower(char *str);
 char	*ft_strdup(const char *s1);
 char	*ft_strjoin(char const *s1, char const *s2);
 int		ft_strlen(const char *str);
-
 void	ft_env(t_shell *shell);
-
 void	ft_export(t_shell *shell);
 void	fill(t_shell *shell);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yasinsensoy <yasinsensoy@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 10:38:45 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/11/21 11:38:42 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/11/23 20:52:25 by yasinsensoy      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,12 @@ void	fill(t_shell *shell)
 
 void	ft_unset(t_shell *shell)
 {
-	int i;
 	int counter;
 	char *temp;
 	char *temp2;
 	t_list *tmp_lst;
 
 	counter = 1;
-	i = ft_strlen(shell->str[1]);
 	temp = shell->str[1];
 	tmp_lst = shell->x; //envlerin hepsini atadım
 	tmp_lst = tmp_lst->next; //başı null

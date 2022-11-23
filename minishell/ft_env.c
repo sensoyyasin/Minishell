@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yasinsensoy <yasinsensoy@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 10:36:48 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/11/21 10:36:49 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/11/23 21:04:02 by yasinsensoy      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_env(t_shell *shell)
 	temp = temp->next;
 	while (temp != NULL)
 	{
-		printf("%s\n",temp->content);
+		printf("%s\n",(char *)temp->content);
 		temp = temp->next;
 	}
 }

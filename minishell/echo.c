@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yasinsensoy <yasinsensoy@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 10:38:50 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/11/23 13:21:55 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/11/23 20:52:37 by yasinsensoy      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	ft_echo(t_shell *shell, int i)
 {
-	int j = 0;
 	if (ft_strcmp(shell->str[i], "-n") == 1)
 	{
 		i++;
@@ -28,10 +27,6 @@ int	ft_echo(t_shell *shell, int i)
 	}
 	else if (shell->str[i])
 	{
-		if (shell->str[i][j] == 34)
-			d_quote(shell->str[i]);
-		else if (shell->str[i][j] == 39)
-			s_quote(shell->str[i]);
 		while (shell->str[i])
 		{
 			printf("%s",shell->str[i]);
