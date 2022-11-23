@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/13 16:42:49 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/10/21 19:15:30 by ysensoy          ###   ########.fr       */
+/*   Created: 2022/11/21 10:38:38 by ysensoy           #+#    #+#             */
+/*   Updated: 2022/11/21 10:38:39 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,3 @@ char    **ft_split(char	*ptr, char c)
     *temp = NULL;
     return (holdtemp);
 }
-
-// int	main()
-// {
-// 	int i;
-// 	i = 0;
-// 	while(ft_split("yasin,doğu,ali", ',')[i])
-// 	{
-// 		printf("%s\n", ft_split(",,,,,yasin,,,,,,,doğu,,,,,,,,ali", ',')[i]);
-// 		i++;
-// 	}
-// }

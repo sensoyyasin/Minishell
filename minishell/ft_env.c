@@ -1,22 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/21 10:38:47 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/11/21 10:38:48 by ysensoy          ###   ########.fr       */
+/*   Created: 2022/11/21 10:36:48 by ysensoy           #+#    #+#             */
+/*   Updated: 2022/11/21 10:36:49 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int ft_exit(int i)
+void	ft_env(t_shell *shell)
 {
-	if (i == 1)
-		exit(EXIT_SUCCESS);
-	else
-		exit(EXIT_FAILURE);
-	return(1);
+	t_list	*temp;
+
+	if (shell->sayi == 42)
+	{
+		fill(shell);
+		shell->sayi++;
+	}
+	temp = shell->x;
+	temp = temp->next;
+	while (temp != NULL)
+	{
+		printf("%s\n",temp->content);
+		temp = temp->next;
+	}
 }

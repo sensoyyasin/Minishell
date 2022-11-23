@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/13 16:45:44 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/10/28 17:58:48 by ysensoy          ###   ########.fr       */
+/*   Created: 2022/11/21 10:39:30 by ysensoy           #+#    #+#             */
+/*   Updated: 2022/11/21 11:03:52 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,12 @@ int check(t_shell *shell)
 		ft_echo(shell, i);
 		return(1);
 	}
-	// else if (ft_strcmp(shell->str[i], "export"))
-	// 	ft_export(shell);
+	else if (ft_strcmp(shell->str[i], "export"))
+		ft_export(shell);
+	else if (ft_strcmp(shell->str[i], "env"))
+		ft_env(shell);
+	else if (ft_strcmp(shell->str[i], "unset"))
+		ft_unset(shell);
 	else if (ft_strcmp(shell->str[i], "exit"))
 		ft_exit(1);
 	else if ((ft_strcmp(shell->str[i], "pwd") && !shell->str[i + 1]) || ft_strcmp(shell->str[i], "PWD"))

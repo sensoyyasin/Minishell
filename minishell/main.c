@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/13 16:45:50 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/10/28 17:53:01 by ysensoy          ###   ########.fr       */
+/*   Created: 2022/11/21 10:37:01 by ysensoy           #+#    #+#             */
+/*   Updated: 2022/11/23 16:14:59 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@ int main(int argc, char **argv, char **env)
 	t_shell *shell;
 	char *ptr = NULL;
 
-	shell = malloc(sizeof(t_list*));
-	shell->temp_env = env;
+	shell = malloc(sizeof(t_shell));
+	environ = env;
+	shell->sayi = 42;
 	printf("------MINIHELL------\n");
 	while (1)
 	{
@@ -37,6 +38,7 @@ int main(int argc, char **argv, char **env)
 			continue;
 		shell->str = ft_split(ptr, ' ');
 		shell->str_pipe = ft_split(ptr, '|');
+		quote_sayici(shell);
 		pipe_sayici(shell);
 		if (shell->pipe > 0)
 		{

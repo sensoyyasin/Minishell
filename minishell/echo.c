@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/13 16:45:54 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/10/28 17:55:44 by ysensoy          ###   ########.fr       */
+/*   Created: 2022/11/21 10:38:50 by ysensoy           #+#    #+#             */
+/*   Updated: 2022/11/23 13:21:55 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	ft_echo(t_shell *shell, int i)
 {
+	int j = 0;
 	if (ft_strcmp(shell->str[i], "-n") == 1)
 	{
 		i++;
@@ -27,6 +28,10 @@ int	ft_echo(t_shell *shell, int i)
 	}
 	else if (shell->str[i])
 	{
+		if (shell->str[i][j] == 34)
+			d_quote(shell->str[i]);
+		else if (shell->str[i][j] == 39)
+			s_quote(shell->str[i]);
 		while (shell->str[i])
 		{
 			printf("%s",shell->str[i]);
