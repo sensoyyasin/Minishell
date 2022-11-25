@@ -33,14 +33,18 @@ typedef struct s_shell
 {
 	char 		**str;
 	char		**str_pipe;
-	char		**str_quote;
 	char		**temp_env;
 	t_list		*x;
-	int			sayi;
-	int			pipe;
+
+	int			len;
+	int			heredoc;
 	int			quote;
+	int			pipe;
+	int			sayi;
 	int 		pid;
 }		t_shell;
+
+t_shell *shell;
 
 char	prompt(char *str);
 int		ft_echo(t_shell *shell, int i);
@@ -55,10 +59,10 @@ int		ft_cd(t_shell *shell);
 void	handle_siginit(int sig);
 char	*to_lower(char *str);
 void	shell_pipe_dup2(t_shell *shell);
-void	pipe_sayici(t_shell *shell);
+void	pipe_sayici();
 void	multi_close(int **fd);
 int 	check2(t_shell *shell, int i);
-void	quote_sayici(t_shell *shell);
+void	quote_sayici();
 void	handle_siginit(int sig);
 int		other_cmnds(char **arg);
 
@@ -67,7 +71,10 @@ char	*to_lower(char *str);
 char	*ft_strdup(const char *s1);
 char	*ft_strjoin(char const *s1, char const *s2);
 int		ft_strlen(const char *str);
+void	*ft_memset(void *b, int c, size_t len);
+
 void	ft_env(t_shell *shell);
+
 void	ft_export(t_shell *shell);
 void	fill(t_shell *shell);
 
@@ -80,7 +87,14 @@ t_list		*ft_lstnew(void	*content);
 void		ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)());
 char		*ft_strchr(char *s, int c);
 
+void	quote_sayici();
 int		size_dquote_dollar(t_shell *shell);
 int		size_dquote(t_shell *shell);
+int		find_size(t_shell *shell);
+char	*expand_quote(t_shell *shell);
+char	*final_line(t_shell *shell);
+int		size_squote(t_shell *shell);
+char	*d_quote(t_shell *shell);
+char	*s_quote(t_shell *shell);
 
 #endif

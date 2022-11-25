@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yasinsensoy <yasinsensoy@student.42.fr>    +#+  +:+       +#+        */
+/*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 10:37:01 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/11/23 20:50:51 by yasinsensoy      ###   ########.fr       */
+/*   Updated: 2022/11/25 16:44:42 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int main(int argc, char **argv, char **env)
 		shell->str = ft_split(ptr, ' ');
 		shell->str_pipe = ft_split(ptr, '|');
 		quote_sayici(shell);
+		if (quote_sayici > 0)
+			expand_quote(shell);
 		pipe_sayici(shell);
 		if (shell->pipe > 0)
 		{
@@ -46,7 +48,7 @@ int main(int argc, char **argv, char **env)
 			continue;
 		}
 		else if (check(shell))
-				continue;
+			continue;
 		free(ptr);
 	}
 	return(0);

@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 10:39:14 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/11/21 10:46:50 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/11/25 15:39:01 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,46 @@ void	pipe_sayici(t_shell *shell)
 		{
 			if (shell->str[i][j] == '|')
 				shell->pipe++;
+			j++;
+		}
+		i++;
+	}
+}
+
+void	quote_sayici(t_shell *shell)
+{
+	int i;
+	int j;
+
+	i = 0;
+	shell->quote = 0;
+	while (shell->str[i])
+	{
+		j = 0;
+		while (shell->str[i][j])
+		{
+			if (shell->str[i][j] == 34 || shell->str[i][j] == 39)
+				shell->quote++;
+			j++;
+		}
+		i++;
+	}
+}
+
+void	heredoc_sayici()
+{
+	int i;
+	int j;
+
+	i = 0;
+	shell->heredoc = 0;
+	while (shell->str[i])
+	{
+		j = 0;
+		while (shell->str[i][j])
+		{
+			if (shell->str[i][j] == '<' && shell->str[i][j + 1] == '<')
+				shell->heredoc++;
 			j++;
 		}
 		i++;
@@ -207,6 +247,21 @@ void ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)())
     }
     cur = *begin_list;
     ft_list_remove_if(&cur->next, data_ref, cmp);
+}
+
+void	*ft_memset(void *b, int c, size_t len)
+{
+	size_t	i;
+	char	*str;
+
+	i = 0;
+	str = (char *)b;
+	while (i < len)
+	{
+		str[i] = c;
+		i++;
+	}
+	return (b);
 }
 
 // char	*ft_strchr(char *s, int c)
