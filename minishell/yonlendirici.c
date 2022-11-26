@@ -27,7 +27,7 @@ int check(t_shell *shell)
 	else if (ft_strcmp(shell->str[i], "export"))
 		ft_export(shell);
 	else if (ft_strcmp(shell->str[i], "env"))
-		ft_env(shell);
+		ft_env();
 	else if (ft_strcmp(shell->str[i], "unset"))
 		ft_unset(shell);
 	else if (ft_strcmp(shell->str[i], "exit"))

@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 10:37:01 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/11/25 16:44:42 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/11/26 17:04:48 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int main(int argc, char **argv, char **env)
 {
 	(void)argc;
 	(void)*argv;
-	t_shell *shell;
 	char *ptr = NULL;
 
 	shell = malloc(sizeof(t_shell));
@@ -26,13 +25,14 @@ int main(int argc, char **argv, char **env)
 	while (1)
 	{
 		signal(SIGINT, handle_siginit);
-		signal(SIGQUIT, SIG_IGN);
-		ptr =  readline(ft_strjoin(getenv("USER"),"\033[0;92m@yasinshell> \033[0m"));
-		add_history(ptr);
-		if (!ptr)
-		{
-			printf("exit\n");
-			exit(EXIT_SUCCESS);
+		 signal(SIGQUIT, SIG_IGN);
+		ptr = readline("\033[0;92m@yasinshell> \033[0m");
+		 //ptr = readline(">");
+		 add_history(ptr);
+		 if (!ptr)
+		 {
+			 printf("exit\n");
+			 exit(EXIT_SUCCESS);
 		}
 		if (ptr[0] == 0)
 			continue;
@@ -45,6 +45,7 @@ int main(int argc, char **argv, char **env)
 		if (shell->pipe > 0)
 		{
 			shell_pipe_dup2(shell);
+			sleep(1);
 			continue;
 		}
 		else if (check(shell))

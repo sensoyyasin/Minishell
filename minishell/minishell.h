@@ -34,6 +34,7 @@ typedef struct s_shell
 	char 		**str;
 	char		**str_pipe;
 	char		**temp_env;
+	char		*temp;
 	t_list		*x;
 
 	int			len;
@@ -72,8 +73,9 @@ char	*ft_strdup(const char *s1);
 char	*ft_strjoin(char const *s1, char const *s2);
 int		ft_strlen(const char *str);
 void	*ft_memset(void *b, int c, size_t len);
+char	*ft_itoa(int n);
 
-void	ft_env(t_shell *shell);
+void	ft_env(void);
 
 void	ft_export(t_shell *shell);
 void	fill(t_shell *shell);
@@ -86,6 +88,7 @@ void		ft_lstadd_back(t_list **lst, t_list *new);
 t_list		*ft_lstnew(void	*content);
 void		ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)());
 char		*ft_strchr(char *s, int c);
+size_t		ft_strlcpy(char *dst, const char *src, size_t dstsize);
 
 void	quote_sayici();
 int		size_dquote_dollar(t_shell *shell);
@@ -94,7 +97,11 @@ int		find_size(t_shell *shell);
 char	*expand_quote(t_shell *shell);
 char	*final_line(t_shell *shell);
 int		size_squote(t_shell *shell);
-char	*d_quote(t_shell *shell);
-char	*s_quote(t_shell *shell);
+char	*d_quote(t_shell *shell, int i, int j);
+char	*s_quote(t_shell *shell, int i, int j);
+char	*dollar_sign(t_shell *shell, char *str, int j);
+
+char	*check_env();
+char	*ret_env(int i, char *str);
 
 #endif

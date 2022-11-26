@@ -19,7 +19,8 @@ void	ft_export(t_shell *shell)
 		fill(shell);
 		shell->sayi++;
 	}
-	ft_lstadd_back(&shell->x, ft_lstnew(shell->str[1]));
+	if (shell->str[1] != NULL)
+		ft_lstadd_back(&shell->x, ft_lstnew(shell->str[1]));
 }
 
 void	fill(t_shell *shell)
@@ -27,12 +28,13 @@ void	fill(t_shell *shell)
 	int i;
 
 	i = 0;
-	shell->x = malloc(sizeof(t_list));
-	while (environ[i])
+	shell->x = malloc(sizeof(t_list) * 50);
+	while (environ && environ[i])
 	{
 		ft_lstadd_back(&shell->x, ft_lstnew(environ[i]));
 		i++;
 	}
+	shell->x = shell->x->next;
 }
 
 void	ft_unset(t_shell *shell)

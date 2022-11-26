@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 10:39:14 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/11/25 15:39:01 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/11/26 14:43:22 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	quote_sayici(t_shell *shell)
 		i++;
 	}
 }
-
 void	heredoc_sayici()
 {
 	int i;
@@ -172,7 +171,7 @@ int ft_strcmp(char *str1, char *str2)
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	int		i;
+	int i;
 	int		a;
 	char	*src;
 	char	*dest;
@@ -264,18 +263,25 @@ void	*ft_memset(void *b, int c, size_t len)
 	return (b);
 }
 
-// char	*ft_strchr(char *s, int c)
-// {
-// 	size_t	i;
-// 	size_t	a;
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+{
+	size_t			a;
+	size_t			b;
+	unsigned char	*s;
 
-// 	a = ft_strlen(s);
-// 	i = 0;
-// 	while (i <= a)
-// 	{
-// 		if (s[i] == (char)c)
-// 			return ((char *)s + i);
-// 		i++;
-// 	}
-// 	return (NULL);
-// }
+	a = 0;
+	b = 0;
+	s = (unsigned char *)src;
+	while (s[a] != '\0')
+		a++;
+	if (dstsize != 0)
+	{
+		while (s[b] != '\0' && b < dstsize - 1)
+		{
+			dst[b] = s[b];
+			b++;
+		}
+		dst[b] = '\0';
+	}
+	return (a);
+}
