@@ -2,31 +2,31 @@
 
 int ft_strlen(char *str)
 {
-    int i;
+	int i;
 
-    i = 0;
-    while (str[i])
-        i++;
-    return(i);
+	i = 0;
+	while (str[i])
+		i++;
+	return(i);
 }
 
-int ft_strcmp(char *x, char *y)
+int ft_strcmp(char *str, char *str2)
 {
-    int i = 0;
-    size_t len;
+	int	i = 0;
+	size_t	len;
 
-    len = ft_strlen(y);
-    while (len)
-    {
-        if (x[i] == y[i])
-            i++;
-        else
-            return(0);
-        len--;
-    }
-    if (x[i] != '\0')
-        return(0);
-    return(1);
+	len = ft_strlen(str2);
+	while (len)
+	{
+		if (str[i] == str2[i])
+			i++;
+		else
+			return(0);
+		len--;
+	}
+	if (str[i] != '\0')
+		return(0);
+	return(1);
 }
 
 int token_compr(void)
@@ -71,4 +71,22 @@ int text_cmpr(void)
         i++;
     }
     return(i);
+}
+
+char	*index_data(t_list *list, int index)
+{
+	int i = 0;
+	t_list *temp;
+
+	if (list == NULL)
+		return(0);
+	temp = list;
+	while (i != index)
+	{
+		i++;
+		temp = temp->next;
+	}
+	if (temp == NULL)
+		return(0);
+	return(temp->content);
 }

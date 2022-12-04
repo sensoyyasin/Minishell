@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void sighandler(int signum)
+void handle_siginit(int signum)
 {
 	if (signum == SIGINT)
 	{
@@ -36,10 +36,11 @@ void	appointment(char **env)
 
 	shell->name = "\033[0;92m@yasinshell> \033[0m";
 	shell->environ = env;
-	signal(SIGINT, sighandler);
+	signal(SIGINT, handle_siginit);
 	signal(SIGQUIT, SIG_IGN);
 
 	shell->len = 0;
+	shell->ctrl = 0;
 }
 
 int	cmnd_length(void)
@@ -68,13 +69,19 @@ void	lexir(int count)
 	ft_lstadd_back(&shell->arg, ft_lstnew(temp));
 }
 
-void	space_skip(void)
+void    space_skip()
 {
-	int i;
-
-	i = 0;
-	while (shell->line[i] <= 32)
-		shell->line++;
+    int i;
+    i = 0;
+    while (shell->line[i] <= 32 && shell->line[i + 1] != '\0')
+    {
+        shell->line++;
+    }
+    if (((shell->line[i] >= 9 && shell->line[i] <= 13) || shell->line[i] == 32) && (shell->line[i + 1] == '\0'))
+    {
+        *shell->line = '\0';
+        return;
+    }
 }
 
 void	lexer(void)
@@ -88,8 +95,8 @@ void	lexer(void)
 		if (shell->arg == NULL || ft_strcmp("|", ft_lstlast(shell->arg)->content))
 		{
 			count = cmnd_length();
-			lexir(count);
-			continue;
+			if (count > 0)
+				lexir(count);
 		}
 		count = token_compr();
 		if (count > 0)
@@ -107,7 +114,7 @@ int main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)*argv;
 	appointment(env);
-	t_list *deneme;
+	//t_list *deneme;
 
 	while (1)
 	{
@@ -116,15 +123,17 @@ int main(int argc, char **argv, char **env)
 			free(shell->line);
 			continue;
 		}
+		add_history(shell->line);
 		lexer();
+		expander();
+		executor();
 		//listeyi yazdirmak icin.
-		deneme = shell->arg;
-		while (deneme != NULL)
-		{
-			printf("Args : %s\n", deneme->content);
-			free(deneme->content);
-			deneme = deneme->next;
-		}
+		// deneme = shell->arg;
+		// while (deneme != NULL)
+		// {
+		// 	printf("Args : %s\n", deneme->content);
+		// 	deneme = deneme->next;
+		// }
 		shell->arg = NULL;
 	}
 	return(1);
