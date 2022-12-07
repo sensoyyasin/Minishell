@@ -71,6 +71,8 @@ void	s_quote(int index)
 			i++;
 			j++;
 		}
+		while (content[++i])
+			temp[j++] = content[i];
 		temp[j] = '\0';
 	}
 	list_f_data(shell->arg, index)->content = ft_strdup(temp);

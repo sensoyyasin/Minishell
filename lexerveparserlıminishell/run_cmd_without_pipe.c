@@ -14,7 +14,7 @@ char	*to_lower(char *str)
 	return (str);
 }
 
-int	run_cmd_without_pipe(t_list *list)
+void	run_cmd_without_pipe(t_list *list)
 {
 	char	*content;
 
@@ -34,9 +34,6 @@ int	run_cmd_without_pipe(t_list *list)
 		ft_env();
 	else if (ft_strcmp(content, "exit"))
 		exit(0);
-	// else if (other_cmnds(list))
-	// 	return (1);
 	else
-		return (0);
-	return (1);
+		other_commands(list_changed(list));
 }

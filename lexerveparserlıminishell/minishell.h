@@ -84,7 +84,11 @@ int		ft_strlen(char *str);
 char	*ft_strjoin(char *s1, char *s2);
 int		ft_strncmp(char *str1, char *str2, size_t n);
 char	*ft_strdup(char *s1);
-int		other_cmnds();
+int		ft_listsize(t_list *list);
+t_list	*ft_lstnew(void *content);
+int		lstcmp(char *str);
+int		ft_strcmp_z(char *str, char *str2);
+char    **ft_split(char	*ptr, char c);
 
 // -> expander
 void	expander();
@@ -105,7 +109,7 @@ void	executor();
 int		pipe_stat();
 
 // -> run_cmd
-int		run_cmd_without_pipe(t_list *list);
+void	run_cmd_without_pipe(t_list *list);
 void	run_cmd_with_pipe();
 
 // -> cmnds
@@ -119,7 +123,8 @@ void	ft_pipe_counter();
 void	ft_pipe_func();
 void	ft_lstclear(t_list *lst);
 
-// -> utils
-int		lstcmp(char *str);
-int		ft_strcmp_z(char *str, char *str2);
+// -> other commands
+void    other_commands(char **arg);
+char    **list_changed(t_list *list);
+
 #endif

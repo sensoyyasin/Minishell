@@ -4,27 +4,26 @@ char	*ft_strjoin(char *s1, char *s2)
 {
 	int		i;
 	int		a;
-	char	*src;
-	char	*dest;
 	char	*dizi;
 
-	i = 0;
-	a = 0;
-	src = (char *)s1;
 	if (!s1)
-		return (0);
-	dest = (char *)s2;
-	dizi = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2)));
+	{
+		s1 = (char*)malloc(1);
+		s1[0] = '\0';
+	}
+	if (!s2)
+		return(NULL);
+	dizi = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!dizi)
 		return (0);
-	while (src[i] != '\0')
-	{
-		dizi[i] = src[i];
-		i++;
-	}
-	while (dest[a] != '\0')
-		dizi[i++] = dest[a++];
-	dizi[i] = '\0';
+	i = -1;
+	while (s1[++i] != '\0')
+		dizi[i] = s1[i];
+	a = -1;
+	while (s2[++a] != '\0')
+		dizi[i + a] = s2[a];
+	dizi[i + a] = '\0';
+	free(s1);
 	return (dizi);
 }
 
@@ -61,4 +60,86 @@ char	*ft_strchr(const char *s, int x)
 	if (x == '\0')
 		return ((char *)s);
 	return (0);
+}
+
+t_list	*ft_lstnew(void *content)
+{
+	t_list *my;
+
+	my = (t_list *)malloc(sizeof(t_list));
+	if (!my)
+		return(NULL);
+	my->content = content;
+	my->next = NULL;
+	return(my);
+}
+
+int		ft_listsize(t_list *list)
+{
+	int i;
+
+	i = 0;
+	while (list != NULL)
+	{
+		list = list->next;
+		i++;
+	}
+	return(i);
+}
+
+static size_t	wordcounter(char *ptr, char c)
+{
+	size_t counter;
+
+	counter = 0;
+	if (!ptr)
+        return(0);
+    while (*ptr)
+    {
+        while (*ptr && *ptr == c)
+            ptr++;
+        if (*ptr)
+            counter++;
+        while (*ptr && *ptr != c)
+            ptr++;
+    }
+    return(counter);
+}
+
+static size_t  word_len(char *ptr, char c)
+{
+    size_t    count;
+
+    count = 0;
+    while (ptr && *ptr && *(ptr++) != c)
+        count++;
+    return (count);
+}
+
+char    **ft_split(char	*ptr, char c)
+{
+    char	**temp;
+    char	**holdtemp;
+    char    *str;
+    char    wordcount;
+
+    wordcount = wordcounter(ptr, c);
+    if (!wordcount)
+        return (NULL);
+    temp = (char**)malloc(sizeof(char *) * (wordcount + 1));
+    holdtemp = temp;
+    while (*ptr)
+    {
+        while (*ptr == c)
+            ptr++;
+        if (!(*ptr))
+            break;
+        str = (char *)malloc(sizeof(char) * (word_len(ptr, c) + 1));
+        *(temp++) = str;
+        while(*ptr != c && *ptr)
+            *(str++) = *(ptr++);
+        *str = 0;
+    }
+    *temp = NULL;
+    return (holdtemp);
 }

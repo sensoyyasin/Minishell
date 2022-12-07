@@ -59,11 +59,12 @@ void	lexir(int count)
 	char *temp;
 
 	temp = malloc(sizeof(t_list));
-	while (count-- > 0)
+	while (count > 0)
 	{
 		temp[i] = *(shell->line);
 		shell->line++;
 		i++;
+		count--;
 	}
 	temp[i] = '\0';
 	ft_lstadd_back(&shell->arg, ft_lstnew(temp));
@@ -87,7 +88,7 @@ void    space_skip()
 void	lexer(void)
 {
 	int count;
-	t_list *temp;
+	//t_list *temp;
 
 	while (*shell->line)
 	{
@@ -104,9 +105,18 @@ void	lexer(void)
 		count = text_cmpr();
 		if (count > 0)
 			lexir(count);
-		temp = shell->arg;
+		//temp = shell->arg;
 	}
 	return;
+}
+
+void	free_list(void)
+{
+	while (shell->arg)
+	{
+		free(shell->arg->content);
+		shell->arg = shell->arg->next;
+	}
 }
 
 int main(int argc, char **argv, char **env)
