@@ -11,7 +11,7 @@ int		pipe_stat()
 		{
 			if (iter->next == NULL)
 			{
-				printf("Sadece pipe var.\n");
+				printf("This was just a pipe.\n");
 				return(-1);
 			}
 		return(1);

@@ -48,6 +48,11 @@ int	cmnd_length(void)
 	int i;
 
 	i = 0;
+	if (shell->line[0] == '|')
+	{
+		write(2, "syntax error near unexpected token `|'\n", 39);
+		return(-1);
+	}
 	while (shell->line[i] > 32 && shell->line[i] != '|' && shell->line[i] != '>' && shell->line[i] != '<' && shell->line[i])
 		i++;
 	return(i);
@@ -85,38 +90,37 @@ void    space_skip()
     }
 }
 
-void	lexer(void)
+int		lexer(void)
 {
 	int count;
-	//t_list *temp;
+	char *temp;
 
+	temp = shell->line;
 	while (*shell->line)
 	{
 		space_skip();
-		if (shell->arg == NULL || ft_strcmp("|", ft_lstlast(shell->arg)->content))
+		if (shell->arg == NULL)
 		{
 			count = cmnd_length();
-			if (count > 0)
+			if (count == -1)
+				return(0);
+			else if (count > 0)
+			{
 				lexir(count);
+				continue;
+			}
 		}
-		count = token_compr();
+		count = token_compare();
 		if (count > 0)
 			lexir(count);
+		else if (count == -1)
+			return(0);
 		count = text_cmpr();
 		if (count > 0)
 			lexir(count);
-		//temp = shell->arg;
 	}
-	return;
-}
-
-void	free_list(void)
-{
-	while (shell->arg)
-	{
-		free(shell->arg->content);
-		shell->arg = shell->arg->next;
-	}
+	free(temp);
+	return (1);
 }
 
 int main(int argc, char **argv, char **env)
@@ -134,7 +138,8 @@ int main(int argc, char **argv, char **env)
 			continue;
 		}
 		add_history(shell->line);
-		lexer();
+		if (!lexer())
+			continue;
 		expander();
 		executor();
 		//listeyi yazdirmak icin.
@@ -144,7 +149,7 @@ int main(int argc, char **argv, char **env)
 		// 	printf("Args : %s\n", deneme->content);
 		// 	deneme = deneme->next;
 		// }
-		shell->arg = NULL;
+		free_list();
 	}
 	return(1);
 }

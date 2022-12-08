@@ -14,13 +14,13 @@ void	d_quote(int index)
 	content = index_data(shell->arg, index);
 	while (content[i])
 	{
-		if (content[i] == 34)
+		if (content[i] == D_QUOTE)
 			i++;
-		if (content[i] == '$' && content[i - 1] != 39)
+		if (content[i] == '$')
 		{
 			i++;
 			ret_dolar = dollar_sign(content, i);
-			while(content[i] != 32 && content[i] != '$' && content[i] != '\0' && content[i] != 34 && content[i] != 39)
+			while(content[i] != 32 && content[i] != '$' && content[i] != '\0' && content[i] != D_QUOTE && content[i] != S_QUOTE)
 				i++;
 			while (*ret_dolar)
 			{
@@ -48,7 +48,7 @@ char	*dollar_sign(char *str, int j)
 	int	i = 0;
 
 	tmp2 = malloc(size_finder(str, j) + 1);
-	while (str[j] != '\0' && str[j] != 32 && str[j] != 34 && str[j] != '$' && str[j] != 39)
+	while (str[j] != '\0' && str[j] != 32 && str[j] != D_QUOTE && str[j] != '$' && str[j] != S_QUOTE)
 	{
 		tmp2[i] = str[j];
 		i++;
@@ -64,7 +64,7 @@ char	*dollar_sign(char *str, int j)
 
 int	size_finder(char *str, int j)
 {
-	while (str[j] != '\0' && str[j] != 32 && str[j] != 34 && str[j] != '$')
+	while (str[j] != '\0' && str[j] != 32 && str[j] != D_QUOTE && str[j] != '$')
 		j++;
 	return (j);
 }

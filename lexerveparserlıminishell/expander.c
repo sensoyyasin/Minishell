@@ -39,16 +39,16 @@ void	expander()
 	{
 		content = ft_strdup(iter->content);
 		quote_varmi = quote_check(content);
-		if (quote_varmi == 34)
+		if (quote_varmi == D_QUOTE)
 			d_quote(index);
-		else if (quote_varmi == 39)
+		else if (quote_varmi == S_QUOTE)
 			s_quote(index);
 		else
 			expand(index);
 		iter = iter->next;
 		index++;
+		free(content);
 	}
-	free(content);
 }
 
 void	s_quote(int index)
@@ -62,10 +62,10 @@ void	s_quote(int index)
 	i = 0;
 	j = 0;
 	content = index_data(shell->arg, index);
-	if (content[i] == 39)
+	if (content[i] == S_QUOTE)
 	{
 		i++;
-		while (content[i] && content[i] != 39)
+		while (content[i] && content[i] != S_QUOTE)
 		{
 			temp[j] = content[i];
 			i++;
@@ -103,10 +103,10 @@ int	quote_check(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == 34)
-			return(34);
-		else if (str[i] == 39)
-			return(39);
+		if (str[i] == D_QUOTE)
+			return(D_QUOTE);
+		else if (str[i] == S_QUOTE)
+			return(S_QUOTE);
 		i++;
 	}
 	return(0);

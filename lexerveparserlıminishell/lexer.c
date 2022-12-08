@@ -29,7 +29,7 @@ int ft_strcmp(char *str, char *str2)
 	return(1);
 }
 
-int token_compr(void)
+int token_compare(void)
 {
 	int i;
 
@@ -38,6 +38,21 @@ int token_compr(void)
 	{
 		if ((shell->line[i] == '>' && shell->line[i + 1] == '>') || (shell->line[i] == '<' && shell->line[i + 1] == '<'))
 			return(2);
+		else if ((shell->line[i + 1] == '>' && shell->line[i + 2] == '>') || (shell->line[i + 2] == '<' && shell->line[i + 1] == '<'))
+		{
+			write(2, "syntax error near unexpected token\n", 35);
+			return(-1);
+		}
+		else if (shell->line[i + 1] == '<' || shell->line[i + 1] == '>')
+		{
+			write(2, "syntax error near unexpected token\n", 35);
+			return(-1);
+		}
+		else if (shell->line[i] == '|' && shell->line[i + 1] == '|')
+		{
+			write(2, "syntax error near expected token '||'\n", 38);
+			return (-1);
+		}
 		else
 			return(1);
 	}
@@ -46,23 +61,24 @@ int token_compr(void)
 
 int text_cmpr(void)
 {
-    int i = 0;
+    int i;
 
+	i = 0;
 	while ((shell->line[i] != ' ' && shell->line[i] != '\0') && (shell->line[i] != '>' && shell->line[i] != '<' && shell->line[i] != '|'))
     {
-        if (shell->line[i] == 34)
+        if (shell->line[i] == D_QUOTE)
         {
             i++;
-            while (shell->line[i] != 34 && shell->line[i])
+            while (shell->line[i] != D_QUOTE && shell->line[i])
                 i++;
             while (shell->line[i] != ' ' && shell->line[i] != '\0')
                 i++;
             return(i + 1);
         }
-        if (shell->line[i] == 39)
+        if (shell->line[i] == S_QUOTE)
         {
             i++;
-            while (shell->line[i] != 39 && shell->line[i] != '\0')
+            while (shell->line[i] != S_QUOTE && shell->line[i] != '\0')
                 i++;
             while (shell->line[i] != ' ' && shell->line[i] != '\0')
                 i++;

@@ -74,6 +74,17 @@ t_list	*ft_lstnew(void *content)
 	return(my);
 }
 
+void	free_list(void)
+{
+	while (shell->arg != NULL)
+	{
+		free(shell->arg->content);
+		free(shell->arg);
+		shell->arg = shell->arg->next;
+	}
+	
+}
+
 int		ft_listsize(t_list *list)
 {
 	int i;

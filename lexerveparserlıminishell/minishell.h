@@ -12,6 +12,9 @@
 #include <stdbool.h>
 #include <signal.h>
 
+#define D_QUOTE 34
+#define	S_QUOTE 39
+
 # define DEFAULT "\033[0;39m"
 # define GRAY "\033[0;90m"
 # define RED "\033[0;91m"
@@ -63,11 +66,11 @@ void	ft_fill();
 int		is_cmd(char	*str);
 //lexer
 void    here_doc(int i);
-void 	lexer(void);
+int 	lexer(void);
 void	space_skip(void);
 void	lexur(int cnt);
 int		text_cmpr(void);
-int		token_compr(void);
+int		token_compare(void);
 int		cmnd_length(void);
 
 
@@ -89,6 +92,7 @@ t_list	*ft_lstnew(void *content);
 int		lstcmp(char *str);
 int		ft_strcmp_z(char *str, char *str2);
 char    **ft_split(char	*ptr, char c);
+void	free_list(void);
 
 // -> expander
 void	expander();
