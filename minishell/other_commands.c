@@ -23,8 +23,6 @@ void    exec_func(char *path, char **arg)
 {
     if (execve(path, arg, shell->environ) == -1)
     {
-	    dup2(shell->saved_stdout, 1);
-	    close(shell->saved_stdout);
         printf("zsh: command not found\n");
         free(path);
         exit(0);
@@ -58,8 +56,8 @@ void    other_commands(char **arg)
     int pid;
 
     pid = fork();
-    if (pid == 0)
-        exec_func(func_path(arg), arg);
+    if (pid == 0) // ->child process olusursa.
+         exec_func(func_path(arg), arg);
     wait(NULL);
     free(arg);
 }

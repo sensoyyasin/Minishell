@@ -99,6 +99,7 @@ int		ft_strcmp_z(char *str, char *str2);
 char	**ft_split(char	*ptr, char c);
 void	free_list(void);
 void	ft_putstr_fd(char *str, int fd);
+void	reset_stdout();
 
 // -> expander
 void	expander();
@@ -150,5 +151,6 @@ void	check_cmnd2();
 int		heredoc_cnt();
 void	heredoc_f();
 void	run_cmd_heredoc();
+int		heredoc_list();
 
 #endif

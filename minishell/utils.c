@@ -193,3 +193,9 @@ void	ft_putstr_fd(char *str, int fd)
 		}
 	}
 }
+
+void	reset_stdout()
+{
+	dup2(shell->saved_stdout, 1);
+	close(shell->saved_stdout);
+}

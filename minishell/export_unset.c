@@ -52,6 +52,20 @@ void	ft_export(t_list *list)
 	return;
 }
 
+// void	ft_destroy_node(int c)
+// {
+// 	int i;
+// 	t_list *temp;
+
+// 	i = 0;
+// 	temp = shell->arg;
+// 	while (str != NULL)
+// 	{
+// 		temp = temp->next;
+// 	}
+
+// }
+
 void	printf_alph(void)
 {
 	t_list *list_iter;

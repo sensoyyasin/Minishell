@@ -30,81 +30,80 @@ void	 ft_echo(t_list *list)
 	}
 }
 
-void	ft_lstclear(t_list *lst)
-{
-	t_list	*temp;
+// void	ft_lstclear(t_list *lst)
+// {
+// 	t_list	*temp;
 
-	if (lst == NULL)
-		return ;
-	while (lst)
-	{
-		temp = lst->next;
-		if (!lst)
-			return ;
-		free(lst);
-		lst = temp;
-	}
-}
+// 	if (lst == NULL)
+// 		return ;
+// 	while (lst)
+// 	{
+// 		temp = lst->next;
+// 		if (!lst)
+// 			return ;
+// 		free(lst);
+// 		lst = temp;
+// 	}
+// }
 
 void	ft_unset(t_list *list)
 {
-	ft_lstclear(list);
+	ft_lstremover(list);
 }
 
-// void ft_dstry_node(int c)
-// {
-// 	t_list *tmp;
-// 	t_list *tmp2;
+void ft_dstry_node(int c)
+{
+	t_list *tmp;
+	t_list *tmp2;
 
-// 	tmp = shell->asd;
-// 	tmp2 = shell->asd;
-// 	while (c > 1 && tmp != NULL)
-// 	{
-// 		if (tmp->next != NULL)
-// 			tmp = tmp->next;
-// 		c--;
-// 	}
-// 	if (tmp->next->next != NULL)
-// 		tmp2 = tmp->next->next;
-// 	else
-// 		tmp2 = NULL;
-// 	if (tmp2 != NULL)
-// 		tmp->next = tmp2;
-// 	else
-// 		tmp->next = NULL;
-// }
+	tmp = shell->asd;
+	tmp2 = shell->asd;
+	while (c > 1 && tmp != NULL)
+	{
+		if (tmp->next != NULL)
+			tmp = tmp->next;
+		c--;
+	}
+	if (tmp->next->next != NULL)
+		tmp2 = tmp->next->next;
+	else
+		tmp2 = NULL;
+	if (tmp2 != NULL)
+		tmp->next = tmp2;
+	else
+		tmp->next = NULL;
+}
 
-// void	ft_lstremover(t_list *list)
-// {
-// 	int i = 1;
-// 	char *tmp;
-// 	char	*content;
-// 	t_list *tmplst;
+void	ft_lstremover(t_list *list)
+{
+	int		i = 1;
+	char	*tmp;
+	char	*content;
+	t_list *tmplst;
 
-// 	int c = 1;
-// 	content = index_data(list, 1);
-// 	while (content)
-// 	{
-// 		content = index_data(list, i);
-// 		tmplst = shell->asd->next;
-// 		while(tmplst)
-// 		{
-// 			tmp = (char *)tmplst->content;
-// 			if (tmplst == NULL || content == NULL)
-// 				break;
-// 			if (ft_strcmp2(tmp, content))
-// 			{
-// 				ft_dstry_node(c);
-// 				break;
-// 			}
-// 			tmplst = tmplst->next;
-// 			c++;
-// 		}
-// 		i++;
-// 		c = 1;
-// 	}
-// 	free(content);
-// }
+	int c = 1;
+	content = index_data(list, 1);
+	while (content)
+	{
+		content = index_data(list, i);
+		tmplst = shell->asd->next; //unsetten sonrakini tmp_lst tutuyor.
+		while(tmplst)
+		{
+			tmp = (char *)tmplst->content;
+			if (tmplst == NULL || content == NULL)
+				break;
+			if (ft_strcmp(tmp, content))
+			{
+				ft_dstry_node(c);
+				break;
+			}
+			tmplst = tmplst->next;
+			c++;
+		}
+		i++;
+		c = 1;
+	}
+}
 
 int		ft_env(void)
 {

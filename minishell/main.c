@@ -36,7 +36,6 @@ void	appointment(char **env)
 
 	shell->name = "\033[0;93m@yasinshell> \033[0m";
 	shell->environ = env;
-	shell->saved_stdout = dup(1);
 	signal(SIGINT, handle_siginit);
 	signal(SIGQUIT, SIG_IGN);
 
@@ -139,9 +138,10 @@ int main(int argc, char **argv, char **env)
 		if (!lexer())
 			continue;
 		expander();
-		executor();
 		if (heredoc_cnt() > 0)
 			heredoc_f();
+		if (heredoc_cnt() == 0)
+			executor();
 		free_list();
 	}
 	return(1);

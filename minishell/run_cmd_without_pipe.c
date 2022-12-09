@@ -25,7 +25,7 @@ void	run_cmd_without_pipe(t_list *list)
 		ft_export(list);
 	else if (ft_strcmp(content, "unset"))
 		ft_unset(list);
-	if (ft_strcmp(content, "echo"))
+	else if (ft_strcmp(content, "echo"))
 		ft_echo(list);
 	else if (ft_strcmp(content, "pwd"))
 		ft_pwd();
