@@ -1,14 +1,20 @@
-#ifndef MINISHELL
-# define MINISHELL
+#ifndef MINISHELL_H
+#define MINISHELL_H
 
 #include <unistd.h>
-#include <stdio.h>
 #include <stdlib.h>
-#include <fcntl.h>
-#include <string.h>
+#include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <sys/stat.h>
+#include <sys/wait.h>
+#include <time.h>
+#include <stdbool.h>
 #include <signal.h>
+#include <fcntl.h>
+
+#define D_QUOTE 34
+#define	S_QUOTE 39
 
 # define DEFAULT "\033[0;39m"
 # define GRAY "\033[0;90m"
@@ -20,88 +26,128 @@
 # define CYAN "\033[0;96m"
 # define WHITE "\033[0;97m"
 
-char **environ;
-
 typedef struct s_list
 {
-	void			*content;
+	char			*content;
 	void			*data;
+	int				index;
 	struct s_list	*next;
 }	t_list;
 
 typedef struct s_shell
 {
-	char 		**str;
-	char		**str_pipe;
-	char		**temp_env;
-	char		*temp;
-	t_list		*x;
+	char	*line;
+	char	*name;
 
-	int			len;
-	int			heredoc;
-	int			quote;
-	int			pipe;
-	int			sayi;
-	int 		pid;
-}		t_shell;
+	char	**environ;
+	char 	**str;
+	char	**str_pipe;
+	char	*temp;
+	t_list	*asd;
+	t_list	*declare;
+	t_list	*cmd;
+	t_list	*arg;
+	t_list	*pipe_arg;
+	t_list	*token;
+	int	ctrl;
+	int	s_quote;
+	int	d_quote;
+	int	pipe;
+	int	cmmp;
+	int	len;
+	int	heredoc;
+	int	exit_status;
+	int	saved_stdout;
+	int	fd;
+}	t_shell;
 
-t_shell *shell;
+t_shell	*shell;
 
-char	prompt(char *str);
-int		ft_echo(t_shell *shell, int i);
-char	*path_finder();
-int		ft_pwd(void);
-char	**ft_split(char *ptr, char c);
-int		ft_exit(int i);
-int		ft_strcmp(char *str1,char *str2);
-char	*ft_strjoin(char const *s1, char const *s2);
-int		check(t_shell *shell);
-int		ft_cd(t_shell *shell);
+void	sighandler(int signum);
+void	signal_d();
+int		normal(void);
+void	appointment(char **env);
+void	ft_fill();
+int		is_cmd(char	*str);
+//lexer
+void    here_doc(int i);
+int 	lexer(void);
+void	space_skip(void);
+void	lexur(int cnt);
+int		text_cmpr(void);
+int		token_compare(void);
+int		cmnd_length(void);
+
+
+int		ft_strcmp(char *str, char *str2);
+char	*ft_strchr(const char *s, int x);
+void	ft_lstadd_front(t_list **lst, t_list *new);
+t_list	*ft_lstlast(t_list *lst);
+t_list	*ft_lstnew(void *content);
+void	ft_lstadd_back(t_list **lst, t_list *new);
+void	signal_d(void);
 void	handle_siginit(int sig);
-char	*to_lower(char *str);
-void	shell_pipe_dup2(t_shell *shell);
-void	pipe_sayici();
-void	multi_close(int **fd);
-int 	check2(t_shell *shell, int i);
-void	quote_sayici();
-void	handle_siginit(int sig);
-int		other_cmnds(char **arg);
-
+//functions - utils
+int		ft_strlen(char *str);
+char	*ft_strjoin(char *s1, char *s2);
 int		ft_strncmp(char *str1, char *str2, size_t n);
-char	*to_lower(char *str);
-char	*ft_strdup(const char *s1);
-char	*ft_strjoin(char const *s1, char const *s2);
-int		ft_strlen(const char *str);
-void	*ft_memset(void *b, int c, size_t len);
-char	*ft_itoa(int n);
+char	*ft_strdup(char *s1);
+int		ft_listsize(t_list *list);
+t_list	*ft_lstnew(void *content);
+int		lstcmp(char *str);
+int		ft_strcmp_z(char *str, char *str2);
+char	**ft_split(char	*ptr, char c);
+void	free_list(void);
+void	ft_putstr_fd(char *str, int fd);
 
-void	ft_env(void);
+// -> expander
+void	expander();
+void	expand(int index);
+t_list	*list_f_data(t_list *root, int index);
+void	s_quote(int index);
+void	d_quote(int index);
+char	*index_data(t_list *list, int index);
+char	*dollar_sign(char *str, int j);
+int		quote_check(char *str);
 
-void	ft_export(t_shell *shell);
-void	fill(t_shell *shell);
-
-void	ft_unset(t_shell *shell);
-void	ft_remover(t_shell *shell, int counter);
-
-t_list		*ft_lstlast(t_list *lst);
-void		ft_lstadd_back(t_list **lst, t_list *new);
-t_list		*ft_lstnew(void	*content);
-void		ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)());
-char		*ft_strchr(char *s, int c);
-size_t		ft_strlcpy(char *dst, const char *src, size_t dstsize);
-
-void	quote_sayici();
-int		size_dquote_dollar(t_shell *shell);
-int		size_dquote(t_shell *shell);
-int		find_size(t_shell *shell);
-char	*expand_quote(t_shell *shell);
-char	*final_line(t_shell *shell);
-int		size_squote(t_shell *shell);
-char	*d_quote(t_shell *shell, int i, int j);
-char	*s_quote(t_shell *shell, int i, int j);
-char	*dollar_sign(t_shell *shell, char *str, int j);
-
-char	*check_env();
 char	*ret_env(int i, char *str);
+char	*check_env(void);
+int		size_finder(char *str, int j);
+
+// -> executor
+void	executor();
+int		pipe_stat();
+
+// -> run_cmd
+void	run_cmd_without_pipe(t_list *list);
+void	run_cmd_with_pipe();
+
+// -> cmnds
+void	ft_echo(t_list *list);
+void	ft_export(t_list *list);
+int		ft_env(void);
+void	ft_pwd(void);
+void	ft_unset(t_list *list);
+void	printf_alph(void);
+void	ft_pipe_counter();
+void	ft_pipe_func();
+void	ft_lstclear(t_list *lst);
+
+// -> other commands
+void    other_commands(char **arg);
+char    **list_changed(t_list *list);
+
+// -> pipe
+void	shell_pipe_dup2();
+void	multi_close(int **fd);
+int		check2(int i);
+int		ft_strcmp2(char *asd, char *sda);
+void	ft_dstry_node(int c);
+void	ft_lstremover(t_list *list);
+void	check_cmnd2();
+
+// -> heredoc
+int		heredoc_cnt();
+void	heredoc_f();
 
 #endif

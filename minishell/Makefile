@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+         #
+#    By: yasinsensoy <yasinsensoy@student.42.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/21 10:34:24 by ysensoy           #+#    #+#              #
-#    Updated: 2022/11/21 11:37:46 by ysensoy          ###   ########.fr        #
+#    Updated: 2022/11/30 20:43:50 by yasinsensoy      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ OBJ = $(SRCS:.c=.o)
 all: yasin
 
 yasin :
-	$(CC) $(CLAFGS) $(SRCS) -lreadline -L /goinfre/homebrew/opt/readline/lib -I /goinfre/homebrew/opt/readline/include -o $(NAME)
+	$(CC) $(CLAFGS) $(SRCS) -lreadline -L /Users/yasinsensoy/homebrew/opt/readline/lib -I /Users/yasinsensoy/homebrew/opt/readline/include -o $(NAME)
 	@echo "derlendi.."
 clean:
 	@rm -rf minishell

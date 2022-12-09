@@ -1,287 +1,195 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/21 10:39:14 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/11/26 14:43:22 by ysensoy          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
-void	pipe_sayici(t_shell *shell)
-{
-	int i;
-	int j;
-
-	i = 0;
-	shell->pipe = 0;
-	while (shell->str[i])
-	{
-		j = 0;
-		while (shell->str[i][j])
-		{
-			if (shell->str[i][j] == '|')
-				shell->pipe++;
-			j++;
-		}
-		i++;
-	}
-}
-
-void	quote_sayici(t_shell *shell)
-{
-	int i;
-	int j;
-
-	i = 0;
-	shell->quote = 0;
-	while (shell->str[i])
-	{
-		j = 0;
-		while (shell->str[i][j])
-		{
-			if (shell->str[i][j] == 34 || shell->str[i][j] == 39)
-				shell->quote++;
-			j++;
-		}
-		i++;
-	}
-}
-void	heredoc_sayici()
-{
-	int i;
-	int j;
-
-	i = 0;
-	shell->heredoc = 0;
-	while (shell->str[i])
-	{
-		j = 0;
-		while (shell->str[i][j])
-		{
-			if (shell->str[i][j] == '<' && shell->str[i][j + 1] == '<')
-				shell->heredoc++;
-			j++;
-		}
-		i++;
-	}
-}
-
-int other_cmnds(char **arg)
-{
-	int pid;
-	int i = 0;
-	char **str;
-
-	str = ft_split(ft_strdup(getenv("PATH")),':');
-	while (str[i])
-	{
-		str[i] = ft_strjoin(str[i], "/");
-		str[i] = ft_strjoin(str[i], arg[0]);
-		if (access(str[i], F_OK) == 0)
-			break;
-		i++;
-	}
-	pid = fork();
-	if (pid == 0)
-	{
-		if(execve(str[i], arg, environ) == -1)
-		{
-			printf("zsh: command not found\n");
-			exit(0);
-		}
-	}
-	wait(NULL);
-	return (1);
-}
-
-int ft_strlen(const char *str)
-{
-    int i = 0;
-    while (str[i])
-        i++;
-    return(i);
-}
-
-char	*to_lower(char *str)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] >= 'A' && str[i] <= 'Z')
-			str[i] += 32;
-			i++;
-	}
-	return(str);
-}
-
-int ft_strncmp(char *str1, char *str2, size_t n)
-{
-	size_t i;
-
-	i = 0;
-	while (str1[i] == str2[i] && (str1[i] != '\0' || str2[i] != '\0'))
-		i++;
-	if (i >= n)
-		return(1);
-	else
-		return(0);
-}
-char	*ft_strdup(const char *s1)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	int		i;
-	char	*src;
-	char	*dest;
-
-	i = 0;
-	src = (char *)s1;
-	dest = (char *)malloc(ft_strlen(src) + 1);
-	if (dest == 0)
-		return (NULL);
-	while (src[i] != '\0')
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
-
-int ft_strcmp(char *str1, char *str2)
-{
-	int i;
-
-	i = 0;
-	if (!str1)
-		return(0);
-    while (str1[i] == str2[i])
-    {
-        if(!str1[i] && !str2[i])
-			return(1);
-		i++;
-    }
-    return(0);
-}
-
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	int i;
 	int		a;
-	char	*src;
-	char	*dest;
 	char	*dizi;
 
-	i = 0;
-	a = 0;
-	src = (char *)s1;
 	if (!s1)
-		return (0);
-	dest = (char *)s2;
-	dizi = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2)));
+	{
+		s1 = (char*)malloc(1);
+		s1[0] = '\0';
+	}
+	if (!s2)
+		return(NULL);
+	dizi = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!dizi)
 		return (0);
-	while (src[i] != '\0')
-	{
-		dizi[i] = src[i];
-		i++;
-	}
-	while (dest[a] != '\0')
-		dizi[i++] = dest[a++];
-	dizi[i] = '\0';
+	i = -1;
+	while (s1[++i] != '\0')
+		dizi[i] = s1[i];
+	a = -1;
+	while (s2[++a] != '\0')
+		dizi[i + a] = s2[a];
+	dizi[i + a] = '\0';
+	free(s1);
 	return (dizi);
 }
 
-t_list	*ft_lstnew(void	*content)
+char	*ft_strdup(char *s1)
 {
-	t_list	*new;
+	char	*s2;
+	int		len;
+	int		i;
 
-	new = (t_list *)malloc(sizeof(t_list));
-	if (!(new))
-		return (0);
-	new->content = content;
-	new->next = NULL;
-	return (new);
-}
-
-void	ft_lstadd_back(t_list **lst, t_list *new)
-{
-	t_list	*list;
-
-	if (!new)
-		return ;
-	if (!*lst)
-	{
-		*lst = new;
-		return ;
-	}
-	list = ft_lstlast(*lst);
-	list->next = new;
-}
-
-t_list	*ft_lstlast(t_list *lst)
-{
-	if (!lst)
-		return (0);
-	while (lst->next)
-		lst = lst->next;
-	return (lst);
-}
-
-void ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)())
-{
-    if (begin_list == NULL || *begin_list == NULL)
-        return;
-    t_list *cur = *begin_list;
-    if (cmp(cur->data, data_ref, cmp) == 0)
-    {
-        *begin_list = cur->next;
-        free(cur);
-        ft_list_remove_if(begin_list, data_ref, cmp);
-    }
-    cur = *begin_list;
-    ft_list_remove_if(&cur->next, data_ref, cmp);
-}
-
-void	*ft_memset(void *b, int c, size_t len)
-{
-	size_t	i;
-	char	*str;
-
+	len = ft_strlen(s1);
+	s2 = malloc(sizeof(char) * len + 1);
+	if (s2 == NULL)
+		return(NULL);
 	i = 0;
-	str = (char *)b;
-	while (i < len)
+	while (s1[i])
 	{
-		str[i] = c;
+		s2[i] = s1[i];
 		i++;
 	}
-	return (b);
+	s2[i] = '\0';
+	return(s2);
 }
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+char	*ft_strchr(const char *s, int x)
 {
-	size_t			a;
-	size_t			b;
-	unsigned char	*s;
-
-	a = 0;
-	b = 0;
-	s = (unsigned char *)src;
-	while (s[a] != '\0')
-		a++;
-	if (dstsize != 0)
+	if (x > 127)
+		return ((char *)s);
+	while (*s)
 	{
-		while (s[b] != '\0' && b < dstsize - 1)
-		{
-			dst[b] = s[b];
-			b++;
-		}
-		dst[b] = '\0';
+		if (*s == x)
+			return ((char *)s);
+		++s;
 	}
-	return (a);
+	if (x == '\0')
+		return ((char *)s);
+	return (0);
+}
+
+t_list	*ft_lstnew(void *content)
+{
+	t_list *my;
+
+	my = (t_list *)malloc(sizeof(t_list));
+	if (!my)
+		return(NULL);
+	my->content = content;
+	my->next = NULL;
+	return(my);
+}
+
+void	free_list(void)
+{
+	while (shell->arg != NULL)
+	{
+		free(shell->arg->content);
+		free(shell->arg);
+		shell->arg = shell->arg->next;
+	}
+
+}
+
+int		ft_listsize(t_list *list)
+{
+	int i;
+
+	i = 0;
+	while (list != NULL)
+	{
+		list = list->next;
+		i++;
+	}
+	return(i);
+}
+
+static size_t	wordcounter(char *ptr, char c)
+{
+	size_t counter;
+
+	counter = 0;
+	if (!ptr)
+        return(0);
+    while (*ptr)
+    {
+        while (*ptr && *ptr == c)
+            ptr++;
+        if (*ptr)
+            counter++;
+        while (*ptr && *ptr != c)
+            ptr++;
+    }
+    return(counter);
+}
+
+static size_t  word_len(char *ptr, char c)
+{
+    size_t    count;
+
+    count = 0;
+    while (ptr && *ptr && *(ptr++) != c)
+        count++;
+    return (count);
+}
+
+char    **ft_split(char	*ptr, char c)
+{
+    char	**temp;
+    char	**holdtemp;
+    char    *str;
+    char    wordcount;
+
+    wordcount = wordcounter(ptr, c);
+    if (!wordcount)
+        return (NULL);
+    temp = (char**)malloc(sizeof(char *) * (wordcount + 1));
+    holdtemp = temp;
+    while (*ptr)
+    {
+        while (*ptr == c)
+            ptr++;
+        if (!(*ptr))
+            break;
+        str = (char *)malloc(sizeof(char) * (word_len(ptr, c) + 1));
+        *(temp++) = str;
+        while(*ptr != c && *ptr)
+            *(str++) = *(ptr++);
+        *str = 0;
+    }
+    *temp = NULL;
+    return (holdtemp);
+}
+
+int	ft_strcmp2(char *asd, char *sda)
+{
+	int	i;
+	size_t len;
+
+	len = ft_strlen(sda);
+	i = 0;
+	while (len)
+	{
+		if (asd[i] == sda[i])
+			i++;
+		else
+			return(0);
+		len--;
+	}
+	if (asd[i] == '=')
+		return(1);
+	else
+	{
+		printf("minishell: unset: `%s': not a valid identifier\n", asd);
+		return(0);
+	}
+}
+
+void	ft_putstr_fd(char *str, int fd)
+{
+	int		i;
+
+	i = 0;
+	if (str)
+	{
+		while (str[i] != '\0')
+		{
+			write(fd, &str[i], 1);
+			i++;
+		}
+	}
 }
