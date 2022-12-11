@@ -198,3 +198,15 @@ void	reset_stdout()
 	dup2(shell->saved_stdout, 1);
 	close(shell->saved_stdout);
 }
+
+int	ft_isalpha(char *str)
+{
+	if (str[0] < 65 || (str[0] > 90 && str[0] < 97) || str[0] > 122)
+	{
+		printf("%s: not a valid identifier\n", str);
+		return(0);
+	}
+	else
+		return(1);
+
+}

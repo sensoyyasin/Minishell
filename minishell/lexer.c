@@ -89,6 +89,7 @@ int text_cmpr(void)
     return(i);
 }
 
+/* return command's next argument as char* */
 char	*index_data(t_list *list, int index)
 {
 	int i = 0;

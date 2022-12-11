@@ -1,5 +1,6 @@
 #include "minishell.h"
 
+/* take environment as node's content */
 void	ft_fill()
 {
 	int i;
@@ -31,12 +32,12 @@ void	ft_export(t_list *list)
 		content = NULL;
 	if (!shell->ctrl++)
 		ft_fill();
-	//printf("%s\n",shell->arg->content); ->export
-	//printf("%s\n",shell->arg->next->content); -> a
 	if (content == NULL)
 		printf_alph();
 	while (content)
 	{
+		if (!ft_isalpha(content))
+			break;
 		if (islistequal(content) == 2)
 		{
 			printf("isequal 2(= yok değişken de tanımlı) step:%d\n", shell->step);

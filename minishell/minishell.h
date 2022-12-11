@@ -68,6 +68,8 @@ void	delete_node(t_list **head, char *str);
 int		isnamequal(char *str, char *content);
 int		islistequal(char *str);
 int		isequal(char *str);
+int		uisnamequal(char *str, char *content);
+void	udelete_node(t_list **head, char *str);
 
 void	sighandler(int signum);
 void	signal_d();
@@ -158,5 +160,6 @@ int		heredoc_cnt();
 void	heredoc_f();
 void	run_cmd_heredoc();
 int		heredoc_list();
+int		ft_isalpha(char *str);
 
 #endif

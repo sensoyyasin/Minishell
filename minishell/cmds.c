@@ -30,28 +30,83 @@ void	 ft_echo(t_list *list)
 	}
 }
 
-// void	ft_lstclear(t_list *lst)
-// {
-// 	t_list	*temp;
-
-// 	if (lst == NULL)
-// 		return ;
-// 	while (lst)
-// 	{
-// 		temp = lst->next;
-// 		if (!lst)
-// 			return ;
-// 		free(lst);
-// 		lst = temp;
-// 	}
-// }
-
 void	ft_unset(t_list *list)
 {
-	ft_lstremover(list);
+
+	int		i;
+	int		j;
+	char	*content;
+	char	*content1;
+
+	i = 1;
+	j = 0;
+	content1 = index_data(list ,i);
+	if (content1 != NULL)
+		content = ft_strdup(content1);//freelenecek
+	else
+		content = NULL;
+	while (content)
+	{
+		if (islistequal(content) == 2 || isequal(content))
+		{
+			printf("unset girdi step:%d\n", isequal(content));
+			udelete_node(&shell->asd, content);
+		}
+		i++;
+		content = index_data(list, i);
+	}
+	return;
 }
 
-void ft_dstry_node(int c)
+void	udelete_node(t_list **head, char *str)
+{
+	t_list	*temp;
+	t_list	*prev;
+	int		i;
+
+	i = 0;
+	temp = *head;
+	prev = *head;
+	if (temp != NULL && shell->step == 0)
+	{
+		*head = temp->next;
+		free(temp);
+		return;
+	}
+	while (temp != NULL && !uisnamequal(str, temp->content))
+	{
+		/* printf("i: %d, step: %d\n", i, shell->step); */
+		prev = temp;
+		temp = temp->next;
+		i++;
+	}
+	if (temp == NULL)
+		return ;
+	prev->next = temp->next;
+	free (temp);
+}
+
+int	uisnamequal(char *str, char *content)
+{
+	int	i;
+
+	i = 0;
+	if (!str || !content)
+		return (0);
+	while (str[i] && content[i])
+	{
+		if(str[i] != content[i])
+			return (0);
+		if(str[i] == '=' && content[i] == '=')
+			return(1);
+		i++;
+	}
+	if ((str[i] == '\0' || str[i] == '=') && (content[i] == '=' || content[i] == '\0'))
+		return(1);
+	return (0);
+}
+
+/* void ft_dstry_node(int c)
 {
 	t_list *tmp;
 	t_list *tmp2;
@@ -72,38 +127,7 @@ void ft_dstry_node(int c)
 		tmp->next = tmp2;
 	else
 		tmp->next = NULL;
-}
-
-void	ft_lstremover(t_list *list)
-{
-	int		i = 1;
-	char	*tmp;
-	char	*content;
-	t_list *tmplst;
-
-	int c = 1;
-	content = index_data(list, 1);
-	while (content)
-	{
-		content = index_data(list, i);
-		tmplst = shell->asd->next; //unsetten sonrakini tmp_lst tutuyor.
-		while(tmplst)
-		{
-			tmp = (char *)tmplst->content;
-			if (tmplst == NULL || content == NULL)
-				break;
-			if (ft_strcmp(tmp, content))
-			{
-				ft_dstry_node(c);
-				break;
-			}
-			tmplst = tmplst->next;
-			c++;
-		}
-		i++;
-		c = 1;
-	}
-}
+} */
 
 int		ft_env(void)
 {

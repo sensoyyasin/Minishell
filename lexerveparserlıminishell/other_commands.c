@@ -16,14 +16,14 @@ char    **list_changed(t_list *list)
         i++;
     }
     str[i] = NULL;
-    return(str); 
+    return(str);
 }
 
 void    exec_func(char *path, char **arg)
 {
     if (execve(path, arg, shell->environ) == -1)
     {
-        printf("zsh: command not found\n");
+        printf("%s : command not found\n", arg[0]);
         free(path);
         exit(0);
     }
