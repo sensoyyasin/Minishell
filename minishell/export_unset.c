@@ -37,23 +37,27 @@ void	ft_export(t_list *list)
 		printf_alph();
 	while (content)
 	{
-		if (content == NULL)
-			break;
-		if (ft_strchr(content, '=') && !lstcmp_isequal(content))// = var ve benzersiz
+		if (ft_strchr(content, '=') && !islistequal(content))
 		{
-			printf("ilk if\n");
+			printf("ilk if çalıştı(= var değişken farklı) step:%d\n", shell->step);
 			ft_lstadd_back(&shell->asd, ft_lstnew(content));
-			ft_lstadd_back(&shell->declare, ft_lstnew(content));
 		}
-		else if (ft_strchr(content, '=') && lstcmp_isequal(content) == 1)// = var ve aynı
+		else if (ft_strchr(content, '=') && islistequal(content))
 		{
+			printf("ikinci if çalıştı(= var değişken aynı) step:%d\n", shell->step);
+			delete_node(&shell->asd, content);
 			ft_lstadd_back(&shell->asd, ft_lstnew(content));
-			ft_lstadd_back(&shell->declare, ft_lstnew(content));
 		}
-		else if(!lstcmp_isequal(content))// = yok (declare)
+		else if (!ft_strchr(content, '=') && !isequal(content))
 		{
-			printf("son if\n");
-			ft_lstadd_back(&shell->declare, ft_lstnew(content));
+			printf("üçüncü if çalıştı(= yok değişken farklı) step:%d\n", shell->step);
+			ft_lstadd_back(&shell->asd, ft_lstnew(content));
+		}
+		else if (!ft_strchr(content, '=') && isequal(content))
+		{
+			printf("son if çalıştı(= yok değişken aynı) step:%d\n", shell->step);
+			delete_node(&shell->asd, content);
+			ft_lstadd_back(&shell->asd, ft_lstnew(content));
 		}
 		i++;
 		content = index_data(list, i);
@@ -61,30 +65,52 @@ void	ft_export(t_list *list)
 	return;
 }
 
-void	delete_node(char *str)
+void	delete_node(t_list **head, char *str)
 {
-	t_list	**temp;
+	t_list	*temp;
+	t_list	*prev;
 	int		i;
 
-	temp = &(shell->asd);
-	if(!(*temp))
-		return ;
-	while ((*temp)->next != NULL)
+	i = 0;
+	temp = *head;
+	prev = *head;
+	if (temp != NULL && shell->step == 0)
 	{
-		i = 0;
-		while ((*temp)->next->content[i] && str[i])
-		{
-			if ((*temp)->next->content[i] != str[i])
-				break;
-			if (((*temp)->next->content[i] == '=' && str[i] == '=') && (!(*temp)->content[i] && !str[i]))
-			{
-				(*temp)->next = (*temp)->next->next;
-			}
-			i++;
-		}
-		*temp = (*temp)->next;
+		*head = temp->next;
+		free(temp);
+		return;
 	}
-	shell->asd = *temp;
+	while (temp != NULL && !isnamequal(str, temp->content))
+	{
+		/* printf("i: %d, step: %d\n", i, shell->step); */
+		prev = temp;
+		temp = temp->next;
+		i++;
+	}
+	if (temp == NULL)
+		return ;
+	prev->next = temp->next;
+	free (temp);
+}
+
+int	isnamequal(char *str, char *content)
+{
+	int	i;
+
+	i = 0;
+	if (!str || !content)
+		return (0);
+	while (str[i] && content[i])
+	{
+		if(str[i] != content[i])
+			return (0);
+		if(str[i] == '=' && content[i] == '=')
+			return(1);
+		i++;
+	}
+	if (str[i] == '\0' && content[i] == '\0')
+		return(1);
+	return (0);
 }
 
 void	printf_alph(void)
@@ -93,7 +119,7 @@ void	printf_alph(void)
 	int	i;
 	int	flag;
 
-	list_iter = shell->declare; // shell->asd'si kopya listemiz.
+	list_iter = shell->asd; // shell->asd'si kopya listemiz.
 	while (list_iter)
 	{
 		write(1, "declare -x ", 11);
@@ -109,7 +135,8 @@ void	printf_alph(void)
 			}
 			i++;
 		}
-		write(1, "\"", 1);
+		if(ft_strchr(list_iter->content, '='))
+			write(1, "\"", 1);
 		write(1, "\n", 1);
 		list_iter = list_iter->next;
 	}

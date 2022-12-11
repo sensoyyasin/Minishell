@@ -117,7 +117,8 @@ int		ft_env(void)
 	temp = shell->asd;
 	while (temp != NULL)
 	{
-		printf("%s\n",temp->content);
+		if(ft_strchr(temp->content, '='))
+			printf("%s\n",temp->content);
 		temp = temp->next;
 	}
 	return(1);

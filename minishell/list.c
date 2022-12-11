@@ -1,36 +1,55 @@
 #include "minishell.h"
 
-int	lstcmp_isequal(char *str)
+int	islistequal(char *str)
 {
-	t_list *temp;
-	int	i = 0;
+	t_list	*temp;
+	int		i;
 
-	shell->cmmp = 1;
+	shell->step = 0;
 	temp = shell->asd;
-	while (temp != NULL)
+	if (!temp)
+		return (0);
+	while (temp)
 	{
 		i = 0;
 		while (temp->content[i] && str[i])
 		{
-			if (temp->content[i] != str[i])
-				break;
-			if ((temp->content[i] == '=' && str[i] == '='))
-			{
-				while (temp->content[i] == str[i])
-				{
-					i++;
-					if (temp->content[i] == '\0')
-						return 2; //değismeyecek
-				}
-
-				return (1); //degisecek
-			}
+			if(temp->content[i] != str[i])
+				break ;
+			if(temp->content[i] == '=' && str[i] == '=')
+				return(1);
 			i++;
 		}
 		temp = temp->next;
-		shell->cmmp++;
+		(shell->step)++;
 	}
-	return(0);
+	return (0);
+}
+
+int	isequal(char *str)
+{
+	t_list	*temp;
+	int		i;
+
+	shell->step = 0;
+	temp = shell->asd;
+	if (!temp)
+		return (0);
+	while (temp)
+	{
+		i = 0;
+		while (temp->content[i] && str[i])
+		{
+			if(temp->content[i] != str[i])
+				break ;
+			i++;
+		}
+		if (temp->content[i] == '\0' && str[i] == '\0')
+			return(1);
+		temp = temp->next;
+		(shell->step)++;
+	}
+	return (0);
 }
 
 

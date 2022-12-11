@@ -64,7 +64,11 @@ typedef struct s_shell
 
 t_shell	*shell;
 
-void	delete_node(char *str);
+void	delete_node(t_list **head, char *str);
+int		isnamequal(char *str, char *content);
+int		islistequal(char *str);
+int		isequal(char *str);
+
 void	sighandler(int signum);
 void	signal_d();
 int		normal(void);
