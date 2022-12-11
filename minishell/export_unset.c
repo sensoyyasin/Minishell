@@ -37,7 +37,20 @@ void	ft_export(t_list *list)
 		printf_alph();
 	while (content)
 	{
-		if (ft_strchr(content, '=') && !islistequal(content))
+		if (islistequal(content) == 2)
+		{
+			printf("isequal 2(= yok değişken de tanımlı) step:%d\n", shell->step);
+			i++;
+			content = index_data(list, i);
+			continue;
+		}
+		if (islistequal(content) == 3)
+		{
+			printf("isequal 3(= var değişken de tanımlı) step:%d\n", shell->step);
+			delete_node(&shell->asd, content);
+			ft_lstadd_back(&shell->asd, ft_lstnew(content));
+		}
+		else if (ft_strchr(content, '=') && !islistequal(content))
 		{
 			printf("ilk if çalıştı(= var değişken farklı) step:%d\n", shell->step);
 			ft_lstadd_back(&shell->asd, ft_lstnew(content));
@@ -108,7 +121,7 @@ int	isnamequal(char *str, char *content)
 			return(1);
 		i++;
 	}
-	if (str[i] == '\0' && content[i] == '\0')
+	if ((str[i] == '\0' || str[i] == '=') && content[i] == '\0')
 		return(1);
 	return (0);
 }

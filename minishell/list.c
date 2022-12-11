@@ -20,6 +20,10 @@ int	islistequal(char *str)
 				return(1);
 			i++;
 		}
+		if(temp->content[i] == '=' && str[i] == '\0')
+			return (2);
+		if(temp->content[i] == '\0' && str[i] == '=')
+			return (3);
 		temp = temp->next;
 		(shell->step)++;
 	}
