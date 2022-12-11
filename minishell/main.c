@@ -140,9 +140,8 @@ int main(int argc, char **argv, char **env)
 			continue;
 		expander();
 		if (heredoc_cnt() > 0)
-			heredoc_f();
-		if (heredoc_cnt() == 0)
-			executor();
+			heredoc_functions();
+		executor();
 		free_list();
 	}
 	return(1);

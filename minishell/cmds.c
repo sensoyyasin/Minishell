@@ -48,10 +48,7 @@ void	ft_unset(t_list *list)
 	while (content)
 	{
 		if (islistequal(content) == 2 || isequal(content))
-		{
-			printf("unset girdi step:%d\n", isequal(content));
 			udelete_node(&shell->asd, content);
-		}
 		i++;
 		content = index_data(list, i);
 	}
@@ -75,7 +72,6 @@ void	udelete_node(t_list **head, char *str)
 	}
 	while (temp != NULL && !uisnamequal(str, temp->content))
 	{
-		/* printf("i: %d, step: %d\n", i, shell->step); */
 		prev = temp;
 		temp = temp->next;
 		i++;

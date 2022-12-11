@@ -53,6 +53,9 @@ typedef struct s_shell
 	int	ctrl;
 	int	s_quote;
 	int	d_quote;
+	int	right_single_counter;
+	int	right_double_counter;
+	int	left_single_counter;
 	int	pipe;
 	int	cmmp;
 	int	len;
@@ -143,8 +146,9 @@ void	ft_pipe_func();
 void	ft_lstclear(t_list *lst);
 
 // -> other commands
-void    other_commands(char **arg);
-char    **list_changed(t_list *list);
+void	other_commands(char **arg);
+char	**list_changed(t_list *list);
+int		ft_isalpha(char *str);
 
 // -> pipe
 void	shell_pipe_dup2();
@@ -160,6 +164,12 @@ int		heredoc_cnt();
 void	heredoc_f();
 void	run_cmd_heredoc();
 int		heredoc_list();
-int		ft_isalpha(char *str);
+void	heredoc_functions();
+void	cut_heredoc();
+
+// -> redirections
+int		right_single_counter();
+int		right_double_counter();
+int		left_single_counter();
 
 #endif
