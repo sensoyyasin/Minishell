@@ -49,6 +49,7 @@ typedef struct s_shell
 	t_list	*arg;
 	t_list	*pipe_arg;
 	t_list	*token;
+	int	step;
 	int	ctrl;
 	int	s_quote;
 	int	d_quote;
@@ -63,6 +64,7 @@ typedef struct s_shell
 
 t_shell	*shell;
 
+void	delete_node(char *str);
 void	sighandler(int signum);
 void	signal_d();
 int		normal(void);
@@ -94,7 +96,7 @@ int		ft_strncmp(char *str1, char *str2, size_t n);
 char	*ft_strdup(char *s1);
 int		ft_listsize(t_list *list);
 t_list	*ft_lstnew(void *content);
-int		lstcmp(char *str);
+int		lstcmp_isequal(char *str);
 int		ft_strcmp_z(char *str, char *str2);
 char	**ft_split(char	*ptr, char c);
 void	free_list(void);
@@ -143,7 +145,7 @@ void	shell_pipe_dup2();
 void	multi_close(int **fd);
 int		check2(int i);
 int		ft_strcmp2(char *asd, char *sda);
-void	ft_dstry_node(int c);
+void	ft_dstry_node();
 void	ft_lstremover(t_list *list);
 void	check_cmnd2();
 

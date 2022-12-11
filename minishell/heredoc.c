@@ -38,7 +38,7 @@ void	heredoc_f()
 	int		fd;
 
 	eof = index_data(shell->arg, heredoc_list() + 2);
-	fd = open("a.txt", O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	fd = open("a.txt", O_WRONLY | O_CREAT | O_TRUNC);
 	if (fd < 0)
 		write(2, "Error\n", 6);
 	else

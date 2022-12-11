@@ -82,7 +82,6 @@ void	free_list(void)
 		free(shell->arg);
 		shell->arg = shell->arg->next;
 	}
-
 }
 
 int		ft_listsize(t_list *list)

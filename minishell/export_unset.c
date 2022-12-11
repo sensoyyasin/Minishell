@@ -9,6 +9,7 @@ void	ft_fill()
 	while (shell->environ[i] != NULL)
 	{
 		ft_lstadd_back(&shell->asd, ft_lstnew(shell->environ[i]));
+		ft_lstadd_back(&shell->declare, ft_lstnew(shell->environ[i]));
 		i++;
 	}
 	//! -> alphabetic olarak siralamasi gerek bunun algoritması olusturulacak.
@@ -17,13 +18,15 @@ void	ft_fill()
 void	ft_export(t_list *list)
 {
 	int		i;
+	int		j;
 	char	*content;
 	char	*content1;
 
 	i = 1;
+	j = 0;
 	content1 = index_data(list ,i);
 	if (content1 != NULL)
-		content = ft_strdup(content1);
+		content = ft_strdup(content1);//freelenecek
 	else
 		content = NULL;
 	if (!shell->ctrl++)
@@ -36,15 +39,21 @@ void	ft_export(t_list *list)
 	{
 		if (content == NULL)
 			break;
-		if (lstcmp(content) && ft_strchr(content, '='))
-			ft_lstadd_back(&shell->asd, ft_lstnew(content));
-		else if (lstcmp(content) && !ft_strchr(content, '='))
-			ft_lstadd_back(&shell->declare, ft_lstnew(content));
-		else
+		if (ft_strchr(content, '=') && !lstcmp_isequal(content))// = var ve benzersiz
 		{
-			//ft_dstry_node(shell->cmmp);
-			if (ft_strchr(content, '='))
-				ft_lstadd_back(&shell->asd, ft_lstnew(content));
+			printf("ilk if\n");
+			ft_lstadd_back(&shell->asd, ft_lstnew(content));
+			ft_lstadd_back(&shell->declare, ft_lstnew(content));
+		}
+		else if (ft_strchr(content, '=') && lstcmp_isequal(content) == 1)// = var ve aynı
+		{
+			ft_lstadd_back(&shell->asd, ft_lstnew(content));
+			ft_lstadd_back(&shell->declare, ft_lstnew(content));
+		}
+		else if(!lstcmp_isequal(content))// = yok (declare)
+		{
+			printf("son if\n");
+			ft_lstadd_back(&shell->declare, ft_lstnew(content));
 		}
 		i++;
 		content = index_data(list, i);
@@ -52,36 +61,56 @@ void	ft_export(t_list *list)
 	return;
 }
 
-// void	ft_destroy_node(int c)
-// {
-// 	int i;
-// 	t_list *temp;
+void	delete_node(char *str)
+{
+	t_list	**temp;
+	int		i;
 
-// 	i = 0;
-// 	temp = shell->arg;
-// 	while (str != NULL)
-// 	{
-// 		temp = temp->next;
-// 	}
-
-// }
+	temp = &(shell->asd);
+	if(!(*temp))
+		return ;
+	while ((*temp)->next != NULL)
+	{
+		i = 0;
+		while ((*temp)->next->content[i] && str[i])
+		{
+			if ((*temp)->next->content[i] != str[i])
+				break;
+			if (((*temp)->next->content[i] == '=' && str[i] == '=') && (!(*temp)->content[i] && !str[i]))
+			{
+				(*temp)->next = (*temp)->next->next;
+			}
+			i++;
+		}
+		*temp = (*temp)->next;
+	}
+	shell->asd = *temp;
+}
 
 void	printf_alph(void)
 {
 	t_list *list_iter;
-	int i;
-	i = 0;
-	list_iter = shell->asd; // shell->asd'si kopya listemiz.
-	while (list_iter != NULL)
+	int	i;
+	int	flag;
+
+	list_iter = shell->declare; // shell->asd'si kopya listemiz.
+	while (list_iter)
 	{
-		while (list_iter && list_iter->index != i)
-			list_iter = list_iter->next;
-		if (list_iter == NULL)
-			return;
-		if ((char *)list_iter->content)
-			printf("declare -x %s\n", list_iter->content);
-		i++;
-		list_iter = shell->asd;
-		continue;
+		write(1, "declare -x ", 11);
+		i = 0;
+		flag = 0;
+		while(list_iter->content[i])
+		{
+			write(1, &list_iter->content[i], 1);
+			if(list_iter->content[i] == '=' && flag == 0)
+			{
+				flag = 1;
+				write(1, "\"", 1);
+			}
+			i++;
+		}
+		write(1, "\"", 1);
+		write(1, "\n", 1);
+		list_iter = list_iter->next;
 	}
 }

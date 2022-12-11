@@ -78,6 +78,7 @@ void	lexir(int count)
 void    space_skip()
 {
     int i;
+
     i = 0;
     while (shell->line[i] <= 32 && shell->line[i + 1] != '\0')
         shell->line++;

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yasinsensoy <yasinsensoy@student.42.fr>    +#+  +:+       +#+         #
+#    By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/21 10:34:24 by ysensoy           #+#    #+#              #
-#    Updated: 2022/11/30 20:43:50 by yasinsensoy      ###   ########.fr        #
+#    Updated: 2022/12/10 14:13:48 by ysensoy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,6 @@ all: yasin
 
 yasin :
 	$(CC) $(CLAFGS) $(SRCS) -lreadline -L /Users/yasinsensoy/homebrew/opt/readline/lib -I /Users/yasinsensoy/homebrew/opt/readline/include -o $(NAME)
-	@echo "derlendi.."
+	@echo "\033[1;92mderlendi..\033[0m"
 clean:
 	@rm -rf minishell

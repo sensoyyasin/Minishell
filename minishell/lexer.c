@@ -103,6 +103,8 @@ char	*index_data(t_list *list, int index)
 		temp = temp->next;
 	}
 	if (temp == NULL)
+	{
 		return(0);
+	}
 	return(temp->content);
 }
