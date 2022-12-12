@@ -10,6 +10,8 @@ int ft_strlen(char *str)
 	return(i);
 }
 
+/* return 1 if strings equal
+return 0 if there is any difference */
 int ft_strcmp(char *str, char *str2)
 {
 	int	i = 0;

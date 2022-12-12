@@ -56,21 +56,16 @@ int	isequal(char *str)
 	return (0);
 }
 
-
-
-// int		ft_strcmp_z(char *str, char *str2)
-// {
-// 	int i;
-
-// 	i = 0;
-// 	while (str[i] != '\0' && str2[i] != '\0')
-// 	{
-// 		if (str[i] == '=' && str2[i] == '=')
-// 			return(1);
-// 		else if (str[i] == str2[i])
-// 			i++;
-// 		else
-// 			return(0);
-// 	}
-// 	return(1);
-// }
+int	ft_lstcmp(t_list *iter, char *str)
+{
+	t_list	*temp;
+	
+	temp = iter;
+	while (temp != NULL)
+	{
+		if (ft_strcmp(temp->content, str))
+			return(0);
+		temp = temp->next;
+	}
+	return(1);
+}

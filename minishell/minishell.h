@@ -106,7 +106,7 @@ char	*ft_strdup(char *s1);
 int		ft_listsize(t_list *list);
 t_list	*ft_lstnew(void *content);
 int		lstcmp_isequal(char *str);
-int		ft_strcmp_z(char *str, char *str2);
+int		ft_lstcmp(t_list *iter, char *str);
 char	**ft_split(char	*ptr, char c);
 void	free_list(void);
 void	ft_putstr_fd(char *str, int fd);
@@ -168,8 +168,7 @@ void	heredoc_functions();
 void	cut_heredoc();
 
 // -> redirections
-int		right_single_counter();
-int		right_double_counter();
-int		left_single_counter();
+int		index_redirect(char *str);
+int		redirections_counter();
 
 #endif

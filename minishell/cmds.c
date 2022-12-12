@@ -34,12 +34,10 @@ void	ft_unset(t_list *list)
 {
 
 	int		i;
-	int		j;
 	char	*content;
 	char	*content1;
 
 	i = 1;
-	j = 0;
 	content1 = index_data(list ,i);
 	if (content1 != NULL)
 		content = ft_strdup(content1);//freelenecek

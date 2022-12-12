@@ -19,12 +19,10 @@ void	ft_fill()
 void	ft_export(t_list *list)
 {
 	int		i;
-	int		j;
 	char	*content;
 	char	*content1;
 
 	i = 1;
-	j = 0;
 	content1 = index_data(list ,i);
 	if (content1 != NULL)
 		content = ft_strdup(content1);//freelenecek
@@ -86,7 +84,6 @@ void	delete_node(t_list **head, char *str)
 	}
 	while (temp != NULL && !isnamequal(str, temp->content))
 	{
-		/* printf("i: %d, step: %d\n", i, shell->step); */
 		prev = temp;
 		temp = temp->next;
 		i++;

@@ -25,17 +25,33 @@ int		heredoc_list()
 	while (iter != NULL)
 	{
 		if (ft_strcmp(iter->content, "<<"))
-			i++;
+			return(i);
+		i++;
 		iter = iter->next;
 	}
-	return(i);
+	return(0);
 }
 
 void	heredoc_functions()
 {
+	t_list	*iter;
+
+	iter = shell->arg;
 	heredoc_f();
-	cut_heredoc(); /*-> << ve heredoc'a giren kelimeyi cutlamamız lazım echo kalacak.*/
-	run_cmd_heredoc();
+	if (shell->heredoc == 1)
+	{
+		run_cmd_heredoc();
+		shell->heredoc--;
+	}
+	else
+		shell->heredoc--;
+	if (shell->heredoc == 0)
+		return ;
+	if (!ft_lstcmp(iter, "<<"))
+		heredoc_functions(); 
+	//heredoc_f();
+	//cut_heredoc(); /*-> << ve heredoc'a giren kelimeyi cutlamamız lazım echo kalacak.*/
+	//run_cmd_heredoc();
 }
 
 void	cut_heredoc()
@@ -76,13 +92,17 @@ void	heredoc_f()
 		while (1)
 		{
 			str = readline("> ");
+			signal(SIGINT, handle_siginit);
+			signal(SIGQUIT, SIG_IGN);
 			if (ft_strcmp(str, eof)) // str == eof olamaz adreslerini kıyaslıyorum pointer oldukları icin.
 				break;
 			ft_putstr_fd(str, fd);
 			ft_putstr_fd("\n", fd);
 		}
+		free(str);
 	}
 	close(fd);
+	return ;
 }
 
 void	run_cmd_heredoc()
@@ -90,10 +110,12 @@ void	run_cmd_heredoc()
 	int	pid;
 	int	fd;
 
-	fd = open("a.txt", O_RDWR);
 	pid = fork();
-	while (pid > 0)
+	while (pid >= 0)
 	{
+		fd = open("a.txt", O_RDWR);
+		if (fd < 0)
+			write(2, "Error\n", 6);
 		dup2(fd, 0);
 		close(fd);
 		executor();
@@ -101,5 +123,4 @@ void	run_cmd_heredoc()
 	}
 	wait(NULL);
 	waitpid(pid, NULL, 0);
-	close(fd);
 }
