@@ -86,10 +86,13 @@ void	heredoc_f()
 		while (1)
 		{
 			str = readline("> ");
-			signal(SIGINT, handle_siginit);
-			signal(SIGQUIT, SIG_IGN);
+			if (!str)
+				break;
+			/* signal(SIGINT, handle_siginit);
+			signal(SIGQUIT, SIG_IGN); */
 			if (ft_strcmp(str, eof)) // str == eof olamaz adreslerini kıyaslıyorum pointer oldukları icin.
 				break;
+			/* printf("while sonu\n"); */
 			ft_putstr_fd(str, fd);
 			ft_putstr_fd("\n", fd);
 		}
