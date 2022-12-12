@@ -1,5 +1,7 @@
 #include "minishell.h"
 
+/* is there a variable
+check if there is an equal mark */
 char	*check_env(void)
 {
 	t_list	*t_temp;

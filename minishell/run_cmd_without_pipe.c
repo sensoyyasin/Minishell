@@ -19,8 +19,8 @@ void	run_cmd_without_pipe(t_list *list)
 	char	*content;
 
 	content = to_lower(list->content); // -> orn: !! pWD falan gelirse direkt kucultup bakıyoruz.
-	// if (ft_strcmp(content, "cd"))
-	// 	ft_cd(list);
+	/* if (ft_strcmp(content, "cd"))
+		ft_cd(list); */
 	if (ft_strcmp(content, "export"))
 		ft_export(list);
 	else if (ft_strcmp(content, "unset"))

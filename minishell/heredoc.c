@@ -34,49 +34,43 @@ int		heredoc_list()
 
 void	heredoc_functions()
 {
-	t_list	*iter;
-
-	iter = shell->arg;
 	heredoc_f();
-	if (shell->heredoc == 1)
-	{
-		run_cmd_heredoc();
-		shell->heredoc--;
-	}
-	else
-		shell->heredoc--;
-	if (shell->heredoc == 0)
-		return ;
-	if (!ft_lstcmp(iter, "<<"))
-		heredoc_functions(); 
-	//heredoc_f();
-	//cut_heredoc(); /*-> << ve heredoc'a giren kelimeyi cutlamamız lazım echo kalacak.*/
-	//run_cmd_heredoc();
+	cut_heredoc(); /*-> << ve heredoc'a giren kelimeyi cutlamamız lazım echo kalacak.*/
+	run_cmd_heredoc();
 }
 
+/* delete all list expect first line */
 void	cut_heredoc()
 {
-	t_list	*temp;
-	t_list	*temp2;
+	t_list *first;
+	t_list *current;
+	t_list *next;
 
-	temp = shell->arg;
-	temp2 = shell->arg;
-	if (temp == NULL)
-	{
-		free(temp);
+	first = shell->arg;
+	if (!first)
 		return ;
-	}
-	while (temp != NULL)
+	current = first->next;
+	while (current != NULL)
 	{
-		temp2 = temp;
-		temp = temp->next;
+		next = current->next;
+		free(current);
+		current = next;
 	}
-	if (temp == NULL)
-		return ;
-	temp2->next = temp->next;
-	free(temp);
+	first->next = NULL;
+	/* while (shell->arg)
+	{
+		printf("shell content: %s\n",shell->arg->content);
+		shell->arg = shell->arg->next;
+	}
+	while (first)
+	{
+		printf("first content: %s\n",first->content);
+		first = first->next;
+	} */
+
 }
 
+/* start readline till eof occured */
 void	heredoc_f()
 {
 	char	*str;
@@ -84,7 +78,7 @@ void	heredoc_f()
 	int		fd;
 
 	eof = index_data(shell->arg, heredoc_list() + 1);
-	fd = open("a.txt", O_WRONLY | O_CREAT | O_TRUNC);
+	fd = open(".heredoc", O_WRONLY | O_CREAT | O_TRUNC);
 	if (fd < 0)
 		write(2, "Error\n", 6);
 	else
@@ -105,15 +99,16 @@ void	heredoc_f()
 	return ;
 }
 
+/* create a child process and execute the command */
 void	run_cmd_heredoc()
 {
 	int	pid;
 	int	fd;
 
 	pid = fork();
-	while (pid >= 0)
+	while (pid == 0)
 	{
-		fd = open("a.txt", O_RDWR);
+		fd = open(".heredoc", O_RDWR);
 		if (fd < 0)
 			write(2, "Error\n", 6);
 		dup2(fd, 0);
