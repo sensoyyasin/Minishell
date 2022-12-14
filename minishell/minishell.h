@@ -63,6 +63,7 @@ typedef struct s_shell
 	int	exit_status;
 	int	saved_stdout;
 	int	fd;
+	int	fpid;
 }	t_shell;
 
 t_shell	*shell;

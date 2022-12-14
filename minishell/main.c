@@ -41,6 +41,7 @@ void	appointment(char **env)
 
 	shell->len = 0;
 	shell->ctrl = 0;
+	shell->fpid = 1;
 }
 
 int	cmnd_length(void)

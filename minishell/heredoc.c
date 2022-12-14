@@ -32,25 +32,29 @@ int		heredoc_list()
 	return(0);
 }
 
-void deneme(int a)
+void pro_fork(int i)
 {
-	exit(a);
+	shell->fpid = 1;
+	exit(i);
 }
+
 void	heredoc_functions()
 {
 	int a;
 
-	if (fork()==0)
+	shell->fpid = fork();
+	if (shell->fpid == 0)
 	{
-		signal(SIGINT, (void *)exit);
+		signal(SIGINT, pro_fork);
 		heredoc_f();
-		exit(0);
+		cut_heredoc(); /*-> << ve heredoc'a giren kelimeyi cutlamamız lazım echo kalacak.*/
+		run_cmd_heredoc();
+		exit(0);//burası çok önemli
 	}
 	waitpid(-1, &a, 0);
 	if (a != 0)
 		return ;
-	cut_heredoc(); /*-> << ve heredoc'a giren kelimeyi cutlamamız lazım echo kalacak.*/
-	run_cmd_heredoc();
+	/* printf("fpid=%d\n", shell->fpid); */
 }
 
 /* delete all list expect first line */
@@ -90,45 +94,44 @@ void	heredoc_f()
 	char	*eof;
 	int		fd;
 
-
-	eof = index_data(shell->arg, heredoc_list() + 1);
-	fd = open(".heredoc", O_WRONLY | O_CREAT | O_TRUNC);
-
-	if (fd < 0)
-		write(2, "Error\n", 6);
-	else
+	if (shell->fpid == 0)
 	{
-
-		while (1)
+		eof = index_data(shell->arg, heredoc_list() + 1);
+		fd = open(".heredoc", O_WRONLY | O_CREAT | O_TRUNC, 0777);
+		if (fd < 0)
+			write(2, "Error\n", 6);
+		else
 		{
-			str = readline("> ");
-			if (!str)
-				break;
-			/* signal(SIGINT, (void *)exit);
-			signal(SIGQUIT, SIG_IGN); */
-			if (ft_strcmp(str, eof)) // str == eof olamaz adreslerini kıyaslıyorum pointer oldukları icin.
-				break;
-			/* printf("while sonu\n"); */
-			ft_putstr_fd(str, fd);
-			ft_putstr_fd("\n", fd);
+
+			while (1)
+			{
+				str = readline("> ");
+				if (!str)
+					break;
+				/* signal(SIGINT, (void *)exit);
+				signal(SIGQUIT, SIG_IGN); */
+				if (ft_strcmp(str, eof)) // str == eof olamaz adreslerini kıyaslıyorum pointer oldukları icin.
+					break;
+				/* printf("while sonu\n"); */
+				ft_putstr_fd(str, fd);
+				ft_putstr_fd("\n", fd);
+			}
+			free(str);
 		}
-		free(str);
+		close(fd);
 	}
-	close(fd);
 	return ;
 }
 
 /* create a child process and execute the command */
 void	run_cmd_heredoc()
 {
-	int	pid;
+	//int	pid;
 	int	fd;
 
-
-	pid = fork();
-	if (pid == 0)
+	if (shell->fpid == 0)
 	{
-		signal(SIGINT, deneme);
+		/* signal(SIGINT, deneme); */
 		//signal(SIGQUIT, SIG_IGN);
 		fd = open(".heredoc", O_RDWR);
 		if (fd < 0)
@@ -138,7 +141,5 @@ void	run_cmd_heredoc()
 		executor();
 		exit(0);
 	}
-	if (pid > 0)
-		printf("%d\n", getpid());
-	waitpid(pid, NULL, 0);
+	/* waitpid(shell->fpid, NULL, 0); */
 }
