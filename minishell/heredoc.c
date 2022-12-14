@@ -32,9 +32,23 @@ int		heredoc_list()
 	return(0);
 }
 
+void deneme(int a)
+{
+	exit(a);
+}
 void	heredoc_functions()
 {
-	heredoc_f();
+	int a;
+
+	if (fork()==0)
+	{
+		signal(SIGINT, (void *)exit);
+		heredoc_f();
+		exit(0);
+	}
+	waitpid(-1, &a, 0);
+	if (a != 0)
+		return ;
 	cut_heredoc(); /*-> << ve heredoc'a giren kelimeyi cutlamamız lazım echo kalacak.*/
 	run_cmd_heredoc();
 }
@@ -69,7 +83,6 @@ void	cut_heredoc()
 	} */
 
 }
-
 /* start readline till eof occured */
 void	heredoc_f()
 {
@@ -77,18 +90,21 @@ void	heredoc_f()
 	char	*eof;
 	int		fd;
 
+
 	eof = index_data(shell->arg, heredoc_list() + 1);
 	fd = open(".heredoc", O_WRONLY | O_CREAT | O_TRUNC);
+
 	if (fd < 0)
 		write(2, "Error\n", 6);
 	else
 	{
+
 		while (1)
 		{
 			str = readline("> ");
 			if (!str)
 				break;
-			/* signal(SIGINT, handle_siginit);
+			/* signal(SIGINT, (void *)exit);
 			signal(SIGQUIT, SIG_IGN); */
 			if (ft_strcmp(str, eof)) // str == eof olamaz adreslerini kıyaslıyorum pointer oldukları icin.
 				break;
@@ -108,9 +124,12 @@ void	run_cmd_heredoc()
 	int	pid;
 	int	fd;
 
+
 	pid = fork();
-	while (pid == 0)
+	if (pid == 0)
 	{
+		signal(SIGINT, deneme);
+		//signal(SIGQUIT, SIG_IGN);
 		fd = open(".heredoc", O_RDWR);
 		if (fd < 0)
 			write(2, "Error\n", 6);
@@ -119,6 +138,7 @@ void	run_cmd_heredoc()
 		executor();
 		exit(0);
 	}
-	wait(NULL);
+	if (pid > 0)
+		printf("%d\n", getpid());
 	waitpid(pid, NULL, 0);
 }
