@@ -210,3 +210,19 @@ int	ft_isalpha(char *str)
 		return(1);
 
 }
+
+char	*ft_strrchr(const char *str, int c)
+{
+	char	*ns;
+	int		len;
+
+	ns = (char *)str;
+	len = ft_strlen(ns);
+	while (len >= 0)
+	{
+		if (ns[len] == (unsigned char)c)
+			return (ns + len);
+		len --;
+	}
+	return (0);
+}

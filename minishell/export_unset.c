@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-/* take environment as node's content */
+/* take environment as nodes' content */
 void	ft_fill()
 {
 	int i;
@@ -10,7 +10,7 @@ void	ft_fill()
 	while (shell->environ[i] != NULL)
 	{
 		ft_lstadd_back(&shell->asd, ft_lstnew(shell->environ[i]));
-		ft_lstadd_back(&shell->declare, ft_lstnew(shell->environ[i]));
+		/* ft_lstadd_back(&shell->declare, ft_lstnew(shell->environ[i])); */
 		i++;
 	}
 	//! -> alphabetic olarak siralamasi gerek bunun algoritması olusturulacak.

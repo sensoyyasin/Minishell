@@ -172,4 +172,10 @@ void	cut_heredoc();
 int		index_redirect(char *str);
 int		redirections_counter();
 
+// ->cd
+char	*tail_trimer(const char *str, int c);
+char	*ft_strrchr(const char *str, int c);
+void	ft_cd2(char *pwd);
+int		ft_cd(t_list *list);
+
 #endif

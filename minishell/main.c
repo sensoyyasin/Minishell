@@ -36,11 +36,12 @@ void	appointment(char **env)
 
 	shell->name = "\033[0;93m@yasinshell> \033[0m";
 	shell->environ = env;
+	ft_fill();
 	signal(SIGINT, handle_siginit);
 	signal(SIGQUIT, SIG_IGN);
 
 	shell->len = 0;
-	shell->ctrl = 0;
+	shell->ctrl = 1;
 	shell->fpid = 1;
 }
 
