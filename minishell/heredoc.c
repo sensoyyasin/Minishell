@@ -1,5 +1,47 @@
 #include "minishell.h"
 
+void	hdelete_node(t_list **head, char *str)
+{
+	t_list	*temp;
+	t_list	*prev;
+
+	temp = *head;
+	prev = *head;
+	if (temp != NULL && hisnamequal(str, temp->content))
+	{
+		*head = temp->next;
+		free(temp);
+		return;
+	}
+	while (temp != NULL && !hisnamequal(str, temp->content))
+	{
+		prev = temp;
+		temp = temp->next;
+	}
+	if (temp == NULL)
+		return ;
+	prev->next = temp->next;
+	free (temp);
+}
+
+int	hisnamequal(char *str, char *content)
+{
+	int	i;
+
+	i = 0;
+	if (!str || !content)
+		return (0);
+	while (str[i] && content[i])
+	{
+		if(str[i] != content[i])
+			return (0);
+		i++;
+	}
+	if (str[i] == '\0' && content[i] == '\0')
+		return(1);
+	return (0);
+}
+
 int		heredoc_cnt()
 {
 	t_list *iter;
@@ -64,7 +106,8 @@ void	heredoc_functions()
 	{
 		signal(SIGINT, pro_fork);
 		heredoc_f();
-		cut_heredoc(); /*-> << ve heredoc'a giren kelimeyi cutlamamız lazım echo kalacak.*/
+		hdelete_node(&shell->arg, index_data(shell->arg, heredoc_list() + 1));
+		hdelete_node(&shell->arg, index_data(shell->arg, heredoc_list()));
 		run_cmd_heredoc();
 		exit(0);//burası çok önemli
 	}
@@ -74,7 +117,7 @@ void	heredoc_functions()
 }
 
 /* delete all list expect first line */
-void	cut_heredoc()
+/* void	cut_heredoc()
 {
 	t_list *first;
 	t_list *current;
@@ -91,7 +134,7 @@ void	cut_heredoc()
 		current = next;
 	}
 	first->next = NULL;
-}
+} */
 
 /* start readline till eof occured */
 void	heredoc_f()
@@ -125,7 +168,8 @@ void	heredoc_f()
 	return ;
 }
 
-/* create a child process and execute the command */
+/* if there is a child process
+(fpid == 0), execute the command */
 void	run_cmd_heredoc()
 {
 	//int	pid;
@@ -138,24 +182,39 @@ void	run_cmd_heredoc()
 			write(2, "Error\n", 6);
 		dup2(fd, 0);
 		close(fd);
-		executor();
+		if (!check_token())
+			executor();
 		exit(0);
 	}
 }
 
 void	single_right_redirection()
 {
+	int		a;
 	int		fd;
 	char	*str;
 
-	str = index_data(shell->arg, single_right_redirect_list() + 1);
-	fd = open(str, O_CREAT | O_APPEND | O_RDWR, 0777);
-	if (fd < 0)
-		write(2, "Error\n", 6);
-	dup2(fd, STDOUT_FILENO);
-	cut_heredoc();
-	close(fd);
-	executor();
+	shell->fpid = fork();
+	if(shell->fpid == 0)
+	{
+		signal(SIGINT, pro_fork);
+		str = index_data(shell->arg, single_right_redirect_list() + 1);
+		fd = open(str, O_CREAT | O_APPEND | O_RDWR, 0777);
+		if (fd < 0)
+			write(2, "Error\n", 6);
+		else
+		{
+			hdelete_node(&shell->arg, index_data(shell->arg, single_right_redirect_list() + 1));
+			hdelete_node(&shell->arg, index_data(shell->arg, single_right_redirect_list()));
+			dup2(fd, 1);
+			close(fd);
+			executor();
+			exit(0);
+		}
+	}
+	waitpid(-1, &a, 0);
+	if (a != 0)
+		return ;
 }
 
 int		single_right_redirect_list()

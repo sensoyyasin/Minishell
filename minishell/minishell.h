@@ -44,7 +44,6 @@ typedef struct s_shell
 	char	**str_pipe;
 	char	*temp;
 	t_list	*asd;
-	t_list	*declare;
 	t_list	*cmd;
 	t_list	*arg;
 	t_list	*pipe_arg;
@@ -167,6 +166,8 @@ void	run_cmd_heredoc();
 int		heredoc_list();
 void	heredoc_functions();
 void	cut_heredoc();
+void	hdelete_node(t_list **head, char *str);
+int		hisnamequal(char *str, char *content);
 
 // -> redirections
 int		index_redirect(char *str);
@@ -174,6 +175,7 @@ int		redirect_cnt();
 int		redirections_counter();
 int		single_right_redirect_list();
 void	single_right_redirection();
+int		check_token();
 
 // ->cd
 char	*tail_trimer(const char *str, int c);
