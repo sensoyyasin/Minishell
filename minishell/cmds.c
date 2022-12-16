@@ -100,29 +100,6 @@ int	uisnamequal(char *str, char *content)
 	return (0);
 }
 
-/* void ft_dstry_node(int c)
-{
-	t_list *tmp;
-	t_list *tmp2;
-
-	tmp = shell->asd;
-	tmp2 = shell->asd;
-	while (c > 1 && tmp != NULL)
-	{
-		if (tmp->next != NULL)
-			tmp = tmp->next;
-		c--;
-	}
-	if (tmp->next->next != NULL)
-		tmp2 = tmp->next->next;
-	else
-		tmp2 = NULL;
-	if (tmp2 != NULL)
-		tmp->next = tmp2;
-	else
-		tmp->next = NULL;
-} */
-
 int		ft_env(void)
 {
 	t_list	*temp;
@@ -156,16 +133,16 @@ void	ft_pwd(void)
 	temp2 = malloc(ft_strlen("PWD") + 1);
 	while (list != NULL)
 	{
-		temp = list->content; // -> Mesela ilkinde USE ' yi attı ilk satırın ilk 3 üne bakıyor.
+		temp = list->content;
 		while (temp[i] != '=' && i < 3)
 		{
 			temp2[i] = temp[i];
 			i++;
 		}
 		temp2[i] = '\0';
-		if (ft_strcmp(temp2, "PWD")) // -> karsilastirma yapiyor.
+		if (ft_strcmp(temp2, "PWD"))
 		{
-			printf("%s\n", &temp[++i]); // -> ='den sonraki yerin komple adresini dönüyoruz cunku komple satırı getirsin diye
+			printf("%s\n", &temp[++i]);
 			free(temp2);
 			return ;
 		}

@@ -15,6 +15,23 @@ int		heredoc_cnt()
 	return(shell->heredoc);
 }
 
+int		redirect_cnt()
+{
+	t_list	*iter;
+
+	iter = shell->arg;
+	while (iter != NULL)
+	{
+		if (ft_strcmp(iter->content, ">>"))
+		{
+			shell->right_double_counter++;
+			return(shell->right_double_counter);
+		}
+		iter = iter->next;
+	}
+	return (0);
+}
+
 int		heredoc_list()
 {
 	t_list *iter;
@@ -54,7 +71,6 @@ void	heredoc_functions()
 	waitpid(-1, &a, 0);
 	if (a != 0)
 		return ;
-	/* printf("fpid=%d\n", shell->fpid); */
 }
 
 /* delete all list expect first line */
@@ -75,18 +91,8 @@ void	cut_heredoc()
 		current = next;
 	}
 	first->next = NULL;
-	/* while (shell->arg)
-	{
-		printf("shell content: %s\n",shell->arg->content);
-		shell->arg = shell->arg->next;
-	}
-	while (first)
-	{
-		printf("first content: %s\n",first->content);
-		first = first->next;
-	} */
-
 }
+
 /* start readline till eof occured */
 void	heredoc_f()
 {
@@ -102,17 +108,13 @@ void	heredoc_f()
 			write(2, "Error\n", 6);
 		else
 		{
-
 			while (1)
 			{
 				str = readline("> ");
 				if (!str)
 					break;
-				/* signal(SIGINT, (void *)exit);
-				signal(SIGQUIT, SIG_IGN); */
 				if (ft_strcmp(str, eof)) // str == eof olamaz adreslerini kıyaslıyorum pointer oldukları icin.
 					break;
-				/* printf("while sonu\n"); */
 				ft_putstr_fd(str, fd);
 				ft_putstr_fd("\n", fd);
 			}
@@ -131,8 +133,6 @@ void	run_cmd_heredoc()
 
 	if (shell->fpid == 0)
 	{
-		/* signal(SIGINT, deneme); */
-		//signal(SIGQUIT, SIG_IGN);
 		fd = open(".heredoc", O_RDWR);
 		if (fd < 0)
 			write(2, "Error\n", 6);
@@ -141,5 +141,36 @@ void	run_cmd_heredoc()
 		executor();
 		exit(0);
 	}
-	/* waitpid(shell->fpid, NULL, 0); */
+}
+
+void	single_right_redirection()
+{
+	int		fd;
+	char	*str;
+
+	str = index_data(shell->arg, single_right_redirect_list() + 1);
+	fd = open(str, O_CREAT | O_APPEND | O_RDWR, 0777);
+	if (fd < 0)
+		write(2, "Error\n", 6);
+	dup2(fd, STDOUT_FILENO);
+	cut_heredoc();
+	close(fd);
+	executor();
+}
+
+int		single_right_redirect_list()
+{
+	t_list	*iter;
+	int		i;
+
+	i = 0;
+	iter = shell->arg;
+	while (iter != NULL)
+	{
+		if (ft_strcmp(iter->content, ">>"))
+			return(i);
+		i++;
+		iter = iter->next;
+	}
+	return(0);
 }

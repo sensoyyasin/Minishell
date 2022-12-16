@@ -13,9 +13,9 @@
 // 			if (ft_strcmp(iter->content, "<"))
 // 				shell->left_single_counter++;
 // 			else if (ft_strcmp(iter->content, ">") && !ft_strcmp(iter->next->content, ">"))
-// 				shell->right_single_counter;
+// 				shell->right_single_counter++;
 // 			else if (ft_strcmp(iter->content, ">") && ft_strcmp(iter->next->content, ">"))
-// 				shell->right_double_counter;
+// 				shell->right_double_counter++;
 // 			i++;
 // 		}
 // 		iter = iter->next;

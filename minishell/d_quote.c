@@ -45,8 +45,9 @@ void	d_quote(int index)
 char	*dollar_sign(char *str, int j)
 {
 	char	*tmp2;
-	int	i = 0;
+	int		i;
 
+	i = 0;
 	tmp2 = malloc(size_finder(str, j) + 1);
 	while (str[j] != '\0' && str[j] != 32 && str[j] != D_QUOTE && str[j] != '$' && str[j] != S_QUOTE)
 	{

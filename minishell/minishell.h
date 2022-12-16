@@ -170,7 +170,10 @@ void	cut_heredoc();
 
 // -> redirections
 int		index_redirect(char *str);
+int		redirect_cnt();
 int		redirections_counter();
+int		single_right_redirect_list();
+void	single_right_redirection();
 
 // ->cd
 char	*tail_trimer(const char *str, int c);

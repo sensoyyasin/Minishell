@@ -94,9 +94,7 @@ void	space_skip()
 int		lexer(void)
 {
 	int count;
-	/* char *temp; */
 
-	/* temp = shell->line; */
 	while (*shell->line)
 	{
 		space_skip();
@@ -143,6 +141,8 @@ int main(int argc, char **argv, char **env)
 		expander();
 		if (heredoc_cnt() > 0)
 			heredoc_functions();
+		else if (redirect_cnt() > 0)
+			single_right_redirection();
 		else
 			executor();
 		free_list();

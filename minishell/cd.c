@@ -1,25 +1,5 @@
 #include "minishell.h"
 
-char	*tail_trimer(const char *str, int c)
-{
-	int		i;
-	int		last;
-	char	*new;
-
-	i = 0;
-	if (!str)
-		return NULL;
-	last = ft_strlen(ft_strrchr(str, c));
-	new = malloc(sizeof(char *) * (ft_strlen((char *)str) - last + 1));
-	while (i < (ft_strlen((char *)str) - last))
-	{
-		new[i] = (char)str[i];
-		i++;
-	}
-	new[i] = '\0';
-	return(new);
-}
-
 void	cdelete_node(t_list **head, char *str)
 {
 	t_list	*temp;
