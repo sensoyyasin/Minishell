@@ -1,0 +1,5 @@
+       5
+cat
+x
+bir
+iki

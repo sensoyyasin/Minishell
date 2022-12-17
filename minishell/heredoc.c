@@ -188,6 +188,58 @@ void	run_cmd_heredoc()
 	}
 }
 
+/* double right */
+void	double_right_redirection()
+{
+	int		a;
+	int		fd;
+	char	*str;
+
+	shell->fpid = fork();
+	if(shell->fpid == 0)
+	{
+		signal(SIGINT, pro_fork);
+		str = index_data(shell->arg, double_right_redirect_list() + 1);
+		fd = open(str, O_CREAT | O_APPEND | O_RDWR, 0777);
+		if (fd < 0)
+		{
+			write(2, "Error\n", 6);
+			exit(0);
+		}
+		else
+		{
+			hdelete_node(&shell->arg, index_data(shell->arg, double_right_redirect_list() + 1));
+			hdelete_node(&shell->arg, index_data(shell->arg, double_right_redirect_list()));
+			dup2(fd, 1);
+			close(fd);
+			if (!check_token())
+				executor();
+			exit(0);
+		}
+	}
+	waitpid(-1, &a, 0);
+	if (a != 0)
+		return ;
+}
+
+int		double_right_redirect_list()
+{
+	t_list	*iter;
+	int		i;
+
+	i = 0;
+	iter = shell->arg;
+	while (iter != NULL)
+	{
+		if (ft_strcmp(iter->content, ">>"))
+			return(i);
+		i++;
+		iter = iter->next;
+	}
+	return(0);
+}
+
+/* single right */
 void	single_right_redirection()
 {
 	int		a;
@@ -199,16 +251,20 @@ void	single_right_redirection()
 	{
 		signal(SIGINT, pro_fork);
 		str = index_data(shell->arg, single_right_redirect_list() + 1);
-		fd = open(str, O_CREAT | O_APPEND | O_RDWR, 0777);
+		fd = open(str, O_CREAT | O_TRUNC | O_RDWR, 0777);
 		if (fd < 0)
+		{
 			write(2, "Error\n", 6);
+			exit(0);
+		}
 		else
 		{
 			hdelete_node(&shell->arg, index_data(shell->arg, single_right_redirect_list() + 1));
 			hdelete_node(&shell->arg, index_data(shell->arg, single_right_redirect_list()));
 			dup2(fd, 1);
 			close(fd);
-			executor();
+			if (!check_token())
+				executor();
 			exit(0);
 		}
 	}
@@ -226,7 +282,56 @@ int		single_right_redirect_list()
 	iter = shell->arg;
 	while (iter != NULL)
 	{
-		if (ft_strcmp(iter->content, ">>"))
+		if (ft_strcmp(iter->content, ">"))
+			return(i);
+		i++;
+		iter = iter->next;
+	}
+	return(0);
+}
+
+void	single_left_redirection()
+{
+	int		a;
+	int		fd;
+	char	*str;
+
+	shell->fpid = fork();
+	if(shell->fpid == 0)
+	{
+		signal(SIGINT, pro_fork);
+		str = index_data(shell->arg, single_left_redirect_list() + 1);
+		fd = open(str, O_RDWR, 0777);
+		if (fd < 0)
+		{
+			write(2, "Error\n", 6);
+			exit(0);
+		}
+		else
+		{
+			hdelete_node(&shell->arg, index_data(shell->arg, single_left_redirect_list()));
+			dup2(fd, 0);
+			close(fd);
+			if (!check_token())
+				executor();
+			exit(0);
+		}
+	}
+	waitpid(-1, &a, 0);
+	if (a != 0)
+		return ;
+}
+
+int		single_left_redirect_list()
+{
+	t_list	*iter;
+	int		i;
+
+	i = 0;
+	iter = shell->arg;
+	while (iter != NULL)
+	{
+		if (ft_strcmp(iter->content, "<"))
 			return(i);
 		i++;
 		iter = iter->next;

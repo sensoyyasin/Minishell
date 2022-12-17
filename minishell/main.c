@@ -139,11 +139,7 @@ int main(int argc, char **argv, char **env)
 		if (!lexer())
 			continue;
 		expander();
-		if (heredoc_cnt() > 0)
-			heredoc_functions();
-		else if (redirect_cnt() > 0)
-			single_right_redirection();
-		else
+		if (!check_token())
 			executor();
 		free_list();
 	}

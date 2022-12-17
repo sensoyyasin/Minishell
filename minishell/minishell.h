@@ -29,8 +29,6 @@
 typedef struct s_list
 {
 	char			*content;
-	void			*data;
-	int				index;
 	struct s_list	*next;
 }	t_list;
 
@@ -173,8 +171,12 @@ int		hisnamequal(char *str, char *content);
 int		index_redirect(char *str);
 int		redirect_cnt();
 int		redirections_counter();
+int		double_right_redirect_list();
+void	double_right_redirection();
 int		single_right_redirect_list();
 void	single_right_redirection();
+int		single_left_redirect_list();
+void	single_left_redirection();
 int		check_token();
 
 // ->cd
