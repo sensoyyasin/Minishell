@@ -1,3 +1,0 @@
-pati:/bin/cat
-asd
-fdg

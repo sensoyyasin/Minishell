@@ -1,113 +1,91 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/18 14:48:49 by mtemel            #+#    #+#             */
+/*   Updated: 2022/12/18 15:50:32 by mtemel           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int ft_strlen(char *str)
+int	cmnd_length(void)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while (str[i])
+	if (shell->line[0] == '|')
+	{
+		write(2, "syntax error near unexpected token `|'\n", 39);
+		return (-1);
+	}
+	while (shell->line[i] > 32 && shell->line[i] != '|' && shell->line[i] != '>'
+		&& shell->line[i] != '<' && shell->line[i])
 		i++;
-	return(i);
+	return (i);
 }
 
-/* return 1 if strings equal
-return 0 if there is any difference */
-int ft_strcmp(char *str, char *str2)
+void	lexir(int count)
 {
-	int	i = 0;
-	size_t	len;
-
-	len = ft_strlen(str2);
-	if (!str)
-		return (0);
-	while (len)
-	{
-		if (str[i] == str2[i])
-			i++;
-		else
-			return(0);
-		len--;
-	}
-	if (str[i] != '\0')
-		return(0);
-	return(1);
-}
-
-int token_compare(void)
-{
-	int i;
+	int		i;
+	char	*temp;
 
 	i = 0;
-	if (shell->line[i] == '>' || shell->line[i] == '<' || shell->line[i] == '|')
+	temp = malloc(sizeof(t_list));
+	while (count > 0 && *(shell->line))
 	{
-		if ((shell->line[i] == '>' && shell->line[i + 1] == '>') || (shell->line[i] == '<' && shell->line[i + 1] == '<'))
-			return(2);
-		else if ((shell->line[i + 1] == '>' && shell->line[i + 2] == '>') || (shell->line[i + 2] == '<' && shell->line[i + 1] == '<'))
-		{
-			write(2, "syntax error near unexpected token\n", 35);
-			return(-1);
-		}
-		else if (shell->line[i + 1] == '<' || shell->line[i + 1] == '>')
-		{
-			write(2, "syntax error near unexpected token\n", 35);
-			return(-1);
-		}
-		else if (shell->line[i] == '|' && shell->line[i + 1] == '|')
-		{
-			write(2, "syntax error near expected token '||'\n", 38);
-			return (-1);
-		}
-		else
-			return(1);
-	}
-	return(0);
-}
-
-int text_cmpr(void)
-{
-    int i;
-
-	i = 0;
-	while ((shell->line[i] != ' ' && shell->line[i] != '\0') && (shell->line[i] != '>' && shell->line[i] != '<' && shell->line[i] != '|'))
-    {
-        if (shell->line[i] == D_QUOTE)
-        {
-            i++;
-            while (shell->line[i] != D_QUOTE && shell->line[i])
-                i++;
-            while (shell->line[i] != ' ' && shell->line[i] != '\0')
-                i++;
-            return(i + 1);
-        }
-        if (shell->line[i] == S_QUOTE)
-        {
-            i++;
-            while (shell->line[i] != S_QUOTE && shell->line[i] != '\0')
-                i++;
-            while (shell->line[i] != ' ' && shell->line[i] != '\0')
-                i++;
-            return(i + 1);
-        }
-        i++;
-    }
-    return(i);
-}
-
-/* return command's next argument as char* */
-char	*index_data(t_list *list, int index)
-{
-	int i = 0;
-	t_list *temp;
-
-	if (list == NULL)
-		return(0);
-	temp = list;
-	while (i != index)
-	{
+		temp[i] = *(shell->line);
+		shell->line++;
 		i++;
-		temp = temp->next;
+		count--;
 	}
-	if (temp == NULL)
-		return(0);
-	return(temp->content);
+	temp[i] = '\0';
+	ft_lstadd_back(&shell->arg, ft_lstnew(temp));
+	free(temp);
+}
+
+void	space_skip(void)
+{
+	int	i;
+
+	i = 0;
+	while (((shell->line[i] >= 9 && shell->line[i] <= 13)
+			|| shell->line[i] == 32) && shell->line[i + 1] != '\0')
+		shell->line++;
+	if (((shell->line[i] >= 9 && shell->line[i] <= 13)
+			|| shell->line[i] == 32) && shell->line[i + 1] == '\0')
+	{
+		*shell->line = '\0';
+		return ;
+	}
+}
+
+int	lexer(void)
+{
+	int	count;
+
+	while (*shell->line)
+	{
+		space_skip();
+		if (shell->arg == NULL)
+		{
+			count = cmnd_length();
+			if (count <= 0)
+				return (0);
+			else if (count > 0)
+				lexir(count);
+		}
+		count = token_compare();
+		if (count > 0)
+			lexir(count);
+		else if (count == -1)
+			return (0);
+		count = text_cmpr();
+		if (count > 0)
+			lexir(count);
+	}
+	return (1);
 }

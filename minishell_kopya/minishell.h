@@ -123,7 +123,9 @@ int		quote_check(char *str);
 
 char	*ret_env(int i, char *str);
 char	*check_env(void);
+char	*ft_str_eq_dup(char *s1);
 int		size_finder(char *str, int j);
+int		checker_tkn(char *str);
 
 // -> executor
 void	executor();

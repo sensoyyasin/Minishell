@@ -6,39 +6,46 @@
 /*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 20:12:41 by mtemel            #+#    #+#             */
-/*   Updated: 2022/12/17 13:11:19 by mtemel           ###   ########.fr       */
+/*   Updated: 2022/12/18 16:59:33 by mtemel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_token()
+int	checker_tkn(char *str)
 {
-	t_list *iter;
+	if (ft_strcmp(str, ">>"))
+	{
+		double_right_redirection();
+		return (1);
+	}
+	else if (ft_strcmp(str, ">"))
+	{
+		single_right_redirection();
+		return (1);
+	}
+	else if (ft_strcmp(str, "<"))
+	{
+		single_left_redirection();
+		return (1);
+	}
+	else if (ft_strcmp(str, "<<"))
+	{
+		heredoc_functions();
+		return (1);
+	}
+	return (0);
+}
+
+int	check_token(void)
+{
+	t_list	*iter;
 
 	iter = shell->arg;
 	while (iter != NULL)
 	{
-		if (ft_strcmp(iter->content, ">>"))
-		{
-			double_right_redirection();
+		if (checker_tkn(iter->content))
 			return (1);
-		}
-		else if (ft_strcmp(iter->content, ">"))
-		{
-			single_right_redirection();
-			return (1);
-		}
-		else if (ft_strcmp(iter->content, "<"))
-		{
-			single_left_redirection();
-			return (1);
-		}
-		else if (ft_strcmp(iter->content, "<<"))
-		{
-			heredoc_functions();
-			return (1);
-		}
 		iter = iter->next;
 	}
 	return (0);

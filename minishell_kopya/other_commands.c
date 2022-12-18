@@ -41,7 +41,10 @@ char    *func_path(char **arg)
 	j = 0;
     temp = getenv("PATH");
     if (access(arg[0], F_OK) == 0)
-        return(arg[0]);
+	{
+		free(temp);
+		return(arg[0]);
+	}
     path = ft_split(temp, ':');
     while (path[i])
     {
