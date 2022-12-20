@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   executor.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/20 15:41:32 by mtemel            #+#    #+#             */
+/*   Updated: 2022/12/20 15:42:26 by mtemel           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int		pipe_stat()
+int	pipe_stat(void)
 {
 	t_list	*iter;
 
@@ -12,16 +24,16 @@ int		pipe_stat()
 			if (iter->next == NULL)
 			{
 				printf("This was just a pipe.\n");
-				return(-1);
+				return (-1);
 			}
-		return(1);
+			return (1);
 		}
 		iter = iter->next;
 	}
-	return(0);
+	return (0);
 }
 
-void	executor()
+void	executor(void)
 {
 	int	stat;
 

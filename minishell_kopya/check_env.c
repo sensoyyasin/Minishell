@@ -6,7 +6,7 @@
 /*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:03:12 by mtemel            #+#    #+#             */
-/*   Updated: 2022/12/18 15:37:09 by mtemel           ###   ########.fr       */
+/*   Updated: 2022/12/20 14:22:02 by mtemel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,8 @@ char	*ft_str_eq_dup(char *s1)
 	int		len;
 	int		i;
 
-	i = 0;
 	len = 0;
-	while (s1[i] != '=' && s1[i] != '\0')
+	while (s1[len] != '=' && s1[len] != '\0')
 		len++;
 	s2 = malloc(sizeof(char) * len + 1);
 	if (s2 == NULL)

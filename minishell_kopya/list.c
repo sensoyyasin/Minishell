@@ -117,3 +117,50 @@ int	uisnamequal(char *str, char *content)
 		return (1);
 	return (0);
 }
+
+void	delete_node(t_list **head, char *str)
+{
+	t_list	*temp;
+	t_list	*prev;
+	int		i;
+
+	i = 0;
+	temp = *head;
+	prev = *head;
+	if (temp != NULL && shell->step == 0)
+	{
+		*head = temp->next;
+		free(temp);
+		return ;
+	}
+	while (temp != NULL && !isnamequal(str, temp->content))
+	{
+		prev = temp;
+		temp = temp->next;
+		i++;
+	}
+	if (temp == NULL)
+		return ;
+	prev->next = temp->next;
+	free (temp);
+}
+
+int	isnamequal(char *str, char *content)
+{
+	int	i;
+
+	i = 0;
+	if (!str || !content)
+		return (0);
+	while (str[i] && content[i])
+	{
+		if (str[i] != content[i])
+			return (0);
+		if (str[i] == '=' && content[i] == '=')
+			return (1);
+		i++;
+	}
+	if ((str[i] == '\0' || str[i] == '=') && content[i] == '\0')
+		return (1);
+	return (0);
+}

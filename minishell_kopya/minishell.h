@@ -36,6 +36,7 @@ typedef struct s_shell
 {
 	char	*line;
 	char	*name;
+	char	*my_content;
 
 	char	**environ;
 	char 	**str;

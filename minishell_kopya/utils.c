@@ -260,3 +260,10 @@ char	*ft_substr(char *s, int start, int len)
 	*(s1 + i) = '\0';
 	return (s1);
 }
+
+int	size_finder(char *str, int j)
+{
+	while (str[j] != '\0' && str[j] != 32 && str[j] != D_QUOTE && str[j] != '$')
+		j++;
+	return (j);
+}

@@ -1,13 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expander.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/20 15:43:11 by mtemel            #+#    #+#             */
+/*   Updated: 2022/12/20 15:45:07 by mtemel           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	expand(int index)
 {
 	char	*content;
 	char	*temp;
-	temp = malloc(500);
-	int i = 0;
-	int j = 0;
+	int		i;
+	int		j;
 
+	i = 0;
+	j = 0;
+	temp = malloc(500);
 	content = index_data(shell->arg, index);
 	while (content[i])
 	{
@@ -26,7 +40,7 @@ void	expand(int index)
 	free(temp);
 }
 
-void	expander()
+void	expander(void)
 {
 	t_list	*iter;
 	char	*content;
@@ -79,13 +93,13 @@ void	s_quote(int index)
 	free(temp);
 }
 
-t_list  *list_f_data(t_list *root, int index)
+t_list	*list_f_data(t_list *root, int index)
 {
-	t_list *list;
-	int i;
+	t_list	*list;
+	int		i;
 
 	if (!root)
-		return(NULL);
+		return (NULL);
 	list = root;
 	i = 0;
 	while (i != index)
@@ -93,7 +107,7 @@ t_list  *list_f_data(t_list *root, int index)
 		i++;
 		list = list->next;
 	}
-	return(list);
+	return (list);
 }
 
 int	quote_check(char *str)
@@ -104,10 +118,10 @@ int	quote_check(char *str)
 	while (str[i])
 	{
 		if (str[i] == D_QUOTE)
-			return(D_QUOTE);
+			return (D_QUOTE);
 		else if (str[i] == S_QUOTE)
-			return(S_QUOTE);
+			return (S_QUOTE);
 		i++;
 	}
-	return(0);
+	return (0);
 }

@@ -1,43 +1,73 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   d_quote.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/20 12:56:02 by mtemel            #+#    #+#             */
+/*   Updated: 2022/12/20 17:13:39 by mtemel           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
+
+void	check_quote_dollar(char *content, int *i)
+{
+	while (content[*i] != 32 && content[*i] != '$' && content[*i] != '\0'
+		&& content[*i] != D_QUOTE && content[*i] != S_QUOTE)
+		(*i)++;
+}
+
+char	*dollar_filler(char **ret_dolar, int *j, char *temp)
+{
+	while (*(*ret_dolar))
+	{
+		temp[*j] = *(*ret_dolar);
+		(*ret_dolar)++;
+		(*j)++;
+	}
+	temp[*j] = '\0';
+	return (temp);
+}
+
+char	*check_content_dquote(int *i, int *j, char *ret_dolar, char *temp)
+{
+	while (shell->my_content[*i])
+	{
+		if (shell->my_content[*i] == D_QUOTE)
+			(*i)++;
+		if (shell->my_content[*i] == '$' && shell->my_content[(*i) + 1] != '"')
+		{
+			(*i)++;
+			ret_dolar = dollar_sign(shell->my_content, *i);
+			check_quote_dollar(shell->my_content, i);
+			temp = dollar_filler(&ret_dolar, j, temp);
+		}
+		else if (shell->my_content[*i] != '"')
+		{
+			temp[*j] = shell->my_content[*i];
+			(*i)++;
+			(*j)++;
+		}
+		else
+			(*i)++;
+	}
+	temp[*j] = '\0';
+	return (temp);
+}
 
 void	d_quote(int index)
 {
-	char	*content;
 	char	*temp;
 	char	*ret_dolar;
-	int		i;
-	int		j;
 
-	i = 0;
-	j = 0;
-	temp = malloc(500); // ->  must use free.
-	content = index_data(shell->arg, index);
-	while (content[i])
-	{
-		if (content[i] == D_QUOTE)
-			i++;
-		if (content[i] == '$')
-		{
-			i++;
-			ret_dolar = dollar_sign(content, i);
-			while(content[i] != 32 && content[i] != '$' && content[i] != '\0' && content[i] != D_QUOTE && content[i] != S_QUOTE)
-				i++;
-			while (*ret_dolar)
-			{
-				temp[j] = (*ret_dolar);
-				ret_dolar++;
-				j++;
-			}
-			temp[j] = '\0';
-		}
-		else
-		{
-			temp[j] = content[i];
-			i++;
-			j++;
-		}
-	}
-	temp[j] = '\0';
+	int (j) = 0;
+	int (i) = 0;
+	ret_dolar = NULL;
+	temp = malloc(500);
+	shell->my_content = index_data(shell->arg, index);
+	temp = check_content_dquote(&i, &j, ret_dolar, temp);
 	list_f_data(shell->arg, index)->content = ft_strdup(temp);
 	free(temp);
 }
@@ -49,7 +79,8 @@ char	*dollar_sign(char *str, int j)
 
 	i = 0;
 	tmp2 = malloc(size_finder(str, j) + 1);
-	while (str[j] != '\0' && str[j] != 32 && str[j] != D_QUOTE && str[j] != '$' && str[j] != S_QUOTE)
+	while (str[j] != '\0' && str[j] != 32 && str[j] != D_QUOTE
+		&& str[j] != '$' && str[j] != S_QUOTE)
 	{
 		tmp2[i] = str[j];
 		i++;
@@ -61,11 +92,4 @@ char	*dollar_sign(char *str, int j)
 	if (check_env())
 		return (check_env());
 	return ("");
-}
-
-int	size_finder(char *str, int j)
-{
-	while (str[j] != '\0' && str[j] != 32 && str[j] != D_QUOTE && str[j] != '$')
-		j++;
-	return (j);
 }
