@@ -6,7 +6,7 @@
 /*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:45:47 by mtemel            #+#    #+#             */
-/*   Updated: 2022/12/20 17:20:55 by mtemel           ###   ########.fr       */
+/*   Updated: 2022/12/21 14:05:14 by mtemel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	ft_fill(void)
 	int	i;
 
 	i = 0;
-	shell->asd = NULL;
-	while (shell->environ[i] != NULL)
+	g_shell->asd = NULL;
+	while (g_shell->environ[i] != NULL)
 	{
-		ft_lstadd_back(&shell->asd, ft_lstnew(shell->environ[i]));
+		ft_lstadd_back(&g_shell->asd, ft_lstnew(g_shell->environ[i]));
 		i++;
 	}
 }
@@ -30,22 +30,22 @@ void	export_checker(char *content)
 {
 	if (islistequal(content) == 3)
 	{
-		delete_node(&shell->asd, content);
-		ft_lstadd_back(&shell->asd, ft_lstnew(content));
+		delete_node(&g_shell->asd, content);
+		ft_lstadd_back(&g_shell->asd, ft_lstnew(content));
 	}
 	else if (ft_strchr(content, '=') && !islistequal(content))
-		ft_lstadd_back(&shell->asd, ft_lstnew(content));
+		ft_lstadd_back(&g_shell->asd, ft_lstnew(content));
 	else if (ft_strchr(content, '=') && islistequal(content))
 	{
-		delete_node(&shell->asd, content);
-		ft_lstadd_back(&shell->asd, ft_lstnew(content));
+		delete_node(&g_shell->asd, content);
+		ft_lstadd_back(&g_shell->asd, ft_lstnew(content));
 	}
 	else if (!ft_strchr(content, '=') && !isequal(content))
-		ft_lstadd_back(&shell->asd, ft_lstnew(content));
+		ft_lstadd_back(&g_shell->asd, ft_lstnew(content));
 	else if (!ft_strchr(content, '=') && isequal(content))
 	{
-		delete_node(&shell->asd, content);
-		ft_lstadd_back(&shell->asd, ft_lstnew(content));
+		delete_node(&g_shell->asd, content);
+		ft_lstadd_back(&g_shell->asd, ft_lstnew(content));
 	}
 }
 
@@ -75,7 +75,7 @@ void	printf_alph(void)
 	int		i;
 	int		flag;
 
-	list_iter = shell->asd;
+	list_iter = g_shell->asd;
 	while (list_iter)
 	{
 		write(1, "declare -x ", 11);

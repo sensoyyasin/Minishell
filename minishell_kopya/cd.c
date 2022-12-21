@@ -6,7 +6,7 @@
 /*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 14:54:07 by mtemel            #+#    #+#             */
-/*   Updated: 2022/12/18 14:56:53 by mtemel           ###   ########.fr       */
+/*   Updated: 2022/12/21 14:05:14 by mtemel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ void	ft_cd2(char *pwd)
 		printf("-> No such file or directory.\n");
 		return ;
 	}
-	cdelete_node(&shell->asd, pwd);
-	ft_lstadd_back(&shell->asd, ft_lstnew(ft_strjoin(pwd, home)));
+	cdelete_node(&g_shell->asd, pwd);
+	ft_lstadd_back(&g_shell->asd, ft_lstnew(ft_strjoin(pwd, home)));
 	return ;
 }
 
@@ -67,8 +67,8 @@ int	ft_cd(t_list *list)
 			printf("-> No such file or directory.\n");
 			return (0);
 		}
-		cdelete_node(&shell->asd, pwd);
-		ft_lstadd_back(&shell->asd, ft_lstnew(
+		cdelete_node(&g_shell->asd, pwd);
+		ft_lstadd_back(&g_shell->asd, ft_lstnew(
 				ft_strjoin(pwd, getcwd(cwd, sizeof(cwd)))));
 		return (1);
 	}

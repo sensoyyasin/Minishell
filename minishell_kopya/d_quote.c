@@ -6,7 +6,7 @@
 /*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 12:56:02 by mtemel            #+#    #+#             */
-/*   Updated: 2022/12/20 17:13:39 by mtemel           ###   ########.fr       */
+/*   Updated: 2022/12/21 16:50:02 by mtemel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,21 @@ char	*dollar_filler(char **ret_dolar, int *j, char *temp)
 
 char	*check_content_dquote(int *i, int *j, char *ret_dolar, char *temp)
 {
-	while (shell->my_content[*i])
+	while (g_shell->my_content[*i])
 	{
-		if (shell->my_content[*i] == D_QUOTE)
+		if (g_shell->my_content[*i] == D_QUOTE)
 			(*i)++;
-		if (shell->my_content[*i] == '$' && shell->my_content[(*i) + 1] != '"')
+		if (g_shell->my_content[*i] == '$'
+			&& g_shell->my_content[(*i) + 1] != '"')
 		{
 			(*i)++;
-			ret_dolar = dollar_sign(shell->my_content, *i);
-			check_quote_dollar(shell->my_content, i);
+			ret_dolar = dollar_sign(g_shell->my_content, *i);
+			check_quote_dollar(g_shell->my_content, i);
 			temp = dollar_filler(&ret_dolar, j, temp);
 		}
-		else if (shell->my_content[*i] != '"')
+		else if (g_shell->my_content[*i] != '"')
 		{
-			temp[*j] = shell->my_content[*i];
+			temp[*j] = g_shell->my_content[*i];
 			(*i)++;
 			(*j)++;
 		}
@@ -66,9 +67,9 @@ void	d_quote(int index)
 	int (i) = 0;
 	ret_dolar = NULL;
 	temp = malloc(500);
-	shell->my_content = index_data(shell->arg, index);
+	g_shell->my_content = index_data(g_shell->arg, index);
 	temp = check_content_dquote(&i, &j, ret_dolar, temp);
-	list_f_data(shell->arg, index)->content = ft_strdup(temp);
+	list_f_data(g_shell->arg, index)->content = ft_strdup(temp);
 	free(temp);
 }
 
@@ -87,7 +88,7 @@ char	*dollar_sign(char *str, int j)
 		j++;
 	}
 	tmp2[i] = '\0';
-	shell->temp = ft_strdup(tmp2);
+	g_shell->temp = ft_strdup(tmp2);
 	free(tmp2);
 	if (check_env())
 		return (check_env());

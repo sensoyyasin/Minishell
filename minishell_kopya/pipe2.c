@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipe2.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/21 14:12:14 by mtemel            #+#    #+#             */
+/*   Updated: 2022/12/21 14:14:20 by mtemel           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	multi_close(int **fd)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while (i <= shell->pipe)
+	while (i <= g_shell->pipe)
 	{
 		close(fd[i][0]);
 		close(fd[i][1]);
@@ -14,46 +26,45 @@ void	multi_close(int **fd)
 	free(fd);
 }
 
-void	check_cmnd2()
+void	check_cmnd2(void)
 {
-	while (!ft_strcmp(shell->arg->content, "|") && shell->arg != NULL)
+	while (!ft_strcmp(g_shell->arg->content, "|") && g_shell->arg != NULL)
 	{
-		ft_lstadd_back(&shell->pipe_arg, ft_lstnew(shell->arg->content));
-		shell->arg = shell->arg->next;
-		if (shell->arg == NULL)
-			break;
+		ft_lstadd_back(&g_shell->pipe_arg, ft_lstnew(g_shell->arg->content));
+		g_shell->arg = g_shell->arg->next;
+		if (g_shell->arg == NULL)
+			break ;
 	}
-	run_cmd_without_pipe(shell->pipe_arg);
+	run_cmd_without_pipe(g_shell->pipe_arg);
 }
 
-void	shell_pipe_dup2()
+void	g_shell_pipe_dup2(void)
 {
-	int		i = 0;
 	int		**fd;
 	pid_t	pid;
 
-	fd = malloc(sizeof(int *) * (shell->pipe + 1));
-	while (i <= shell->pipe)
+	int (i) = 0;
+	fd = malloc(sizeof(int *) * (g_shell->pipe + 1));
+	while (i <= g_shell->pipe)
 	{
 		fd[i] = malloc(sizeof(int) * 2);
 		i++;
 	}
 	i = 0;
-	while (i <= shell->pipe)
+	while (i <= g_shell->pipe)
 	{
 		if (pipe(fd[i]) < 0)
 		{
 			perror("");
-			return;
+			return ;
 		}
 		i++;
 	}
 	i = 0;
 	pid = fork();
-	if (pid == 0)//child
+	if (pid == 0)
 	{
-		dup2(fd[0][1], 1); // yeni fork olustu.
-		//printf("A\n"); -> bu artik child processte olusur. mainde yazdiramam
+		dup2(fd[0][1], 1);
 		multi_close(fd);
 		check_cmnd2();
 		exit(0);
@@ -61,16 +72,17 @@ void	shell_pipe_dup2()
 	else
 	{
 		i++;
-		while (i < shell->pipe + 1)
+		while (i < g_shell->pipe + 1)
 		{
-			while (!ft_strcmp(shell->arg->content, "|") && shell->arg != NULL)
-				shell->arg = shell->arg->next;
-			if (ft_strcmp(shell->arg->content, "|"))
-				shell->arg = shell->arg->next;
+			while (!ft_strcmp(g_shell->arg->content, "|")
+				&& g_shell->arg != NULL)
+				g_shell->arg = g_shell->arg->next;
+			if (ft_strcmp(g_shell->arg->content, "|"))
+				g_shell->arg = g_shell->arg->next;
 			if (!fork())
 			{
 				dup2(fd[i - 1][0], 0);
-				if (i != shell->pipe)
+				if (i != g_shell->pipe)
 					dup2(fd[i][1], 1);
 				multi_close(fd);
 				check_cmnd2();
@@ -78,7 +90,6 @@ void	shell_pipe_dup2()
 			}
 			i++;
 		}
-		///parent
 		waitpid(pid, NULL, 0);
 		multi_close(fd);
 		wait(NULL);

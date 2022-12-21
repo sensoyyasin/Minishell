@@ -6,7 +6,7 @@
 /*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 14:48:49 by mtemel            #+#    #+#             */
-/*   Updated: 2022/12/18 15:50:32 by mtemel           ###   ########.fr       */
+/*   Updated: 2022/12/21 16:51:24 by mtemel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ int	cmnd_length(void)
 	int	i;
 
 	i = 0;
-	if (shell->line[0] == '|')
+	if (g_shell->line[0] == '|')
 	{
 		write(2, "syntax error near unexpected token `|'\n", 39);
 		return (-1);
 	}
-	while (shell->line[i] > 32 && shell->line[i] != '|' && shell->line[i] != '>'
-		&& shell->line[i] != '<' && shell->line[i])
+	while (g_shell->line[i] > 32 && g_shell->line[i] != '|' && g_shell->line[i]
+		!= '>' && g_shell->line[i] != '<' && g_shell->line[i])
 		i++;
 	return (i);
 }
@@ -35,15 +35,15 @@ void	lexir(int count)
 
 	i = 0;
 	temp = malloc(sizeof(t_list));
-	while (count > 0 && *(shell->line))
+	while (count > 0 && *(g_shell->line))
 	{
-		temp[i] = *(shell->line);
-		shell->line++;
+		temp[i] = *(g_shell->line);
+		g_shell->line++;
 		i++;
 		count--;
 	}
 	temp[i] = '\0';
-	ft_lstadd_back(&shell->arg, ft_lstnew(temp));
+	ft_lstadd_back(&g_shell->arg, ft_lstnew(temp));
 	free(temp);
 }
 
@@ -52,13 +52,13 @@ void	space_skip(void)
 	int	i;
 
 	i = 0;
-	while (((shell->line[i] >= 9 && shell->line[i] <= 13)
-			|| shell->line[i] == 32) && shell->line[i + 1] != '\0')
-		shell->line++;
-	if (((shell->line[i] >= 9 && shell->line[i] <= 13)
-			|| shell->line[i] == 32) && shell->line[i + 1] == '\0')
+	while (((g_shell->line[i] >= 9 && g_shell->line[i] <= 13)
+			|| g_shell->line[i] == 32) && g_shell->line[i + 1] != '\0')
+		g_shell->line++;
+	if (((g_shell->line[i] >= 9 && g_shell->line[i] <= 13)
+			|| g_shell->line[i] == 32) && g_shell->line[i + 1] == '\0')
 	{
-		*shell->line = '\0';
+		*g_shell->line = '\0';
 		return ;
 	}
 }
@@ -67,10 +67,10 @@ int	lexer(void)
 {
 	int	count;
 
-	while (*shell->line)
+	while (*g_shell->line)
 	{
 		space_skip();
-		if (shell->arg == NULL)
+		if (g_shell->arg == NULL)
 		{
 			count = cmnd_length();
 			if (count <= 0)

@@ -6,7 +6,7 @@
 /*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 17:05:12 by mtemel            #+#    #+#             */
-/*   Updated: 2022/12/18 18:02:04 by mtemel           ###   ########.fr       */
+/*   Updated: 2022/12/21 14:05:14 by mtemel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	ft_unset(t_list *list)
 	while (content)
 	{
 		if (islistequal(content) == 2 || isequal(content))
-			udelete_node(&shell->asd, content);
+			udelete_node(&g_shell->asd, content);
 		i++;
 		content = index_data(list, i);
 	}
@@ -65,12 +65,12 @@ int	ft_env(void)
 {
 	t_list	*temp;
 
-	if (!shell->ctrl)
+	if (!g_shell->ctrl)
 	{
 		ft_fill();
-		shell->ctrl++;
+		g_shell->ctrl++;
 	}
-	temp = shell->asd;
+	temp = g_shell->asd;
 	while (temp != NULL)
 	{
 		if (ft_strchr(temp->content, '='))
@@ -87,7 +87,7 @@ void	ft_pwd(void)
 	int		i;
 
 	i = 0;
-	list = shell->asd;
+	list = g_shell->asd;
 	temp2 = malloc(ft_strlen("PWD") + 1);
 	while (list != NULL)
 	{

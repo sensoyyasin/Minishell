@@ -1,20 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/21 13:57:23 by mtemel            #+#    #+#             */
+/*   Updated: 2022/12/21 15:59:31 by mtemel           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
-#define MINISHELL_H
+# define MINISHELL_H
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <sys/stat.h>
-#include <sys/wait.h>
-#include <time.h>
-#include <stdbool.h>
-#include <signal.h>
-#include <fcntl.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <sys/stat.h>
+# include <sys/wait.h>
+# include <time.h>
+# include <stdbool.h>
+# include <signal.h>
+# include <fcntl.h>
 
-#define D_QUOTE 34
-#define	S_QUOTE 39
+# define D_QUOTE 34
+# define S_QUOTE 39
 
 # define DEFAULT "\033[0;39m"
 # define GRAY "\033[0;90m"
@@ -32,14 +44,14 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
-typedef struct s_shell
+typedef struct s_g_shell
 {
 	char	*line;
 	char	*name;
 	char	*my_content;
 
 	char	**environ;
-	char 	**str;
+	char	**str;
 	char	**str_pipe;
 	char	*temp;
 	t_list	*asd;
@@ -47,24 +59,24 @@ typedef struct s_shell
 	t_list	*arg;
 	t_list	*pipe_arg;
 	t_list	*token;
-	int	step;
-	int	ctrl;
-	int	s_quote;
-	int	d_quote;
-	int	right_single_counter;
-	int	right_double_counter;
-	int	left_single_counter;
-	int	pipe;
-	int	cmmp;
-	int	len;
-	int	heredoc;
-	int	exit_status;
-	int	saved_stdout;
-	int	fd;
-	int	fpid;
-}	t_shell;
+	int		step;
+	int		ctrl;
+	int		s_quote;
+	int		d_quote;
+	int		right_single_counter;
+	int		right_double_counter;
+	int		left_single_counter;
+	int		pipe;
+	int		cmmp;
+	int		len;
+	int		heredoc;
+	int		exit_status;
+	int		saved_stdout;
+	int		fd;
+	int		fpid;
+}	t_g_shell;
 
-t_shell	*shell;
+t_g_shell	*g_shell;
 
 void	delete_node(t_list **head, char *str);
 int		isnamequal(char *str, char *content);
@@ -72,22 +84,22 @@ int		islistequal(char *str);
 int		isequal(char *str);
 int		uisnamequal(char *str, char *content);
 void	udelete_node(t_list **head, char *str);
+void	pro_fork(int i);
 
 void	sighandler(int signum);
-void	signal_d();
+void	signal_d(void);
 int		normal(void);
 void	appointment(char **env);
-void	ft_fill();
+void	ft_fill(void);
 int		is_cmd(char	*str);
 //lexer
-void    here_doc(int i);
-int 	lexer(void);
+void	here_doc(int i);
+int		lexer(void);
 void	space_skip(void);
 void	lexur(int cnt);
 int		text_cmpr(void);
 int		token_compare(void);
 int		cmnd_length(void);
-
 
 int		ft_strcmp(char *str, char *str2);
 char	*ft_strchr(const char *s, int x);
@@ -110,10 +122,10 @@ char	*ft_substr(char *s, int start, int len);
 char	**ft_split(char *s, char c);
 void	free_list(void);
 void	ft_putstr_fd(char *str, int fd);
-void	reset_stdout();
+void	reset_stdout(void);
 
 // -> expander
-void	expander();
+void	expander(void);
 void	expand(int index);
 t_list	*list_f_data(t_list *root, int index);
 void	s_quote(int index);
@@ -129,12 +141,12 @@ int		size_finder(char *str, int j);
 int		checker_tkn(char *str);
 
 // -> executor
-void	executor();
-int		pipe_stat();
+void	executor(void);
+int		pipe_stat(void);
 
 // -> run_cmd
 void	run_cmd_without_pipe(t_list *list);
-void	run_cmd_with_pipe();
+void	run_cmd_with_pipe(void);
 
 // -> cmnds
 void	ft_echo(t_list *list);
@@ -143,8 +155,8 @@ int		ft_env(void);
 void	ft_pwd(void);
 void	ft_unset(t_list *list);
 void	printf_alph(void);
-void	ft_pipe_counter();
-void	ft_pipe_func();
+void	ft_pipe_counter(void);
+void	ft_pipe_func(void);
 void	ft_lstclear(t_list *lst);
 
 // -> other commands
@@ -153,35 +165,40 @@ char	**list_changed(t_list *list);
 int		ft_isalpha(char *str);
 
 // -> pipe
-void	shell_pipe_dup2();
+void	g_shell_pipe_dup2(void);
 void	multi_close(int **fd);
 int		check2(int i);
 int		ft_strcmp2(char *asd, char *sda);
-void	ft_dstry_node();
+void	ft_dstry_node(void);
 void	ft_lstremover(t_list *list);
-void	check_cmnd2();
+void	check_cmnd2(void);
 
 // -> heredoc
-int		heredoc_cnt();
-void	heredoc_f();
-void	run_cmd_heredoc();
-int		heredoc_list();
-void	heredoc_functions();
-void	cut_heredoc();
+int		heredoc_cnt(void);
+void	heredoc_f(void);
+void	run_cmd_heredoc(void);
+int		heredoc_list(void);
+void	heredoc_functions(void);
+void	cut_heredoc(void);
 void	hdelete_node(t_list **head, char *str);
 int		hisnamequal(char *str, char *content);
+void	heredoc_f2(char **str, char **eof, int *fd);
 
 // -> redirections
 int		index_redirect(char *str);
-int		redirect_cnt();
-int		redirections_counter();
-int		double_right_redirect_list();
-void	double_right_redirection();
-int		single_right_redirect_list();
-void	single_right_redirection();
-int		single_left_redirect_list();
-void	single_left_redirection();
-int		check_token();
+int		redirect_cnt(void);
+int		redirections_counter(void);
+int		double_right_redirect_list(void);
+void	double_right_redirection(void);
+void	double_right_redirection2(int *fd, char **str);
+int		single_right_redirect_list(void);
+void	single_right_redirection(void);
+void	single_right_redirection2(int *fd, char **str);
+int		single_left_redirect_list(void);
+void	single_left_redirection(void);
+void	single_right_redirection2(int *fd, char **str);
+int		check_token(void);
+int		checker_tkn(char *str);
 
 // ->cd
 char	*tail_trimer(const char *str, int c);

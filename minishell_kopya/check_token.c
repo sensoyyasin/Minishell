@@ -6,7 +6,7 @@
 /*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 20:12:41 by mtemel            #+#    #+#             */
-/*   Updated: 2022/12/18 16:59:33 by mtemel           ###   ########.fr       */
+/*   Updated: 2022/12/21 14:05:14 by mtemel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	check_token(void)
 {
 	t_list	*iter;
 
-	iter = shell->arg;
+	iter = g_shell->arg;
 	while (iter != NULL)
 	{
 		if (checker_tkn(iter->content))

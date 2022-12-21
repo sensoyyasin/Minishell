@@ -6,7 +6,7 @@
 /*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:41:32 by mtemel            #+#    #+#             */
-/*   Updated: 2022/12/20 15:42:26 by mtemel           ###   ########.fr       */
+/*   Updated: 2022/12/21 14:05:14 by mtemel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	pipe_stat(void)
 {
 	t_list	*iter;
 
-	iter = shell->arg;
+	iter = g_shell->arg;
 	while (iter != NULL)
 	{
 		if (ft_strcmp(iter->content, "|"))
@@ -41,7 +41,7 @@ void	executor(void)
 	if (stat)
 		run_cmd_with_pipe();
 	else if (!stat)
-		run_cmd_without_pipe(shell->arg);
+		run_cmd_without_pipe(g_shell->arg);
 	else
 		return ;
 }

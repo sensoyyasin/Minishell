@@ -6,7 +6,7 @@
 /*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 12:43:06 by mtemel            #+#    #+#             */
-/*   Updated: 2022/12/18 17:57:15 by mtemel           ###   ########.fr       */
+/*   Updated: 2022/12/21 14:05:14 by mtemel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,17 @@ void	handle_siginit(int signum)
 void	signal_d(void)
 {
 	printf("exit\n");
-	free(shell->line);
+	free(g_shell->line);
 	exit(1);
 }
 
 int	normal(void)
 {
-	shell->line = readline(shell->name);
-	if (!shell->line)
+	g_shell->line = readline(g_shell->name);
+	if (!g_shell->line)
 		signal_d();
-	add_history(shell->line);
-	if (shell->line[0] == 0)
+	add_history(g_shell->line);
+	if (g_shell->line[0] == 0)
 		return (0);
 	return (1);
 }
@@ -44,17 +44,17 @@ int	normal(void)
 void	appointment(char **env)
 {
 	printf("------MINIHELL------\n");
-	shell = malloc(sizeof(t_shell));
-	shell->name = "\033[0;93m@yasinshell> \033[0m";
-	shell->environ = env;
+	g_shell = malloc(sizeof(t_g_shell));
+	g_shell->name = "\033[0;93m@yasing_shell> \033[0m";
+	g_shell->environ = env;
 	ft_fill();
-	if (!shell->asd)
+	if (!g_shell->asd)
 		write(2, "Env error!\n", 11);
 	signal(SIGINT, handle_siginit);
 	signal(SIGQUIT, SIG_IGN);
-	shell->len = 0;
-	shell->ctrl = 1;
-	shell->fpid = 1;
+	g_shell->len = 0;
+	g_shell->ctrl = 1;
+	g_shell->fpid = 1;
 }
 
 int	main(int argc, char **argv, char **env)
@@ -66,7 +66,7 @@ int	main(int argc, char **argv, char **env)
 	{
 		if (!normal())
 		{
-			free(shell->line);
+			free(g_shell->line);
 			continue ;
 		}
 		if (!lexer())
