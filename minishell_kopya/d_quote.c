@@ -6,7 +6,7 @@
 /*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 12:56:02 by mtemel            #+#    #+#             */
-/*   Updated: 2022/12/21 16:50:02 by mtemel           ###   ########.fr       */
+/*   Updated: 2022/12/21 17:18:11 by mtemel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ void	d_quote(int index)
 char	*dollar_sign(char *str, int j)
 {
 	char	*tmp2;
-	int		i;
+	char	*a;
 
-	i = 0;
+	int (i) = 0;
 	tmp2 = malloc(size_finder(str, j) + 1);
 	while (str[j] != '\0' && str[j] != 32 && str[j] != D_QUOTE
 		&& str[j] != '$' && str[j] != S_QUOTE)
@@ -90,7 +90,8 @@ char	*dollar_sign(char *str, int j)
 	tmp2[i] = '\0';
 	g_shell->temp = ft_strdup(tmp2);
 	free(tmp2);
-	if (check_env())
-		return (check_env());
+	a = check_env();
+	if (a)
+		return (a);
 	return ("");
 }
