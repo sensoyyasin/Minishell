@@ -6,7 +6,7 @@
 /*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 16:41:52 by mtemel            #+#    #+#             */
-/*   Updated: 2022/12/21 16:44:38 by mtemel           ###   ########.fr       */
+/*   Updated: 2022/12/22 16:21:22 by mtemel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,16 @@ t_list	*ft_lstnew(void *content)
 	return (my);
 }
 
+/* int (i) = 0;
+	int (lsize) = ft_listsize(g_shell->arg);
+	printf("g_shell arg lstsize:%d<\n", ft_listsize(g_shell->arg));
+	while (i < lsize)
+	{
+		free(g_shell->arg->content);
+		free(g_shell->arg);
+		g_shell->arg = g_shell->arg->next;
+		i++;
+	} */
 void	free_list(void)
 {
 	while (g_shell->arg != NULL)
