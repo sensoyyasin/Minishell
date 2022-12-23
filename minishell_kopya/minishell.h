@@ -6,7 +6,7 @@
 /*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 13:57:23 by mtemel            #+#    #+#             */
-/*   Updated: 2022/12/21 15:59:31 by mtemel           ###   ########.fr       */
+/*   Updated: 2022/12/23 19:15:19 by mtemel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ char	*check_env(void);
 char	*ft_str_eq_dup(char *s1);
 int		size_finder(char *str, int j);
 int		checker_tkn(char *str);
+void	free_str(char **ret_dolar);
 
 // -> executor
 void	executor(void);

@@ -6,7 +6,7 @@
 /*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 14:12:14 by mtemel            #+#    #+#             */
-/*   Updated: 2022/12/21 14:14:20 by mtemel           ###   ########.fr       */
+/*   Updated: 2022/12/23 14:46:48 by mtemel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	multi_close(int **fd)
 	{
 		close(fd[i][0]);
 		close(fd[i][1]);
+		free(fd[i]);
 		i++;
 	}
 	free(fd);
@@ -30,6 +31,7 @@ void	check_cmnd2(void)
 {
 	while (!ft_strcmp(g_shell->arg->content, "|") && g_shell->arg != NULL)
 	{
+		printf("arg con: %s\n", g_shell->arg->content);
 		ft_lstadd_back(&g_shell->pipe_arg, ft_lstnew(g_shell->arg->content));
 		g_shell->arg = g_shell->arg->next;
 		if (g_shell->arg == NULL)
@@ -44,7 +46,7 @@ void	g_shell_pipe_dup2(void)
 	pid_t	pid;
 
 	int (i) = 0;
-	fd = malloc(sizeof(int *) * (g_shell->pipe + 1));
+	fd = (int **)malloc(sizeof(int *) * (g_shell->pipe + 100));
 	while (i <= g_shell->pipe)
 	{
 		fd[i] = malloc(sizeof(int) * 2);

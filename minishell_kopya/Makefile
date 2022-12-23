@@ -6,7 +6,7 @@
 #    By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/21 10:34:24 by ysensoy           #+#    #+#              #
-#    Updated: 2022/12/22 17:08:44 by mtemel           ###   ########.fr        #
+#    Updated: 2022/12/23 14:24:19 by mtemel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,3 +23,9 @@ yasin :
 	@echo "\033[1;92mderlendi..\033[0m"
 clean:
 	@rm -rf minishell
+
+fclean: clean
+
+re: fclean all
+
+.PHONY: all clean fclean re bonus

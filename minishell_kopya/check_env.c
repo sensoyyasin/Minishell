@@ -6,7 +6,7 @@
 /*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:03:12 by mtemel            #+#    #+#             */
-/*   Updated: 2022/12/22 13:43:03 by mtemel           ###   ########.fr       */
+/*   Updated: 2022/12/23 18:17:01 by mtemel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ char	*check_env(void)
 		if (ft_strcmp(temp2, g_shell->temp) && t_temp->content[i] != '\0')
 		{
 			free(temp2);
+			free(g_shell->temp);
 			return (ret_env(i + 1, t_temp->content));
 		}
 		else if (t_temp->content[i] == '\0')

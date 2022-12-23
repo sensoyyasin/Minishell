@@ -6,7 +6,7 @@
 /*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 16:41:52 by mtemel            #+#    #+#             */
-/*   Updated: 2022/12/21 16:48:58 by mtemel           ###   ########.fr       */
+/*   Updated: 2022/12/23 19:14:33 by mtemel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,13 @@ int	ft_strcmp(char *str, char *str2)
 	if (str[i] != '\0')
 		return (0);
 	return (1);
+}
+
+void	free_str(char **ret_dolar)
+{
+	if (*ret_dolar && **ret_dolar >= 32)
+	{
+		free(*ret_dolar);
+		*ret_dolar = NULL;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:43:11 by mtemel            #+#    #+#             */
-/*   Updated: 2022/12/22 13:05:34 by mtemel           ###   ########.fr       */
+/*   Updated: 2022/12/23 19:21:02 by mtemel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,18 @@ void	expand(int index)
 {
 	char	*content;
 	char	*temp;
-	int		i;
-	int		j;
+	char	*a;
 
-	i = 0;
-	j = 0;
-	temp = malloc(500);
+	int (i) = 0;
+	int (j) = 0;
+	temp = malloc(1000);
 	content = index_data(g_shell->arg, index);
 	while (content[i])
 	{
-		if (content[i] == '$')
+		if (content[i] == '$' && content[i + 1] != '\0')
 		{
-			temp = ft_strjoin(temp, dollar_sign(content, ++i));
+			a = dollar_sign(content, ++i);
+			temp = ft_strjoin(temp, a);
 			while (content[i] != 32 && content[i] != '$' && content[i] != '\0')
 				i++;
 			while (j < ft_strlen(temp))
@@ -38,6 +38,7 @@ void	expand(int index)
 	temp[j] = '\0';
 	list_f_data(g_shell->arg, index)->content = ft_strdup(temp);
 	free(temp);
+	free_str(&a);
 }
 
 void	expander(void)
@@ -51,7 +52,7 @@ void	expander(void)
 	iter = g_shell->arg;
 	while (iter != NULL)
 	{
-		content = ft_strdup(iter->content);
+		content = iter->content;
 		quote_varmi = quote_check(content);
 		if (quote_varmi == D_QUOTE)
 			d_quote(index);

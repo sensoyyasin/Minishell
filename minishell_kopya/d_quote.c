@@ -6,7 +6,7 @@
 /*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 12:56:02 by mtemel            #+#    #+#             */
-/*   Updated: 2022/12/22 12:42:51 by mtemel           ###   ########.fr       */
+/*   Updated: 2022/12/23 19:16:07 by mtemel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,18 @@ void	check_quote_dollar(char *content, int *i)
 
 char	*dollar_filler(char **ret_dolar, int *j, char *temp)
 {
-	while (*(*ret_dolar))
+	int (i) = 0;
+	while ((*ret_dolar)[i])
 	{
-		temp[*j] = *(*ret_dolar);
-		(*ret_dolar)++;
+		temp[*j] = (*ret_dolar)[i];
 		(*j)++;
+		i++;
 	}
 	temp[*j] = '\0';
 	return (temp);
 }
 
-char	*check_content_dquote(int *i, int *j, char *ret_dolar, char *temp)
+char	*check_content_dquote(int *i, int *j, char **ret_dolar, char *temp)
 {
 	while (g_shell->my_content[*i])
 	{
@@ -41,9 +42,9 @@ char	*check_content_dquote(int *i, int *j, char *ret_dolar, char *temp)
 			&& g_shell->my_content[(*i) + 1] != '"')
 		{
 			(*i)++;
-			ret_dolar = dollar_sign(g_shell->my_content, *i);
+			*ret_dolar = dollar_sign(g_shell->my_content, *i);
 			check_quote_dollar(g_shell->my_content, i);
-			temp = dollar_filler(&ret_dolar, j, temp);
+			temp = dollar_filler(ret_dolar, j, temp);
 		}
 		else if (g_shell->my_content[*i] != '"')
 		{
@@ -68,8 +69,9 @@ void	d_quote(int index)
 	ret_dolar = NULL;
 	temp = malloc(500);
 	g_shell->my_content = index_data(g_shell->arg, index);
-	temp = check_content_dquote(&i, &j, ret_dolar, temp);
+	temp = check_content_dquote(&i, &j, &ret_dolar, temp);
 	list_f_data(g_shell->arg, index)->content = ft_strdup(temp);
+	free_str(&ret_dolar);
 	free(temp);
 }
 
