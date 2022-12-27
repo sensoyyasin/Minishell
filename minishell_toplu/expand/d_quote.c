@@ -6,11 +6,11 @@
 /*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 12:56:02 by mtemel            #+#    #+#             */
-/*   Updated: 2022/12/23 19:16:07 by mtemel           ###   ########.fr       */
+/*   Updated: 2022/12/27 16:32:37 by mtemel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	check_quote_dollar(char *content, int *i)
 {

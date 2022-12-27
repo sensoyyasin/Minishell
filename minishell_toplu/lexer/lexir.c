@@ -6,11 +6,11 @@
 /*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 12:56:41 by mtemel            #+#    #+#             */
-/*   Updated: 2022/12/21 16:55:52 by mtemel           ###   ########.fr       */
+/*   Updated: 2022/12/27 16:32:37 by mtemel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	token_compare2(int *i)
 {

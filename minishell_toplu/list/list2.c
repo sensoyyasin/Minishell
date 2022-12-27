@@ -6,11 +6,11 @@
 /*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 13:54:47 by mtemel            #+#    #+#             */
-/*   Updated: 2022/12/23 18:06:53 by mtemel           ###   ########.fr       */
+/*   Updated: 2022/12/27 16:32:37 by mtemel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	delete_node(t_list **head, char *str)
 {

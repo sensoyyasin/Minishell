@@ -6,11 +6,11 @@
 /*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:03:12 by mtemel            #+#    #+#             */
-/*   Updated: 2022/12/23 18:17:01 by mtemel           ###   ########.fr       */
+/*   Updated: 2022/12/27 16:32:37 by mtemel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 char	*ft_str_eq_dup(char *s1)
 {

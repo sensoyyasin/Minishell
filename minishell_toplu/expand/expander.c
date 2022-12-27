@@ -6,11 +6,11 @@
 /*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:43:11 by mtemel            #+#    #+#             */
-/*   Updated: 2022/12/23 19:21:02 by mtemel           ###   ########.fr       */
+/*   Updated: 2022/12/27 16:32:37 by mtemel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	expand(int index)
 {
