@@ -6,7 +6,7 @@
 /*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 14:54:07 by mtemel            #+#    #+#             */
-/*   Updated: 2022/12/27 16:32:37 by mtemel           ###   ########.fr       */
+/*   Updated: 2022/12/27 17:04:58 by mtemel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	cdelete_node(t_list **head, char *str)
 	if (temp != NULL && uisnamequal(str, temp->content))
 	{
 		*head = temp->next;
+		free (temp->content);
 		free(temp);
 		return ;
 	}
@@ -36,12 +37,14 @@ void	cdelete_node(t_list **head, char *str)
 	if (temp == NULL)
 		return ;
 	prev->next = temp->next;
+	free (temp->content);
 	free (temp);
 }
 
 void	ft_cd2(char *pwd)
 {
 	char	*home;
+	char	*a;
 
 	home = getenv("HOME");
 	if (chdir(home) != 0)
@@ -50,7 +53,9 @@ void	ft_cd2(char *pwd)
 		return ;
 	}
 	cdelete_node(&g_shell->asd, pwd);
-	ft_lstadd_back(&g_shell->asd, ft_lstnew(ft_strjoin(pwd, home)));
+	a = ft_strjoin(pwd, home);
+	ft_lstadd_back(&g_shell->asd, ft_lstnew(a));
+	free (a);
 	return ;
 }
 
@@ -58,6 +63,7 @@ int	ft_cd(t_list *list)
 {
 	char	*pwd;
 	char	cwd[1024];
+	char	*a;
 
 	pwd = ft_strdup("PWD=");
 	if (index_data(list, 1) && getcwd(cwd, sizeof(cwd)) != NULL)
@@ -68,8 +74,9 @@ int	ft_cd(t_list *list)
 			return (0);
 		}
 		cdelete_node(&g_shell->asd, pwd);
-		ft_lstadd_back(&g_shell->asd, ft_lstnew(
-				ft_strjoin(pwd, getcwd(cwd, sizeof(cwd)))));
+		a = ft_strjoin(pwd, getcwd(cwd, sizeof(cwd)));
+		ft_lstadd_back(&g_shell->asd, ft_lstnew(a));
+		free(a);
 		return (1);
 	}
 	else if (!index_data(list, 1) && getcwd(cwd, sizeof(cwd)) != NULL)
