@@ -6,7 +6,7 @@
 /*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 17:05:12 by mtemel            #+#    #+#             */
-/*   Updated: 2022/12/28 12:26:52 by mtemel           ###   ########.fr       */
+/*   Updated: 2022/12/28 13:16:49 by mtemel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void	ft_unset(t_list *list)
 	i = 1;
 	while (index_data(list, i))
 	{
-		if (islistequal(index_data(list, i)) == 2 || isequal(index_data(list, i)))
+		if (islistequal(index_data(list, i)) == 2
+			|| isequal(index_data(list, i)))
 			udelete_node(&g_shell->asd, index_data(list, i));
 		i++;
 	}
