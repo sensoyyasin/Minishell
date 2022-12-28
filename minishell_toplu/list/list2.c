@@ -6,7 +6,7 @@
 /*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 13:54:47 by mtemel            #+#    #+#             */
-/*   Updated: 2022/12/27 16:32:37 by mtemel           ###   ########.fr       */
+/*   Updated: 2022/12/28 12:55:27 by mtemel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	delete_node(t_list **head, char *str)
 	if (temp != NULL && g_shell->step == 0)
 	{
 		*head = temp->next;
+		free(temp->content);
 		free(temp);
 		return ;
 	}
@@ -36,6 +37,7 @@ void	delete_node(t_list **head, char *str)
 	if (temp == NULL)
 		return ;
 	prev->next = temp->next;
+	free (temp->content);
 	free (temp);
 }
 
@@ -69,6 +71,7 @@ void	hdelete_node(t_list **head, char *str)
 	if (temp != NULL && hisnamequal(str, temp->content))
 	{
 		*head = temp->next;
+		free(temp->content);
 		free(temp);
 		return ;
 	}
@@ -80,6 +83,7 @@ void	hdelete_node(t_list **head, char *str)
 	if (temp == NULL)
 		return ;
 	prev->next = temp->next;
+	free (temp->content);
 	free (temp);
 }
 
