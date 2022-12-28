@@ -6,7 +6,7 @@
 /*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 17:05:12 by mtemel            #+#    #+#             */
-/*   Updated: 2022/12/27 16:32:37 by mtemel           ###   ########.fr       */
+/*   Updated: 2022/12/28 12:26:52 by mtemel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,21 +42,13 @@ void	ft_echo(t_list *list)
 void	ft_unset(t_list *list)
 {
 	int		i;
-	char	*content;
-	char	*content1;
 
 	i = 1;
-	content1 = index_data(list, i);
-	if (content1 != NULL)
-		content = ft_strdup(content1);
-	else
-		content = NULL;
-	while (content)
+	while (index_data(list, i))
 	{
-		if (islistequal(content) == 2 || isequal(content))
-			udelete_node(&g_shell->asd, content);
+		if (islistequal(index_data(list, i)) == 2 || isequal(index_data(list, i)))
+			udelete_node(&g_shell->asd, index_data(list, i));
 		i++;
-		content = index_data(list, i);
 	}
 	return ;
 }
