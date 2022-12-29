@@ -69,6 +69,10 @@ void	other_commands(char **arg)
 	int	i;
 
 	i = -1;
+	if (access(arg[0], F_OK) == 0)
+		g_shell->exit_status = 0;
+	else
+		g_shell->exit_status = 127;
 	pid = fork();
 	if (pid == 0)
 		exec_func(func_path(arg), arg);

@@ -117,7 +117,7 @@ int	quote_check(char *str)
 
 	i = 0;
 	if (!str)
-		return(0);
+		return (0);
 	while (str[i])
 	{
 		if (str[i] == D_QUOTE)

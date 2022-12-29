@@ -18,7 +18,6 @@ void	handle_siginit(int signum)
 	{
 		write(1, "\n", 1);
 		rl_on_new_line();
-		//rl_replace_line("", 0);
 		rl_redisplay();
 	}
 }
@@ -34,7 +33,7 @@ char	*rl_gets(char *str)
 	if (str)
 		free(str);
 	str = readline(g_shell->name);
-	if(!str)
+	if (!str)
 		signal_d();
 	if (ft_strlen(str) == 0)
 	{

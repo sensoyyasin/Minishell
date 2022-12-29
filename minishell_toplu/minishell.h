@@ -173,6 +173,10 @@ int		ft_strcmp2(char *asd, char *sda);
 void	ft_dstry_node(void);
 void	ft_lstremover(t_list *list);
 void	check_cmnd2(void);
+void	fd_opener(int *i, int ***fd);
+void	fd_checker(int *i, int ***fd);
+void	fork_work(int ***fd);
+void	big_pipe(int *i, int ***fd, pid_t *pid);
 
 // -> heredoc
 int		heredoc_cnt(void);

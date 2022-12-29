@@ -45,7 +45,7 @@ char	*ft_strdup(char *s1)
 	int		len;
 	int		i;
 
-	if(!s1)
+	if (!s1)
 		return (NULL);
 	len = ft_strlen(s1);
 	s2 = malloc(sizeof(char) * len + 1);
@@ -89,17 +89,14 @@ t_list	*ft_lstnew(void *content)
 }
 
 void	free_list(void)
-{
-	/* while (g_shell->pipe_arg != NULL)
-	{
-		free(g_shell->pipe_arg->content);
-		free(g_shell->pipe_arg);
-		g_shell->pipe_arg = g_shell->pipe_arg->next;
-	} */
+{	
+	t_list	*tmp;
+
 	while (g_shell->arg != NULL)
 	{
 		free(g_shell->arg->content);
-		free(g_shell->arg);
+		tmp = g_shell->arg;
 		g_shell->arg = g_shell->arg->next;
+		free(tmp);
 	}
 }
