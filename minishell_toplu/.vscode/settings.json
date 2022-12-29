@@ -2,6 +2,8 @@
     "files.associations": {
         "../minishell.h": "c",
         "sstream": "c",
-        "algorithm": "c"
+        "algorithm": "c",
+        "iterator": "c",
+        "chrono": "c"
     }
 }

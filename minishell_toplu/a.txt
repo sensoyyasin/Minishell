@@ -1,6 +1,1 @@
-> merhaba
-> dunya
-> musa
-arg con: wc
-arg con: -l
-      36
+      34

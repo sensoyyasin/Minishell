@@ -115,7 +115,6 @@ char	*ft_strjoin(char *s1, char *s2);
 int		ft_strncmp(char *str1, char *str2, size_t n);
 char	*ft_strdup(char *s1);
 int		ft_listsize(t_list *list);
-t_list	*ft_lstnew(void *content);
 int		lstcmp_isequal(char *str);
 int		ft_lstcmp(t_list *iter, char *str);
 char	*ft_substr(char *s, int start, int len);
@@ -123,7 +122,7 @@ char	**ft_split(char *s, char c);
 void	free_list(void);
 void	free_p_list(void);
 void	ft_putstr_fd(char *str, int fd);
-void	reset_stdout(void);
+char	*ft_itoa(int n);
 
 // -> expander
 void	expander(void);

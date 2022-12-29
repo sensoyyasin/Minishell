@@ -28,6 +28,7 @@ void	expand(int index)
 		{
 			a = dollar_sign(content, ++i);
 			temp = ft_strjoin(temp, a);
+			free_str(&a);
 			while (content[i] != 32 && content[i] != '$' && content[i] != '\0')
 				i++;
 			while (j < ft_strlen(temp))
@@ -38,15 +39,14 @@ void	expand(int index)
 	temp[j] = '\0';
 	list_f_data(g_shell->arg, index)->content = ft_strdup(temp);
 	free(temp);
-	free_str(&a);
 }
 
 void	expander(void)
 {
 	t_list	*iter;
-	char	*content;
 	int		quote_varmi;
 	int		index;
+	char	*content;
 
 	index = 0;
 	iter = g_shell->arg;
@@ -116,6 +116,8 @@ int	quote_check(char *str)
 	int	i;
 
 	i = 0;
+	if (!str)
+		return(0);
 	while (str[i])
 	{
 		if (str[i] == D_QUOTE)

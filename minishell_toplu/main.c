@@ -26,34 +26,13 @@ void	handle_siginit(int signum)
 void	signal_d(void)
 {
 	printf("exit\n");
-	free(g_shell->line);
 	exit(1);
 }
-
-/* int	normal(void)
-{
-	printf("g_shell2.:>%s<\n",g_shell->line);
-	if(g_shell->line && *g_shell->line)
-	{
-		//printf("sh:>%s<\n",g_shell->line); -> NULL geliyor.
-		free(g_shell->line);
-		g_shell->line = NULL;
-	}
-	g_shell->line = readline(g_shell->name);
-	if (!g_shell->line)
-		signal_d();
-	else if (g_shell->line && *(g_shell->line))
-		add_history(g_shell->line);
-	else if (g_shell->line[0] == 0)
-		return (0);
-	return (1);
-} */
 
 char	*rl_gets(char *str)
 {
 	if (str)
 		free(str);
-	printf("burs\n");
 	str = readline(g_shell->name);
 	if(!str)
 		signal_d();
@@ -79,7 +58,7 @@ void	appointment(char **env)
 	g_shell->len = 0;
 	g_shell->ctrl = 1;
 	g_shell->fpid = 1;
-	g_shell->pipe = 0;
+	g_shell->exit_status = 0;
 }
 
 int	main(int argc, char **argv, char **env)
@@ -106,8 +85,6 @@ int	main(int argc, char **argv, char **env)
 		expander();
 		if (!check_token())
 			executor();
-		/* if (g_shell->pipe)
-			free_p_list(); */
 		free_list();
 	}
 	return (1);

@@ -12,67 +12,83 @@
 
 #include "../minishell.h"
 
-int	size_finder(char *str, int j)
+static char	*strrev(char *c)
 {
-	while (str[j] != '\0' && str[j] != 32 && str[j] != D_QUOTE && str[j] != '$')
-		j++;
-	return (j);
-}
+	int		i;
+	int		j;
+	char	temp;
 
-void	heredoc_f2(char **str, char **eof, int *fd)
-{
-	while (1)
+	j = ft_strlen(c) - 1;
+	i = 0;
+	temp = 0;
+	while (i < j)
 	{
-		*str = readline("> ");
-		if (!(*str))
-			break ;
-		if (ft_strcmp(*str, *eof))
-			break ;
-		ft_putstr_fd(*str, *fd);
-		ft_putstr_fd("\n", *fd);
+		temp = c [i];
+		c[i] = c[j];
+		c[j] = temp;
+		i++;
+		j--;
 	}
-	free(*str);
+	return (c);
 }
 
-int	ft_strlen(char *str)
+static char	*ia(int n, char *str)
 {
 	int	i;
+	int	temp;
 
 	i = 0;
-	while (str[i])
+	temp = n;
+	if (temp < 0)
+		temp = -temp;
+	while (temp > 0)
+	{
+		str[i] = temp % 10 + 48;
+		temp = temp / 10;
 		i++;
+	}
+	if (n < 0)
+		str[i++] = '-';
+	str[i] = '\0';
+	return (str);
+}
+
+static size_t	calculateallocate(int n)
+{
+	size_t	i;
+	int		temp;
+
+	i = 0;
+	temp = n;
+	if (temp < 0)
+	{
+		temp = -temp;
+		i++;
+	}
+	while (temp > 0)
+	{
+		temp = temp / 10;
+		i++;
+	}
 	return (i);
 }
 
-/* return 1 if strings equal
-return 0 if there is any difference */
-int	ft_strcmp(char *str, char *str2)
+char	*ft_itoa(int n)
 {
-	int		i;
-	size_t	len;
+	char	*str;
+	int		neg;
 
-	i = 0;
-	len = ft_strlen(str2);
+	neg = 0;
+	if (n < 0)
+		neg = 1;
+	if (n == -2147483648)
+		return (ft_strdup("-2147483648"));
+	else if (n == 0)
+		return (ft_strdup("0"));
+	str = (char *)malloc(sizeof(char) * (calculateallocate(n) + 1));
 	if (!str)
 		return (0);
-	while (len)
-	{
-		if (str[i] == str2[i])
-			i++;
-		else
-			return (0);
-		len--;
-	}
-	if (str[i] != '\0')
-		return (0);
-	return (1);
-}
-
-void	free_str(char **ret_dolar)
-{
-	if (*ret_dolar && **ret_dolar >= 32)
-	{
-		free(*ret_dolar);
-		*ret_dolar = NULL;
-	}
+	str = ia(n, str);
+	str = strrev(str);
+	return (str);
 }

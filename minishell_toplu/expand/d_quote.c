@@ -85,6 +85,8 @@ char	*dollar_sign(char *str, int j)
 	while (str[j] != '\0' && str[j] != 32 && str[j] != D_QUOTE
 		&& str[j] != '$' && str[j] != S_QUOTE)
 	{
+		if (str[j] == '?')
+			return (ft_itoa(g_shell->exit_status));
 		tmp2[i] = str[j];
 		i++;
 		j++;

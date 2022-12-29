@@ -20,12 +20,6 @@ char	**list_changed(t_list *list)
 
 	i = 0;
 	temp = list;
-	/* while (temp != NULL)
-	{
-		printf("list: >%s<\n", temp->content);
-		temp = temp->next;
-	}
-	printf("naberrrrr\n"); */
 	str = malloc(sizeof(char **) * ft_listsize(list) + 1);
 	while (temp != NULL)
 	{

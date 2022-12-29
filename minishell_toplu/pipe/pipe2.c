@@ -31,16 +31,11 @@ void	check_cmnd2(void)
 {
 	while (!ft_strcmp(g_shell->arg->content, "|") && g_shell->arg != NULL)
 	{
-		printf("arg con: %s\n", g_shell->arg->content);
 		ft_lstadd_back(&g_shell->pipe_arg, ft_lstnew(g_shell->arg->content));
-		/* free(g_shell->arg->content);
-		free(g_shell->arg); */
 		g_shell->arg = g_shell->arg->next;
 		if (g_shell->arg == NULL)
 			break ;
 	}
-	/* free(g_shell->arg->content);
-	free(g_shell->arg); */
 	run_cmd_without_pipe(g_shell->pipe_arg);
 }
 
@@ -83,17 +78,12 @@ void	g_shell_pipe_dup2(void)
 			while (!ft_strcmp(g_shell->arg->content, "|")
 				&& g_shell->arg != NULL)
 			{
-				/* free(g_shell->arg->content);
-				free(g_shell->arg); */
 				g_shell->arg = g_shell->arg->next;
 			}
 			if (ft_strcmp(g_shell->arg->content, "|"))
 			{
-				/* free(g_shell->arg->content);
-				free(g_shell->arg); */
 				g_shell->arg = g_shell->arg->next;
 			}
-			/* system("leaks minishel"); */
 			if (!fork())
 			{
 				dup2(fd[i - 1][0], 0);
