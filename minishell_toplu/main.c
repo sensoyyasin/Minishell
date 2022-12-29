@@ -6,7 +6,7 @@
 /*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 12:43:06 by mtemel            #+#    #+#             */
-/*   Updated: 2022/12/27 16:32:49 by mtemel           ###   ########.fr       */
+/*   Updated: 2022/12/29 11:13:28 by mtemel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,10 @@ char	*rl_gets(char *str)
 {
 	if (str)
 		free(str);
+	printf("burs\n");
 	str = readline(g_shell->name);
+	if(!str)
+		signal_d();
 	if (ft_strlen(str) == 0)
 	{
 		free(str);
@@ -76,6 +79,7 @@ void	appointment(char **env)
 	g_shell->len = 0;
 	g_shell->ctrl = 1;
 	g_shell->fpid = 1;
+	g_shell->pipe = 0;
 }
 
 int	main(int argc, char **argv, char **env)
@@ -84,7 +88,8 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)*argv;
-	a = NULL;
+	a = malloc(1);
+	a[0] = 0;
 	appointment(env);
 	while (1)
 	{
@@ -101,6 +106,8 @@ int	main(int argc, char **argv, char **env)
 		expander();
 		if (!check_token())
 			executor();
+		/* if (g_shell->pipe)
+			free_p_list(); */
 		free_list();
 	}
 	return (1);

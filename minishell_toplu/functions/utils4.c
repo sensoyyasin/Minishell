@@ -6,7 +6,7 @@
 /*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 16:41:52 by mtemel            #+#    #+#             */
-/*   Updated: 2022/12/27 16:32:37 by mtemel           ###   ########.fr       */
+/*   Updated: 2022/12/28 16:56:49 by mtemel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,16 @@ void	free_str(char **ret_dolar)
 	{
 		free(*ret_dolar);
 		*ret_dolar = NULL;
+	}
+}
+void	free_p_list(void)
+{
+	printf("lst address: %p\n", &g_shell->pipe_arg);
+	while (g_shell->pipe_arg != NULL)
+	{
+		printf("lst address: %p\n", &g_shell->pipe_arg);
+		free(g_shell->pipe_arg->content);
+		free(g_shell->pipe_arg);
+		g_shell->pipe_arg = g_shell->pipe_arg->next;
 	}
 }

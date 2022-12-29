@@ -6,7 +6,7 @@
 /*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 14:12:14 by mtemel            #+#    #+#             */
-/*   Updated: 2022/12/27 16:32:37 by mtemel           ###   ########.fr       */
+/*   Updated: 2022/12/28 16:08:20 by mtemel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,14 @@ void	check_cmnd2(void)
 	{
 		printf("arg con: %s\n", g_shell->arg->content);
 		ft_lstadd_back(&g_shell->pipe_arg, ft_lstnew(g_shell->arg->content));
+		/* free(g_shell->arg->content);
+		free(g_shell->arg); */
 		g_shell->arg = g_shell->arg->next;
 		if (g_shell->arg == NULL)
 			break ;
 	}
+	/* free(g_shell->arg->content);
+	free(g_shell->arg); */
 	run_cmd_without_pipe(g_shell->pipe_arg);
 }
 
@@ -46,7 +50,7 @@ void	g_shell_pipe_dup2(void)
 	pid_t	pid;
 
 	int (i) = 0;
-	fd = (int **)malloc(sizeof(int *) * (g_shell->pipe + 100));
+	fd = (int **)malloc(sizeof(int *) * (g_shell->pipe + 1));
 	while (i <= g_shell->pipe)
 	{
 		fd[i] = malloc(sizeof(int) * 2);
@@ -78,9 +82,18 @@ void	g_shell_pipe_dup2(void)
 		{
 			while (!ft_strcmp(g_shell->arg->content, "|")
 				&& g_shell->arg != NULL)
+			{
+				/* free(g_shell->arg->content);
+				free(g_shell->arg); */
 				g_shell->arg = g_shell->arg->next;
+			}
 			if (ft_strcmp(g_shell->arg->content, "|"))
+			{
+				/* free(g_shell->arg->content);
+				free(g_shell->arg); */
 				g_shell->arg = g_shell->arg->next;
+			}
+			/* system("leaks minishel"); */
 			if (!fork())
 			{
 				dup2(fd[i - 1][0], 0);

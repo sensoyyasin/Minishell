@@ -6,7 +6,7 @@
 /*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 13:57:23 by mtemel            #+#    #+#             */
-/*   Updated: 2022/12/27 17:10:54 by mtemel           ###   ########.fr       */
+/*   Updated: 2022/12/29 11:18:39 by mtemel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ int		ft_lstcmp(t_list *iter, char *str);
 char	*ft_substr(char *s, int start, int len);
 char	**ft_split(char *s, char c);
 void	free_list(void);
+void	free_p_list(void);
 void	ft_putstr_fd(char *str, int fd);
 void	reset_stdout(void);
 

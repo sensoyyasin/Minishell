@@ -6,7 +6,7 @@
 /*   By: mtemel <mtemel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 14:07:52 by mtemel            #+#    #+#             */
-/*   Updated: 2022/12/27 16:32:37 by mtemel           ###   ########.fr       */
+/*   Updated: 2022/12/29 10:59:09 by mtemel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@ char	**list_changed(t_list *list)
 
 	i = 0;
 	temp = list;
+	/* while (temp != NULL)
+	{
+		printf("list: >%s<\n", temp->content);
+		temp = temp->next;
+	}
+	printf("naberrrrr\n"); */
 	str = malloc(sizeof(char **) * ft_listsize(list) + 1);
 	while (temp != NULL)
 	{
@@ -50,10 +56,7 @@ char	*func_path(char **arg)
 	i = 0;
 	temp = getenv("PATH");
 	if (access(arg[0], F_OK) == 0)
-	{
-		free(temp);
 		return (arg[0]);
-	}
 	path = ft_split(temp, ':');
 	while (path[i])
 	{
