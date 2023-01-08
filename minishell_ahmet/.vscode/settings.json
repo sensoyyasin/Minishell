@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "../minishell.h": "c",
+        "sstream": "c",
+        "algorithm": "c",
+        "iterator": "c",
+        "chrono": "c",
+        "minishell.h": "c"
+    }
+}
