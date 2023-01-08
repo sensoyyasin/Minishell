@@ -6,7 +6,7 @@
 /*   By: yasinsensoy <yasinsensoy@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 14:48:49 by mtemel            #+#    #+#             */
-/*   Updated: 2023/01/08 14:44:00 by yasinsensoy      ###   ########.fr       */
+/*   Updated: 2023/01/08 16:14:41 by yasinsensoy      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ int	lexer(void)
 			count = cmnd_length();
 			if (count <= 0)
 				return (0);
-			else if (count > 0)
-				lexir(count);
+			// else if (count > 0)
+			// 	lexir(count);
 		}
 		count = token_compare();
 		if (count > 0)

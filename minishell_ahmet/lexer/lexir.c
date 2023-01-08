@@ -6,7 +6,7 @@
 /*   By: yasinsensoy <yasinsensoy@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 12:56:41 by mtemel            #+#    #+#             */
-/*   Updated: 2023/01/08 15:04:45 by yasinsensoy      ###   ########.fr       */
+/*   Updated: 2023/01/08 16:12:38 by yasinsensoy      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,6 @@ int	token_compare(void)
 	int	i;
 
 	i = 0;
-	// printf("g_shell->line : %s\n",g_shell->line);
-	// printf("%c\n",g_shell->line[i]);
-	// printf("%c\n",g_shell->line[i + 1]);
 	if (g_shell->line[i] == '>' || g_shell->line[i] == '<'
 		|| g_shell->line[i] == '|')
 	{
