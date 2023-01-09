@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 14:07:52 by mtemel            #+#    #+#             */
-/*   Updated: 2023/01/09 16:06:49 by ysensoy          ###   ########.fr       */
+/*   Updated: 2023/01/09 16:16:43 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	exec_func(char *path, char **arg)
 		g_shell->exit_status = 127;
 		printf("%s: command not found\n", arg[0]);
 		free(path);
-		exit(0);
+		exit(127);
 	}
 }
 

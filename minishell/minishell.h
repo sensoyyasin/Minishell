@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 13:57:23 by mtemel            #+#    #+#             */
-/*   Updated: 2023/01/09 15:03:27 by ysensoy          ###   ########.fr       */
+/*   Updated: 2023/01/09 16:30:54 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_g_shell
 	char	**str;
 	char	**str_pipe;
 	char	*temp;
+	char	*iter;
 	t_list	*asd;
 	t_list	*cmd;
 	t_list	*arg;
@@ -210,5 +211,6 @@ char	*tail_trimer(const char *str, int c);
 char	*ft_strrchr(const char *str, int c);
 void	ft_cd2(char *pwd);
 int		ft_cd(t_list *list);
+void	ft_exit(t_list *list);
 
 #endif

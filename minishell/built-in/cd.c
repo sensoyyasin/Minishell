@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 14:54:07 by mtemel            #+#    #+#             */
-/*   Updated: 2023/01/09 15:51:59 by ysensoy          ###   ########.fr       */
+/*   Updated: 2023/01/09 16:20:02 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	ft_cd2(char *pwd)
 	if (chdir(home) != 0)
 	{
 		printf("-> No such file or directory.\n");
+		g_shell->exit_status = 127;
 		return ;
 	}
 	cdelete_node(&g_shell->asd, pwd);
