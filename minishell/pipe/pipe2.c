@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 14:12:14 by mtemel            #+#    #+#             */
-/*   Updated: 2023/01/09 16:04:53 by ysensoy          ###   ########.fr       */
+/*   Updated: 2023/01/09 17:46:17 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void	multi_close(int **fd)
 	while (i <= g_shell->pipe)
 	{
 		if (close(fd[i][0]) < 0)
-			perror("hata1");
+			perror("");
 		if (close(fd[i][1]) < 0)
-			perror("hata2");
+			perror("");
 		free(fd[i]);
 		i++;
 	}
@@ -58,7 +58,5 @@ void	g_shell_pipe_dup2(void)
 	if (pid == 0)
 		fork_work(fd);
 	else
-		big_pipe(&i, fd, &pid);
-	//waitpid(pid, NULL, 0);
-	//g_shell->arg = tmp;
+		big_pipe(&i, fd);
 }

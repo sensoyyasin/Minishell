@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 12:56:02 by mtemel            #+#    #+#             */
-/*   Updated: 2023/01/09 12:23:30 by ysensoy          ###   ########.fr       */
+/*   Updated: 2023/01/09 17:07:29 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,9 @@ char	*dollar_sign(char *str, int j)
 		if (str[j] == '?')
 		{
 			free(tmp2);
-			g_shell->exit_status = 0;
 			return (ft_itoa(g_shell->exit_status));
 		}
-		tmp2[i] = str[j];
-		i++;
-		j++;
+		tmp2[i++] = str[j++];
 	}
 	tmp2[i] = '\0';
 	g_shell->temp = ft_strdup(tmp2);

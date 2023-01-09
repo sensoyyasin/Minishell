@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 13:57:23 by mtemel            #+#    #+#             */
-/*   Updated: 2023/01/09 16:30:54 by ysensoy          ###   ########.fr       */
+/*   Updated: 2023/01/09 17:46:04 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ void	check_cmnd2(void);
 void	fd_opener(int *i, int **fd);
 void	fd_checker(int *i, int ***fd);
 void	fork_work(int **fd);
-void	big_pipe(int *i, int **fd, pid_t *pid);
+void	big_pipe(int *i, int **fd);
 
 // -> heredoc
 int		heredoc_cnt(void);

@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 16:41:01 by mtemel            #+#    #+#             */
-/*   Updated: 2023/01/09 16:40:49 by ysensoy          ###   ########.fr       */
+/*   Updated: 2023/01/09 17:06:30 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	run_cmd_without_pipe(t_list *list)
 
 void	ft_exit(t_list *list)
 {
-	int i;
+	int		i;
 
 	i = 0;
 	if (index_data(list, 0) && !index_data(list, 1))
@@ -63,6 +63,6 @@ void	ft_exit(t_list *list)
 		exit(EXIT_SUCCESS);
 	}
 	else
-		printf("bash: %s: too many arguments\n",list->content);
+		printf("bash: %s: too many arguments\n", list->content);
 	return ;
 }

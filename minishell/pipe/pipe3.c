@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 14:12:14 by mtemel            #+#    #+#             */
-/*   Updated: 2023/01/09 15:14:41 by ysensoy          ###   ########.fr       */
+/*   Updated: 2023/01/09 17:21:01 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,13 @@ void	fork_work(int **fd)
 	exit(0);
 }
 
-void	big_pipe(int *i, int **fd, pid_t *pid)
+void	big_pipe(int *i, int **fd)
 {
-	(*i)++;
-	(void)pid;
-	int pid_1;
-	t_list *temp = g_shell->arg;
-	while ((*i) < g_shell->pipe + 1)
+	int		pid_1;
+	t_list	*temp;
+
+	temp = g_shell->arg;
+	while (++(*i) < g_shell->pipe + 1)
 	{
 		while (!ft_strcmp(g_shell->arg->content, "|")
 			&& g_shell->arg != NULL)
@@ -64,9 +64,8 @@ void	big_pipe(int *i, int **fd, pid_t *pid)
 				dup2((fd)[*i][1], 1);
 			multi_close(fd);
 			check_cmnd2();
-			exit(0);
+			exit(EXIT_SUCCESS);
 		}
-		(*i)++;
 	}
 	multi_close(fd);
 	waitpid(pid_1, 0, 0);

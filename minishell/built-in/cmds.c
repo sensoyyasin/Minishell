@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 17:05:12 by mtemel            #+#    #+#             */
-/*   Updated: 2023/01/09 15:53:45 by ysensoy          ###   ########.fr       */
+/*   Updated: 2023/01/09 17:05:55 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,7 @@ void	ft_echo(t_list *list)
 				printf("\n");
 		}
 		else
-		{
-			g_shell->exit_status = 0;
 			printf("%s ", index_data(list, i));
-		}
 	}
 	g_shell->exit_status = 0;
 }

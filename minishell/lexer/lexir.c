@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yasinsensoy <yasinsensoy@student.42.fr>    +#+  +:+       +#+        */
+/*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 12:56:41 by mtemel            #+#    #+#             */
-/*   Updated: 2023/01/08 16:12:38 by yasinsensoy      ###   ########.fr       */
+/*   Updated: 2023/01/09 17:08:37 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	token_compare(void)
 	{
 		if ((g_shell->line[i] == '>' && g_shell->line[i + 1] == '>')
 			|| (g_shell->line[i] == '<' && g_shell->line[i + 1] == '<'))
-				return (2);
+			return (2);
 		else if ((g_shell->line[i + 1] == '>' && g_shell->line[i + 2] == '>')
 			|| (g_shell->line[i + 2] == '<' && g_shell->line[i + 1] == '<'))
 		{

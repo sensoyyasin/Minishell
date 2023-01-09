@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 14:48:49 by mtemel            #+#    #+#             */
-/*   Updated: 2023/01/09 14:25:11 by ysensoy          ###   ########.fr       */
+/*   Updated: 2023/01/09 17:08:20 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	cmnd_length(void)
 
 	i = 0;
 	if (g_shell->line[i] == '<' || g_shell->line[i] == '>')
-		return(1);
+		return (1);
 	else if (g_shell->line[0] == '|')
 	{
 		write(2, "syntax error near unexpected token `|'\n", 39);
@@ -77,8 +77,6 @@ int	lexer(void)
 			count = cmnd_length();
 			if (count <= 0)
 				return (0);
-			// else if (count > 0)
-			// 	lexir(count);
 		}
 		count = token_compare();
 		if (count > 0)
