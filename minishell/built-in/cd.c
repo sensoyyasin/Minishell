@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 14:54:07 by mtemel            #+#    #+#             */
-/*   Updated: 2023/01/09 16:20:02 by ysensoy          ###   ########.fr       */
+/*   Updated: 2023/01/10 12:28:01 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	ft_cd(t_list *list)
 	{
 		if (chdir(index_data(list, 1)) != 0)
 		{
+			free(pwd);
 			printf("-> No such file or directory.\n");
 			g_shell->exit_status = 127;
 			return (0);

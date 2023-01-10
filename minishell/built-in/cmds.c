@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 17:05:12 by mtemel            #+#    #+#             */
-/*   Updated: 2023/01/09 17:05:55 by ysensoy          ###   ########.fr       */
+/*   Updated: 2023/01/10 13:44:06 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ void	ft_unset(t_list *list)
 		if (islistequal(index_data(list, i)) == 2
 			|| isequal(index_data(list, i)))
 			udelete_node(&g_shell->asd, index_data(list, i));
+		else
+			printf("minishell: unset: not a valid identifier\n");
 		g_shell->exit_status = 0;
 		i++;
 	}

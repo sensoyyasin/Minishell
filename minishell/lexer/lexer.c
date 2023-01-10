@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 14:48:49 by mtemel            #+#    #+#             */
-/*   Updated: 2023/01/09 17:08:20 by ysensoy          ###   ########.fr       */
+/*   Updated: 2023/01/10 13:32:16 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	cmnd_length(void)
 	else if (g_shell->line[0] == '|')
 	{
 		write(2, "syntax error near unexpected token `|'\n", 39);
+		g_shell->exit_status = 258;
 		return (-1);
 	}
 	while (g_shell->line[i] > 32 && g_shell->line[i] != '|' && g_shell->line[i]

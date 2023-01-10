@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 12:56:41 by mtemel            #+#    #+#             */
-/*   Updated: 2023/01/09 17:08:37 by ysensoy          ###   ########.fr       */
+/*   Updated: 2023/01/10 13:37:02 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@ int	token_compare2(int *i)
 {
 	if (g_shell->line[*i] == '<' || g_shell->line[*i + 1] == '>')
 	{
+		g_shell->exit_status = 258;
 		write(2, "syntax error near unexpected token\n", 35);
 		return (-1);
 	}
 	else if (g_shell->line[*i] == '|' && g_shell->line[*i + 1] == '|')
 	{
+		g_shell->exit_status = 258;
 		write(2, "syntax error near expected token '||'\n", 38);
 		return (-1);
 	}
