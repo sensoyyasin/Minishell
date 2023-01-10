@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 14:07:52 by mtemel            #+#    #+#             */
-/*   Updated: 2023/01/10 12:24:35 by ysensoy          ###   ########.fr       */
+/*   Updated: 2023/01/10 17:09:47 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	other_commands(char **arg)
 	pid = fork();
 	if (pid == 0)
 		exec_func(func_path(arg), arg);
-	wait(NULL);
+	waitpid(pid, 0, 0);
 	if (g_shell->pipe <= 0)
 	{
 		while (++i < ft_listsize(g_shell->arg))

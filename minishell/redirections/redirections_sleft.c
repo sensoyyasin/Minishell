@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections_sleft.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yasinsensoy <yasinsensoy@student.42.fr>    +#+  +:+       +#+        */
+/*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 12:45:57 by mtemel            #+#    #+#             */
-/*   Updated: 2023/01/08 14:44:34 by yasinsensoy      ###   ########.fr       */
+/*   Updated: 2023/01/10 16:08:24 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

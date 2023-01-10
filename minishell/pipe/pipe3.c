@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 14:12:14 by mtemel            #+#    #+#             */
-/*   Updated: 2023/01/09 17:21:01 by ysensoy          ###   ########.fr       */
+/*   Updated: 2023/01/10 16:56:30 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	big_pipe(int *i, int **fd)
 		}
 	}
 	multi_close(fd);
+	usleep(50);
 	waitpid(pid_1, 0, 0);
 	g_shell->arg = temp;
 }
